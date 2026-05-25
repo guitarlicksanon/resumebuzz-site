@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ResumeBuzz — Admin</title><style>
+<title>ResumeBuzz - Admin</title><style>
 @font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
 @font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:optional;src:url('/assets/fonts/dm-mono-500.woff2') format('woff2')}
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
@@ -424,12 +424,12 @@ body{
 
         <div class="stat-grid">
           <div class="stat-card gold">
-            <div class="stat-label">Revenue — All Time</div>
+            <div class="stat-label">Revenue - All Time</div>
             <div class="stat-value" id="statRevenue">$0</div>
             <div class="stat-sub">Stripe not yet connected</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Orders — This Month</div>
+            <div class="stat-label">Orders - This Month</div>
             <div class="stat-value" id="statOrders">0</div>
             <div class="stat-sub">AI drafts + human written</div>
           </div>
@@ -439,8 +439,8 @@ body{
             <div class="stat-sub">$60 / mo unlimited</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Free Previews — This Week</div>
-            <div class="stat-value" id="statPreviews">—</div>
+            <div class="stat-label">Free Previews - This Week</div>
+            <div class="stat-value" id="statPreviews">-</div>
             <div class="stat-sub">10 / IP / week limit</div>
           </div>
         </div>
@@ -474,7 +474,7 @@ body{
       <div class="tab-page" id="tab-orders">
         <div>
           <div class="page-title">Orders</div>
-          <div class="page-sub">All client orders — AI drafts, human-written, and subscriptions</div>
+          <div class="page-sub">All client orders - AI drafts, human-written, and subscriptions</div>
         </div>
 
         <div class="panel">
@@ -528,9 +528,9 @@ body{
               <div>
                 <label style="display:block;font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem">Order Type</label>
                 <select id="oType" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;padding:0.45rem 0.65rem;appearance:none">
-                  <option value="ai">AI Draft — $30</option>
-                  <option value="sub">Subscription — $60/mo</option>
-                  <option value="human">Human Written — $149+</option>
+                  <option value="ai">AI Draft - $30</option>
+                  <option value="sub">Subscription - $60/mo</option>
+                  <option value="human">Human Written - $149+</option>
                 </select>
               </div>
               <div>
@@ -595,7 +595,7 @@ body{
             <div class="settings-row">
               <div>
                 <div class="settings-label">Stripe Integration</div>
-                <div class="settings-desc">Not yet connected — required for payment processing</div>
+                <div class="settings-desc">Not yet connected - required for payment processing</div>
               </div>
               <button class="btn-setting" onclick="window.open('https://dashboard.stripe.com','_blank')">Set Up Stripe ↗</button>
             </div>
@@ -797,13 +797,13 @@ body{
     if(t==='ai')    return '<span class="badge badge-ai">AI Draft</span>';
     if(t==='sub')   return '<span class="badge badge-sub">Subscription</span>';
     if(t==='human') return '<span class="badge badge-human">Human Written</span>';
-    return '<span class="badge">—</span>';
+    return '<span class="badge">-</span>';
   }
   function statusBadge(s){
     if(s==='new')     return '<span class="badge badge-new">New</span>';
     if(s==='pending') return '<span class="badge badge-pending">In Progress</span>';
     if(s==='done')    return '<span class="badge badge-done">Complete</span>';
-    return '<span class="badge">—</span>';
+    return '<span class="badge">-</span>';
   }
   function fmtDate(d){
     try{ return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) } catch(e){ return d }

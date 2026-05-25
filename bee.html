@@ -455,7 +455,7 @@ body{
     <p class="stage-label">Stage 3 of 5: CV Crossroads</p>
     <h2 class="game-title" style="font-size:clamp(1.2rem,3.5vw,1.8rem)">Which path?</h2>
     <div id="s2-correct-counter" style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);margin-bottom:0.5rem">Q 1 of 5  ·  0 correct</div>
-    <div class="question-box" id="s2-question">—</div>
+    <div class="question-box" id="s2-question">-</div>
     <div class="fork-choices" id="s2-choices"></div>
     <div class="fork-hint" id="s2-hint"></div>
     <button class="btn" id="s2-continue" onclick="s2Advance()">Continue →</button>
@@ -469,7 +469,7 @@ body{
   <div class="screen" id="s-excuses">
     <div class="hex-bg"></div>
     <p class="stage-label">Stage 1 of 5: The Excuses</p>
-    <div class="question-box" id="s3-question" style="margin:0 0 0.4rem">—</div>
+    <div class="question-box" id="s3-question" style="margin:0 0 0.4rem">-</div>
     <div class="s3-hud">
       <span class="s3-catches" id="s3-catches-hud">catch 0 / 1</span>
       <span class="s3-lives" id="s3-lives-hud">lives 3</span>
@@ -491,7 +491,7 @@ body{
       <div class="lives" id="s4-lives"></div>
     </div>
     <div class="progress-wrap"><div class="progress-fill" id="s4-progress"></div></div>
-    <div class="question-box" id="s4-question">—</div>
+    <div class="question-box" id="s4-question">-</div>
     <div id="s4-instruction"></div>
     <div class="answer-opts" id="s4-answers"></div>
     <button id="s4-submit" disabled>Submit</button>
@@ -543,7 +543,7 @@ body{
     <div class="hex-bg"></div>
     <div class="ghost-emoji">👻</div>
     <h2 class="game-title" style="font-size:1.8rem;margin-bottom:0.25rem">Ghosted.</h2>
-    <p class="ghost-reason" id="ghost-reason">—</p>
+    <p class="ghost-reason" id="ghost-reason">-</p>
     <p style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);text-align:center;max-width:280px;margin:0.75rem 0 1.25rem;line-height:1.6">A stronger resume means fewer of these moments.</p>
     <a href="/build" class="btn btn-big" style="background:var(--gold);color:#111;border-color:var(--gold);margin-bottom:0.6rem">Write my resume with AI</a>
     <a href="/" class="btn btn-big">Audit my current resume</a>
@@ -632,7 +632,7 @@ function restartGame() {
 }
 
 /* ════════════════════════════════════════════════════════════
-   STAGE 1 — RESUME BLITZ (SWIPE MECHANIC)
+   STAGE 1 - RESUME BLITZ (SWIPE MECHANIC)
    ════════════════════════════════════════════════════════════ */
 var S1 = {
   GOOD: [
@@ -869,64 +869,64 @@ function endStage1() {
 }
 
 /* ════════════════════════════════════════════════════════════
-   STAGE 2 — CV CROSSROADS
+   STAGE 2 - CV CROSSROADS
    ════════════════════════════════════════════════════════════ */
 var S2 = {
   forks: [],
   current: 0,
   mistakes: 0,
   POOL: [
-    {q:'The job posting says "attach your resume." What format?',good:'PDF — clean, preserved formatting',bad:'Word .doc with tracked changes on',hint:'ATS reads PDFs cleanly. .doc files expose your revision history and can break formatting.'},
+    {q:'The job posting says "attach your resume." What format?',good:'PDF - clean, preserved formatting',bad:'Word .doc with tracked changes on',hint:'ATS reads PDFs cleanly. .doc files expose your revision history and can break formatting.'},
     {q:'Top of your resume, right below contact info:',good:'3-line value prop: years + specialty + key win',bad:'Objective: Seeking a challenging position to grow',hint:'Hiring managers spend 6 seconds on a resume. Lead with your value, not what you want.'},
     {q:'Writing a bullet for your last job:',good:'"Increased online sales 34% by rebuilding checkout (Q3)"',bad:'"Responsible for maintaining website and related tasks"',hint:'Every bullet should answer: what you did, how, and what measurably resulted.'},
-    {q:'You have 8 years of experience. Resume length:',good:'1 page — ruthlessly edited to most relevant work',bad:'3 pages — full history back to the college internship',hint:'Under 10 years: 1 page. Every extra page is a question mark, not a plus.'},
+    {q:'You have 8 years of experience. Resume length:',good:'1 page - ruthlessly edited to most relevant work',bad:'3 pages - full history back to the college internship',hint:'Under 10 years: 1 page. Every extra page is a question mark, not a plus.'},
     {q:'What belongs in your contact section:',good:'City, LinkedIn URL, portfolio link',bad:'Full home address + "References available upon request"',hint:'Your full address invites bias. "References available" wastes prime real estate.'},
-    {q:'Resume font size for body text:',good:'10-11pt — readable, fits content cleanly',bad:'8pt — squeeze everything onto one page',hint:'Under 10pt is unreadable in print and on screen. Cramming signals poor editing judgment.'},
+    {q:'Resume font size for body text:',good:'10-11pt - readable, fits content cleanly',bad:'8pt - squeeze everything onto one page',hint:'Under 10pt is unreadable in print and on screen. Cramming signals poor editing judgment.'},
     {q:'Margins when running out of space:',good:'Cut weaker content ruthlessly',bad:'Shrink margins to 0.4 inches',hint:'Tight margins look desperate. Ruthless editing is a skill employers value.'},
     {q:'Your resume file name when submitting:',good:'FirstName_LastName_Resume.pdf',bad:'resume_final_v3_USE THIS ONE.pdf',hint:'Recruiters save dozens of files. A professional filename survives their folder.'},
-    {q:'Color on a resume:',good:'One subtle accent color for section headers',bad:'Gradient background with colored skill-level bars',hint:'Skill bars look polished but mislead — what does 80% in Excel actually mean?'},
-    {q:'Resume layout structure (ATS safety):',good:'Single column — ATS parsers read top to bottom cleanly',bad:'Two-column with sidebar for skills and contact',hint:'Most ATS systems linearize text and scramble two-column layouts.'},
-    {q:'Photo on a resume (US market):',good:'No photo — it invites unconscious bias',bad:'Professional headshot in the top-right corner',hint:'In the US, UK, and Canada: no photo. European and APAC markets differ.'},
+    {q:'Color on a resume:',good:'One subtle accent color for section headers',bad:'Gradient background with colored skill-level bars',hint:'Skill bars look polished but mislead - what does 80% in Excel actually mean?'},
+    {q:'Resume layout structure (ATS safety):',good:'Single column - ATS parsers read top to bottom cleanly',bad:'Two-column with sidebar for skills and contact',hint:'Most ATS systems linearize text and scramble two-column layouts.'},
+    {q:'Photo on a resume (US market):',good:'No photo - it invites unconscious bias',bad:'Professional headshot in the top-right corner',hint:'In the US, UK, and Canada: no photo. European and APAC markets differ.'},
     {q:'Resume template from Canva or infographic style:',good:'Clean text-based format that any system can parse',bad:'Designed infographic resume with icons and charts',hint:'Infographic resumes fail ATS and may never reach human eyes.'},
-    {q:'Page borders or boxes around resume content:',good:'No border — clean white space is professional',bad:'Decorative border around the whole page',hint:'Borders waste space and signal design novice, not professional polish.'},
+    {q:'Page borders or boxes around resume content:',good:'No border - clean white space is professional',bad:'Decorative border around the whole page',hint:'Borders waste space and signal design novice, not professional polish.'},
     {q:'Email address to use:',good:'firstname.lastname@gmail.com',bad:'partytime99@yahoo.com',hint:'Your email is a first impression. Unprofessional handles get filtered out consciously and unconsciously.'},
     {q:'LinkedIn URL on your resume:',good:'Custom: linkedin.com/in/yourname',bad:'linkedin.com/in/yourname-b7x3k82-default',hint:'Customizing your LinkedIn URL takes 30 seconds and looks 100% more polished.'},
-    {q:'Phone number format:',good:'(555) 867-5309 — formatted, readable',bad:'5558675309 — no formatting',hint:'Formatted numbers are easier to read and signal attention to detail.'},
+    {q:'Phone number format:',good:'(555) 867-5309 - formatted, readable',bad:'5558675309 - no formatting',hint:'Formatted numbers are easier to read and signal attention to detail.'},
     {q:'Length of your professional summary:',good:'2-3 tight sentences: role, specialty, biggest win',bad:'6-8 sentences covering your whole career story',hint:'A summary is a hook, not a chapter. If it needs scrolling, cut it.'},
     {q:'Opening word of your professional summary:',good:'"Senior product manager with 8 years..." (no "I")',bad:'"I am a passionate and driven senior product manager..."',hint:'Resumes use third-person implied voice. "I am" wastes your opening words.'},
     {q:'Salary expectations in summary:',good:'Never mention salary on your resume',bad:'"Seeking a role with compensation above $120K"',hint:'Salary belongs in negotiation, not on your resume. Mentioning it anchors you early.'},
-    {q:'Objective statement for a career changer:',good:'"Marketing strategist transitioning to UX — 6 yrs building user-facing campaigns"',bad:'"Seeking a new challenge in a different field"',hint:'For career changes, name the transition and show your transferable value upfront.'},
+    {q:'Objective statement for a career changer:',good:'"Marketing strategist transitioning to UX - 6 yrs building user-facing campaigns"',bad:'"Seeking a new challenge in a different field"',hint:'For career changes, name the transition and show your transferable value upfront.'},
     {q:'Starting every bullet with a strong verb:',good:'"Reduced customer churn 18% by redesigning onboarding"',bad:'"Was responsible for working on customer retention efforts"',hint:'Passive language buries impact. Own every action.'},
     {q:'How far back to go in work history:',good:'Last 10-15 years of relevant experience only',bad:'Every job including your first summer job in 2001',hint:'Irrelevant history adds length without signal. Cut anything older than 15 years.'},
     {q:'Date format for work experience:',good:'Jun 2020 - Mar 2023 (month and year)',bad:'2020-2023 (year only)',hint:'Year-only dates hide gaps but also hide tenure. Month/Year is the professional standard.'},
     {q:'How many bullets per role:',good:'3-5 strong bullets for recent roles, 1-2 for older ones',bad:'12 bullets listing every task for every role',hint:'More bullets dilutes impact. Pick your best wins per role and stop.'},
     {q:'Describing what you did day-to-day vs. what you achieved:',good:'"Cut deployment time 40% by migrating to containerized builds"',bad:'"Responsible for software deployments and maintaining the CI/CD pipeline"',hint:'Duties describe the job. Accomplishments show what you made of it.'},
-    {q:'Adding metrics to every bullet:',good:'Use numbers where they genuinely exist — revenue, %, time saved',bad:'"Improved communication by 100% through better meetings"',hint:'Fake or meaningless metrics are worse than no metrics. Never invent percentages.'},
+    {q:'Adding metrics to every bullet:',good:'Use numbers where they genuinely exist - revenue, %, time saved',bad:'"Improved communication by 100% through better meetings"',hint:'Fake or meaningless metrics are worse than no metrics. Never invent percentages.'},
     {q:'Including freelance or contract work:',good:'"Independent Consultant (2022-2023)" as its own role with results',bad:'Omitting contract work since it was not a real job',hint:'Freelance shows initiative and real skills. Format it clearly so it does not look like a gap.'},
     {q:'Employment gap on your resume:',good:'List the year range honestly; prepare a brief explanation',bad:'Extend the previous job end date to cover the gap',hint:'Gaps are fine. Lying about dates is a fireable offense after hire.'},
     {q:'Multiple promotions at the same company:',good:'List company once; stack roles underneath with separate bullets',bad:'List the company separately each time as if different employers',hint:'Stacked roles signal career progression. Repeating the company looks like a formatting error.'},
-    {q:'Remote work — should you note it:',good:'Add "(Remote)" after location if the role was fully remote',bad:'Just omit location for remote roles',hint:'Remote experience is valued. Noting it clearly is a signal, not an asterisk.'},
+    {q:'Remote work - should you note it:',good:'Add "(Remote)" after location if the role was fully remote',bad:'Just omit location for remote roles',hint:'Remote experience is valued. Noting it clearly is a signal, not an asterisk.'},
     {q:'Your actual job title vs. a more recognizable equivalent:',good:'Use your real title; add common equivalent in parentheses if needed',bad:'Change "Customer Success Rep" to "Account Manager" to sound better',hint:'Employers verify titles in reference checks. Misrepresenting yours is resume fraud.'},
-    {q:'Where to place the skills section for an experienced hire:',good:'After experience — your work proves your skills',bad:'At the very top, before experience, to front-load keywords',hint:'Your experience is the proof. Skills at the top without context feels like noise.'},
-    {q:'Soft skills in the skills section:',good:'Technical tools, platforms, certifications — verifiable things',bad:'"Communication, teamwork, leadership, attention to detail"',hint:'Soft skills need proof in your bullets. Listing them standalone means nothing.'},
-    {q:'Self-rated skill bars on your resume:',good:'List skills flat — no visual rating scale',bad:'Skill bars showing "Excel: ████░░ 80%"',hint:'You are rating yourself. ATS cannot parse them. Hiring managers ignore them.'},
-    {q:'GPA — include it or not:',good:'Only if above 3.5 and graduated within the last 3 years',bad:'Always include your 2.8 GPA to be transparent',hint:'Below 3.5 or beyond 3 years, GPA is irrelevant and can be actively harmful.'},
+    {q:'Where to place the skills section for an experienced hire:',good:'After experience - your work proves your skills',bad:'At the very top, before experience, to front-load keywords',hint:'Your experience is the proof. Skills at the top without context feels like noise.'},
+    {q:'Soft skills in the skills section:',good:'Technical tools, platforms, certifications - verifiable things',bad:'"Communication, teamwork, leadership, attention to detail"',hint:'Soft skills need proof in your bullets. Listing them standalone means nothing.'},
+    {q:'Self-rated skill bars on your resume:',good:'List skills flat - no visual rating scale',bad:'Skill bars showing "Excel: ████░░ 80%"',hint:'You are rating yourself. ATS cannot parse them. Hiring managers ignore them.'},
+    {q:'GPA - include it or not:',good:'Only if above 3.5 and graduated within the last 3 years',bad:'Always include your 2.8 GPA to be transparent',hint:'Below 3.5 or beyond 3 years, GPA is irrelevant and can be actively harmful.'},
     {q:'Education section placement for a 10-year veteran:',good:'Bottom of resume, brief: school, degree, year only',bad:'Top of resume with relevant coursework listed',hint:'Ten years in, your experience leads. Education is credentials, not your pitch.'},
-    {q:'Listing an unfinished degree:',good:'"B.S. Computer Science — 90 credits completed, 2019-2022"',bad:'Omit it entirely since you never graduated',hint:'Partial degrees show effort and fill time gaps. Omitting them leaves unexplained years.'},
-    {q:'How to list certifications:',good:'"AWS Solutions Architect — Associate (Amazon, 2023)"',bad:'Just abbreviations: "AWS SAA, PMP, CISSP, SHRM-CP"',hint:'Spell out certifications. Acronyms mean nothing to a recruiter outside your field.'},
+    {q:'Listing an unfinished degree:',good:'"B.S. Computer Science - 90 credits completed, 2019-2022"',bad:'Omit it entirely since you never graduated',hint:'Partial degrees show effort and fill time gaps. Omitting them leaves unexplained years.'},
+    {q:'How to list certifications:',good:'"AWS Solutions Architect - Associate (Amazon, 2023)"',bad:'Just abbreviations: "AWS SAA, PMP, CISSP, SHRM-CP"',hint:'Spell out certifications. Acronyms mean nothing to a recruiter outside your field.'},
     {q:'Sending one resume to 200 jobs:',good:'Tailor summary and top bullets to mirror each job description',bad:'Send one universal resume to every role at once',hint:'A tailored resume gets 3x more responses. Tailoring takes 10 minutes per application.'},
-    {q:'References on the resume:',good:'Never — provide them on request after an interview',bad:'List 3 references with contact info at the bottom',hint:'References waste space you need for experience, and listing their info without consent is inconsiderate.'},
-    {q:'Cover letter when it says "optional":',good:'Write a short, targeted cover letter anyway — most skip it',bad:'Skip it since nobody reads them',hint:'"Optional" means you will not be penalized for skipping, not that it has no value.'},
+    {q:'References on the resume:',good:'Never - provide them on request after an interview',bad:'List 3 references with contact info at the bottom',hint:'References waste space you need for experience, and listing their info without consent is inconsiderate.'},
+    {q:'Cover letter when it says "optional":',good:'Write a short, targeted cover letter anyway - most skip it',bad:'Skip it since nobody reads them',hint:'"Optional" means you will not be penalized for skipping, not that it has no value.'},
     {q:'Using the exact language from the job posting:',good:'Mirror the job description wording in your summary and bullets',bad:'Use your own creative phrasing to stand out',hint:'ATS scores exact keyword matches. Precise language beats creative language here.'},
-    {q:'Applying when you do not meet every requirement:',good:'Apply if you meet 70% — most job requirements are wish lists',bad:'Wait until you can check every single box',hint:'Job descriptions are written by committees with a wish list. 70% qualified is worth applying.'},
+    {q:'Applying when you do not meet every requirement:',good:'Apply if you meet 70% - most job requirements are wish lists',bad:'Wait until you can check every single box',hint:'Job descriptions are written by committees with a wish list. 70% qualified is worth applying.'},
     {q:'Including hobbies and personal interests:',good:'Only if directly relevant to the role or company culture',bad:'Full hobbies section: "dog lover, avid hiker, amateur chef"',hint:'Hobbies are rarely relevant. The space is better used on experience and results.'},
-    {q:'Listing high school on a college graduate resume:',good:'No — college replaces high school on a professional resume',bad:'Include high school GPA, clubs, and honor roll',hint:'Once you have a college degree, high school is irrelevant. Remove it.'},
-    {q:'Adding "References available upon request":',good:'Never write this — everyone knows and it wastes a line',bad:'Always add it at the bottom for professionalism',hint:'It is implied. The line wastes space and makes your resume look dated.'},
-    {q:'Bullet length — ideal:',good:'1-2 lines max — punchy and scannable',bad:'4-5 lines telling the full story of what happened',hint:'Long bullets get skimmed past. If it needs 4 lines, split it or cut it.'},
+    {q:'Listing high school on a college graduate resume:',good:'No - college replaces high school on a professional resume',bad:'Include high school GPA, clubs, and honor roll',hint:'Once you have a college degree, high school is irrelevant. Remove it.'},
+    {q:'Adding "References available upon request":',good:'Never write this - everyone knows and it wastes a line',bad:'Always add it at the bottom for professionalism',hint:'It is implied. The line wastes space and makes your resume look dated.'},
+    {q:'Bullet length - ideal:',good:'1-2 lines max - punchy and scannable',bad:'4-5 lines telling the full story of what happened',hint:'Long bullets get skimmed past. If it needs 4 lines, split it or cut it.'},
     {q:'Including salary history (if not legally required):',good:'Never put salary history on a resume',bad:'List previous salaries to show career progression',hint:'Salary history anchors negotiations against you. Only disclose what is legally required.'},
     {q:'How to handle a job you were let go from:',good:'Describe accomplishments normally; address departure only if asked',bad:'Write "left due to restructuring" if that is not accurate',hint:'Your results stand on their own. Lying about departures is discovered in reference checks.'},
-    {q:'Using industry jargon and acronyms:',good:'Use them when the job description uses them — match their language',bad:'Avoid all jargon to keep the resume accessible to everyone',hint:'ATS and specialist recruiters look for precise industry terms. Use the language of the role.'},
-    {q:'Template vs. custom formatting:',good:'Simple Word or Google Docs format — clean, parseable, easy to update',bad:'Locked PDF template that breaks when you try to update it',hint:'Resumes need frequent updates. A format you cannot easily edit becomes a liability.'}
+    {q:'Using industry jargon and acronyms:',good:'Use them when the job description uses them - match their language',bad:'Avoid all jargon to keep the resume accessible to everyone',hint:'ATS and specialist recruiters look for precise industry terms. Use the language of the role.'},
+    {q:'Template vs. custom formatting:',good:'Simple Word or Google Docs format - clean, parseable, easy to update',bad:'Locked PDF template that breaks when you try to update it',hint:'Resumes need frequent updates. A format you cannot easily edit becomes a liability.'}
   ]
 };
 
@@ -1001,7 +1001,7 @@ function renderFork() {
 }
 
 /* ════════════════════════════════════════════════════════════
-   STAGE 3 — PHONE SCREEN DODGE
+   STAGE 3 - PHONE SCREEN DODGE
    ════════════════════════════════════════════════════════════ */
 var S3 = {
   questions: [
@@ -1246,7 +1246,7 @@ function s3EndDrag(e) {
 }
 
 /* ════════════════════════════════════════════════════════════
-   STAGE 4 — INTERVIEW GAUNTLET
+   STAGE 4 - INTERVIEW GAUNTLET
    ════════════════════════════════════════════════════════════ */
 var S4 = {
   questions: [
@@ -1263,8 +1263,8 @@ var S4 = {
       q: 'Which weakness answer actually lands well in an interview?',
       opts: [
         {t:'"Public speaking used to derail me. Joined Toastmasters. Now I lead all-hands."', good:true},
-        {t:'"I\'m a perfectionist — I just care too much about quality."', good:false},
-        {t:'"I underestimated stakeholder alignment once — I now over-communicate deliberately."', good:false},
+        {t:'"I\'m a perfectionist - I just care too much about quality."', good:false},
+        {t:'"I underestimated stakeholder alignment once - I now over-communicate deliberately."', good:false},
         {t:'"I work too hard and sometimes forget to take breaks."', good:false}
       ]
     },
@@ -1274,7 +1274,7 @@ var S4 = {
         {t:'"Your pivot to enterprise aligns with the B2B motion I built at my last company."', good:true},
         {t:'"Your company seems like a great place to grow my career."', good:false},
         {t:'"I read your CEO\'s interview on the acquisition strategy. I\'ve integrated teams before."', good:true},
-        {t:'"I noticed your pricing page changed last month — that shift matches my go-to-market background."', good:true}
+        {t:'"I noticed your pricing page changed last month - that shift matches my go-to-market background."', good:true}
       ]
     },
     {
@@ -1292,7 +1292,7 @@ var S4 = {
         {t:'"Based on market data and my experience, I\'m targeting $X-$Y."', good:true},
         {t:'"I need at least $X or I can\'t make this work."', good:false},
         {t:'"What\'s the budgeted range for this role?"', good:true},
-        {t:'"I\'m flexible — whatever you think is fair."', good:false}
+        {t:'"I\'m flexible - whatever you think is fair."', good:false}
       ]
     }
   ],
@@ -1342,7 +1342,7 @@ function loadS4Question() {
     instrEl.textContent = 'Pick the one correct answer';
     instrEl.classList.remove('multi');
   } else {
-    instrEl.textContent = '★ Multiple correct — select all that apply';
+    instrEl.textContent = '★ Multiple correct - select all that apply';
     instrEl.classList.add('multi');
   }
 
@@ -1421,7 +1421,7 @@ function launchRejection(cb) {
 }
 
 /* ════════════════════════════════════════════════════════════
-   STAGE 5 — THE OFFER
+   STAGE 5 - THE OFFER
    ════════════════════════════════════════════════════════════ */
 function showWin() {
   showScreen('s-win');
@@ -1449,7 +1449,7 @@ function showWin() {
 }
 
 /* ════════════════════════════════════════════════════════════
-   STAGE 5 — ESCAPE THE HIVE (SPACE INVADERS)
+   STAGE 5 - ESCAPE THE HIVE (SPACE INVADERS)
    ════════════════════════════════════════════════════════════ */
 var S5_COLS = 5;
 var S5_ROWS = 3;

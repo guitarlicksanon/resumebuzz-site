@@ -827,12 +827,12 @@ textarea{resize:vertical;line-height:1.55}
           <!-- Overall -->
           <div style="display:flex;align-items:center;justify-content:center;gap:1.8rem;padding:1rem;background:rgba(232,184,75,0.04);border-radius:8px;margin-bottom:1rem">
             <div style="text-align:center">
-              <div id="scBefore" style="font-size:2.2rem;font-weight:800;color:rgba(255,255,255,0.35);line-height:1">—</div>
+              <div id="scBefore" style="font-size:2.2rem;font-weight:800;color:rgba(255,255,255,0.35);line-height:1">-</div>
               <div style="font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:0.3rem;letter-spacing:0.08em">ORIGINAL</div>
             </div>
             <div style="font-size:1.6rem;color:var(--gold-dim);line-height:1">→</div>
             <div style="text-align:center">
-              <div id="scAfter" style="font-size:2.2rem;font-weight:800;color:var(--gold);line-height:1">—</div>
+              <div id="scAfter" style="font-size:2.2rem;font-weight:800;color:var(--gold);line-height:1">-</div>
               <div style="font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:0.3rem;letter-spacing:0.08em">AI-BUILT</div>
             </div>
             <div id="scDelta" style="font-size:1rem;font-weight:700;margin-left:0.5rem"></div>
@@ -1133,11 +1133,11 @@ textarea{resize:vertical;line-height:1.55}
     var achTa = document.createElement('textarea');
     achTa.id = id+'-ach';
     achTa.rows = 3;
-    achTa.placeholder = 'One per line — numbers and specific wins';
+    achTa.placeholder = 'One per line - numbers and specific wins';
     achTa.setAttribute('data-field','achievements');
     var achHint = document.createElement('div');
     achHint.className = 'field-hint';
-    achHint.textContent = 'One per line — numbers and specific wins';
+    achHint.textContent = 'One per line - numbers and specific wins';
     achWrap.appendChild(achLabel);
     achWrap.appendChild(achTa);
     achWrap.appendChild(achHint);
@@ -1470,7 +1470,7 @@ textarea{resize:vertical;line-height:1.55}
                 setGenerating(false);
                 var m2 = Math.floor(timerSeconds/60);
                 var s2 = timerSeconds % 60;
-                statusLine.textContent = 'Done — ' + tokenCount + ' chunks · ' + m2 + ':' + (s2<10?'0':'')+s2;
+                statusLine.textContent = 'Done - ' + tokenCount + ' chunks · ' + m2 + ':' + (s2<10?'0':'')+s2;
                 if (!isAdmin) document.getElementById('watermark').style.display = 'block';
                 if (!isAdmin) document.getElementById('payCta').style.display = 'flex';
                 runPostBuildAudit();
@@ -1483,7 +1483,7 @@ textarea{resize:vertical;line-height:1.55}
       stopTimer();
       if(isGenerating){
         setGenerating(false);
-        statusLine.textContent = 'Done — ' + tokenCount + ' chunks';
+        statusLine.textContent = 'Done - ' + tokenCount + ' chunks';
         if (!isAdmin) document.getElementById('watermark').style.display = 'block';
         if (!isAdmin) document.getElementById('payCta').style.display = 'flex';
         runPostBuildAudit();
@@ -1595,7 +1595,7 @@ textarea{resize:vertical;line-height:1.55}
         return;
       }
       populateFromParsed(data);
-      showParseStatus('✓ Form filled from ' + file.name + ' — review and adjust as needed', 'success');
+      showParseStatus('✓ Form filled from ' + file.name + ' - review and adjust as needed', 'success');
       setTimeout(function(){ parseStatus.style.display = 'none'; }, 6000);
     } catch(e){
       showParseStatus('Connection error. Please try again.', 'error');
@@ -1674,7 +1674,7 @@ textarea{resize:vertical;line-height:1.55}
       // Overall score row
       var before = preAudit ? preAudit.overall : null;
       var after  = data.overall_score;
-      document.getElementById('scBefore').textContent = before !== null ? before : '—';
+      document.getElementById('scBefore').textContent = before !== null ? before : '-';
       document.getElementById('scAfter').textContent  = after;
 
       var deltaEl = document.getElementById('scDelta');
@@ -1703,9 +1703,9 @@ textarea{resize:vertical;line-height:1.55}
         row.style.cssText = 'display:flex;align-items:center;gap:0.8rem;padding:0.42rem 0.7rem;background:rgba(255,255,255,0.02);border-radius:6px';
         row.innerHTML =
           '<span style="font-size:0.77rem;color:var(--muted);width:90px;flex-shrink:0">' + c.label + '</span>' +
-          '<span style="font-family:DM Mono,monospace;font-size:0.77rem;color:rgba(255,255,255,0.35);width:42px">' + (beforeScore !== null ? beforeScore + '/25' : '—') + '</span>' +
+          '<span style="font-family:DM Mono,monospace;font-size:0.77rem;color:rgba(255,255,255,0.35);width:42px">' + (beforeScore !== null ? beforeScore + '/25' : '-') + '</span>' +
           '<span style="color:var(--gold-dim);font-size:0.72rem">→</span>' +
-          '<span style="font-family:DM Mono,monospace;font-size:0.77rem;color:var(--gold);width:42px">' + (afterScore !== null ? afterScore + '/25' : '—') + '</span>' +
+          '<span style="font-family:DM Mono,monospace;font-size:0.77rem;color:var(--gold);width:42px">' + (afterScore !== null ? afterScore + '/25' : '-') + '</span>' +
           (dStr ? '<span style="font-size:0.77rem;font-weight:700;color:' + dCol + '">' + dStr + '</span>' : '');
         catDiv.appendChild(row);
       });
@@ -1754,7 +1754,7 @@ textarea{resize:vertical;line-height:1.55}
         btn.textContent = 'Download Free';
         btn.style.background = 'linear-gradient(135deg,#5CB85C,#3d8b3d)';
         btn.style.boxShadow = '0 3px 12px rgba(92,184,92,0.3)';
-        document.getElementById('paySubtitle').textContent = 'Promo code applied — download your resume for free';
+        document.getElementById('paySubtitle').textContent = 'Promo code applied - download your resume for free';
         document.getElementById('promoRow').style.display = 'none';
         document.getElementById('promoToggle').style.display = 'none';
       } else {
@@ -1764,7 +1764,7 @@ textarea{resize:vertical;line-height:1.55}
         this.disabled = false;
       }
     } catch(e) {
-      msg.textContent = 'Error — try again';
+      msg.textContent = 'Error - try again';
       msg.style.color = '#E05555';
       this.textContent = 'Apply';
       this.disabled = false;
@@ -1775,7 +1775,7 @@ textarea{resize:vertical;line-height:1.55}
   var urlPlan = (new URLSearchParams(window.location.search)).get('plan') || 'single';
   var planPrices = { single: '$19', polish: '$79' };
   var planPrice  = planPrices[urlPlan] || '$19';
-  document.getElementById('payOnceBtn').textContent = 'Pay & Download — ' + planPrice;
+  document.getElementById('payOnceBtn').textContent = 'Pay & Download - ' + planPrice;
   if (urlPlan === 'polish') {
     document.getElementById('paySubtitle').textContent = 'Pay to download your AI draft. Our writer will polish and email the final version within 2 business days.';
   }
@@ -1786,7 +1786,7 @@ textarea{resize:vertical;line-height:1.55}
     var md = (outputContent.textContent || '').trim();
     if(!md){ alert('Generate a resume preview first.'); return; }
 
-    // Promo code unlocked — free direct download
+    // Promo code unlocked - free direct download
     if (promoUnlocked) {
       var btn = this;
       btn.textContent = '⏳ Preparing…';
@@ -1817,7 +1817,7 @@ textarea{resize:vertical;line-height:1.55}
       return;
     }
 
-    // Paid path — go through Stripe Checkout
+    // Paid path - go through Stripe Checkout
     var btn = this;
     btn.textContent = '⏳ Preparing checkout…';
     btn.style.pointerEvents = 'none';
@@ -1834,7 +1834,7 @@ textarea{resize:vertical;line-height:1.55}
       window.location.href = data.url;
     } catch(err) {
       alert(err.message || 'Could not start checkout. Please try again.');
-      btn.textContent = 'Pay & Download — ' + planPrice;
+      btn.textContent = 'Pay & Download - ' + planPrice;
       btn.style.pointerEvents = '';
     }
   });
@@ -1857,7 +1857,7 @@ textarea{resize:vertical;line-height:1.55}
       window.location.href = data.url;
     } catch(err) {
       alert(err.message || 'Could not start checkout. Please try again.');
-      btn.textContent = 'Go Pro — $49/mo';
+      btn.textContent = 'Go Pro - $49/mo';
       btn.style.pointerEvents = '';
     }
   });

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Job Tracker - ResumeBuzz</title>
+<meta name="robots" content="noindex">
+<style>
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:optional;src:url('/assets/fonts/dm-mono-500.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair-italic.woff2') format('woff2')}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;
+  --surface:#1B1B1B;
+  --surface2:#232323;
+  --border:#2E2E2E;
+  --gold:#C9A84C;
+  --gold-dim:#8A6F2E;
+  --text:#EBEBEB;
+  --muted:#8C8C8C;
+  --warm:#F5F3EE;
+  --red:#E05A3A;
+  --amber:#E8A838;
+  --green:#4CAF7D;
+  --radius:8px;
+  --radius-sm:5px;
+}
+html{font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:1rem;line-height:1.6;min-height:100vh}
+h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.2}
+a{color:inherit;text-decoration:none}
+
+/* OYE BAR */
+.oye-bar{height:36px;background:#090806;border-bottom:1px solid rgba(201,168,76,0.12);display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;position:sticky;top:0;z-index:101}
+.oye-brand{display:flex;align-items:center;gap:0.45rem;text-decoration:none;color:rgba(255,255,255,0.82);font-family:'Playfair Display',Georgia,serif;font-size:0.75rem;font-weight:600;transition:color 150ms}
+.oye-brand em{font-style:normal;color:#C9A84C}
+.oye-brand:hover{color:#C9A84C}
+.oye-brand:hover em{color:rgba(255,255,255,0.82)}
+.oye-nav-links{display:flex;align-items:center;gap:1.25rem}
+.oye-nav-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.82);text-decoration:none;transition:color 0.15s}
+.oye-nav-links a:hover{color:#C9A84C}
+@media(max-width:540px){.oye-nav-links{display:none}}
+
+/* NAV */
+nav.main-nav{position:sticky;top:36px;z-index:100;background:rgba(17,17,17,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 1.5rem}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.wordmark{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:0.3rem}
+.wordmark .w1{color:var(--warm)}
+.wordmark .w2{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:1.25rem}
+.nav-user{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted)}
+.nav-user strong{color:var(--text)}
+.btn-nav-logout{background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.3rem 0.75rem;border-radius:4px;cursor:pointer;transition:border-color 0.15s,color 0.15s}
+.btn-nav-logout:hover{border-color:var(--red);color:var(--red)}
+
+/* AUTH SCREEN */
+.auth-wrap{max-width:420px;margin:6rem auto;padding:0 1.5rem}
+.auth-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2rem}
+.auth-logo{text-align:center;margin-bottom:1.75rem}
+.auth-logo .logo-mark{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:0.3rem}
+.auth-logo .w1{color:var(--warm)}
+.auth-logo .w2{color:var(--gold)}
+.auth-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:1.5rem}
+.auth-tab{flex:1;background:none;border:none;padding:0.65rem;font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color 0.15s;border-bottom:2px solid transparent;margin-bottom:-1px}
+.auth-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.auth-form{display:flex;flex-direction:column;gap:1rem}
+.form-field{display:flex;flex-direction:column;gap:0.35rem}
+.form-field label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;font-family:'DM Mono',monospace}
+.form-field input{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.92rem;padding:0.6rem 0.85rem;transition:border-color 0.18s,box-shadow 0.18s;width:100%}
+.form-field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,0.12)}
+.btn-primary{background:var(--gold);color:#111;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.9rem;padding:0.7rem;border-radius:var(--radius-sm);border:none;cursor:pointer;transition:background 0.18s;width:100%}
+.btn-primary:hover{background:#d9b85c}
+.btn-primary:disabled{opacity:0.5;cursor:default}
+.auth-msg{font-size:0.82rem;padding:0.6rem 0.85rem;border-radius:var(--radius-sm);font-family:'DM Mono',monospace;display:none}
+.auth-msg.error{background:rgba(224,90,58,0.12);color:var(--red);border:1px solid rgba(224,90,58,0.25)}
+.auth-msg.success{background:rgba(76,175,125,0.12);color:var(--green);border:1px solid rgba(76,175,125,0.25)}
+.auth-back{text-align:center;margin-top:1rem;font-size:0.82rem;color:var(--muted)}
+.auth-back a{color:var(--gold)}
+
+/* MAIN LAYOUT */
+.page-wrap{max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem}
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem}
+.page-head h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;color:var(--warm)}
+.page-head p{font-size:0.9rem;color:var(--muted);margin-top:0.4rem}
+.btn-board{background:var(--gold);color:#111;font-weight:600;font-size:0.85rem;padding:0.6rem 1.25rem;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;transition:background 0.18s;white-space:nowrap}
+.btn-board:hover{background:#d9b85c}
+
+/* PROFILE SECTION */
+.profile-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:2.5rem;overflow:hidden}
+.profile-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;background:transparent;border:none;color:var(--text);cursor:pointer;text-align:left}
+.profile-trigger:hover{background:rgba(255,255,255,0.025)}
+.profile-trigger-left{display:flex;flex-direction:column;gap:0.2rem}
+.profile-trigger-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)}
+.profile-trigger-name{font-size:1rem;font-weight:600;color:var(--warm)}
+.profile-trigger-sub{font-size:0.8rem;color:var(--muted)}
+.profile-chevron{width:18px;height:18px;color:var(--muted);flex-shrink:0;transition:transform 0.25s}
+.profile-panel.open .profile-chevron{transform:rotate(180deg)}
+.profile-body{display:none;padding:1.5rem;border-top:1px solid var(--border)}
+.profile-panel.open .profile-body{display:block}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.profile-field{display:flex;flex-direction:column;gap:0.35rem}
+.profile-field.full{grid-column:1/-1}
+.profile-field label{font-size:0.7rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;font-family:'DM Mono',monospace}
+.profile-field input,.profile-field textarea{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.88rem;padding:0.55rem 0.75rem;transition:border-color 0.18s,box-shadow 0.18s;width:100%;resize:vertical}
+.profile-field input:focus,.profile-field textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,0.1)}
+.profile-actions{display:flex;align-items:center;gap:1rem;margin-top:1.25rem}
+.btn-save-profile{background:var(--gold);color:#111;font-weight:700;font-size:0.85rem;padding:0.55rem 1.25rem;border-radius:6px;border:none;cursor:pointer;transition:background 0.18s}
+.btn-save-profile:hover{background:#d9b85c}
+.profile-saved{font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--green);display:none}
+@media(max-width:600px){.profile-grid{grid-template-columns:1fr}}
+
+/* JOB TRACKER */
+.tracker-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.25rem}
+.tracker-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)}
+.tracker-count{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--muted)}
+.tracker-list{display:flex;flex-direction:column;gap:1rem}
+.tracker-empty{text-align:center;padding:3.5rem 1.5rem;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.85rem;border:1px dashed var(--border);border-radius:12px}
+.tracker-empty a{color:var(--gold)}
+
+/* JOB CARD */
+.jcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.18s}
+.jcard:hover{border-color:rgba(201,168,76,0.25)}
+.jcard-top{display:flex;align-items:flex-start;gap:1rem;padding:1.1rem 1.25rem 0.85rem}
+.jcard-main{flex:1;min-width:0}
+.jcard-title{font-size:0.98rem;font-weight:700;color:var(--warm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jcard-meta{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-top:0.25rem}
+.jcard-company{font-size:0.8rem;color:var(--muted)}
+.jcard-loc{font-size:0.75rem;color:var(--muted)}
+.jcard-salary{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--green)}
+.jcard-controls{display:flex;align-items:center;gap:0.75rem;flex-shrink:0;flex-wrap:wrap}
+
+/* Status badge */
+.status-badge{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.07em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:20px;white-space:nowrap}
+.status-badge[data-status="Researching"]{background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.25)}
+.status-badge[data-status="Applied"]{background:rgba(32,136,222,0.1);color:#2088DE;border:1px solid rgba(32,136,222,0.25)}
+.status-badge[data-status="Interview"]{background:rgba(156,98,219,0.1);color:#9C62DB;border:1px solid rgba(156,98,219,0.25)}
+.status-badge[data-status="Offer"]{background:rgba(76,175,125,0.1);color:var(--green);border:1px solid rgba(76,175,125,0.25)}
+.status-badge[data-status="Rejected"]{background:rgba(224,90,58,0.1);color:var(--red);border:1px solid rgba(224,90,58,0.25)}
+
+.status-select{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.04em;padding:0.3rem 0.6rem;cursor:pointer;transition:border-color 0.15s}
+.status-select:focus{outline:none;border-color:var(--gold)}
+
+.btn-build{display:inline-flex;align-items:center;gap:0.3rem;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:700;padding:0.35rem 0.85rem;border-radius:var(--radius-sm);cursor:pointer;transition:background 0.15s,color 0.15s;white-space:nowrap;text-decoration:none}
+.btn-build:hover{background:var(--gold);color:#111}
+.btn-apply-link{font-size:0.78rem;font-weight:600;color:var(--muted);transition:color 0.15s;white-space:nowrap}
+.btn-apply-link:hover{color:var(--text)}
+.btn-delete{background:none;border:none;color:rgba(224,90,58,0.4);font-size:1rem;cursor:pointer;padding:0.2rem;transition:color 0.15s;flex-shrink:0;line-height:1}
+.btn-delete:hover{color:var(--red)}
+
+/* JD + Notes area */
+.jcard-body{border-top:1px solid var(--border);padding:0;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s ease}
+.jcard.expanded .jcard-body{max-height:1000px;padding:1rem 1.25rem}
+.jd-toggle{width:100%;background:none;border:none;border-top:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.6rem 1.25rem;cursor:pointer;display:flex;align-items:center;gap:0.5rem;transition:background 0.15s,color 0.15s}
+.jd-toggle:hover{background:rgba(255,255,255,0.02);color:var(--text)}
+.jd-toggle-chevron{width:14px;height:14px;transition:transform 0.2s;flex-shrink:0}
+.jcard.expanded .jd-toggle-chevron{transform:rotate(180deg)}
+.jd-toggle.has-jd{color:rgba(201,168,76,0.7)}
+.body-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.body-field{display:flex;flex-direction:column;gap:0.4rem}
+.body-field.full{grid-column:1/-1}
+.body-field label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
+.body-field textarea{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Mono',monospace;font-size:0.78rem;padding:0.6rem 0.75rem;width:100%;resize:vertical;min-height:90px;transition:border-color 0.18s}
+.body-field textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,168,76,0.1)}
+.jcard-save-row{display:flex;align-items:center;gap:0.75rem;margin-top:0.75rem}
+.btn-save-jd{background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.06em;text-transform:uppercase;padding:0.35rem 0.85rem;border-radius:var(--radius-sm);cursor:pointer;transition:border-color 0.15s,color 0.15s}
+.btn-save-jd:hover{border-color:var(--gold);color:var(--gold)}
+.jd-saved-msg{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--green);display:none}
+@media(max-width:640px){
+  .body-grid{grid-template-columns:1fr}
+  .jcard-controls{gap:0.5rem}
+  .jcard-title{white-space:normal}
+}
+</style>
+</head>
+<body>
+
+<!-- OYE BAR -->
+<div class="oye-bar">
+  <a href="https://oyecreations.com" target="_blank" rel="noopener noreferrer" class="oye-brand">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" style="height:18px;width:auto" aria-hidden="true">
+      <ellipse cx="250" cy="175" rx="205" ry="135" fill="none" stroke="#C9A84C" stroke-width="13" stroke-linecap="round"/>
+      <defs><clipPath id="oyecp"><ellipse cx="250" cy="175" rx="191" ry="121"/></clipPath></defs>
+      <g clip-path="url(#oyecp)" stroke="#C9A84C" stroke-width="13" stroke-linecap="round" fill="none">
+        <circle cx="148" cy="175" r="63"/>
+        <line x1="175" y1="80" x2="250" y2="168"/><line x1="320" y1="80" x2="250" y2="168"/>
+        <line x1="250" y1="168" x2="250" y2="265"/>
+        <line x1="318" y1="112" x2="318" y2="240"/><line x1="318" y1="112" x2="388" y2="112"/>
+        <line x1="318" y1="176" x2="383" y2="176"/><line x1="318" y1="240" x2="393" y2="240"/>
+      </g>
+    </svg>
+    <span>OYE <em>Creations</em></span>
+  </a>
+  <nav class="oye-nav-links" aria-label="OYE network">
+    <a href="https://multilingo.studio" target="_blank" rel="noopener noreferrer">Multilingo</a>
+    <a href="https://guitaranon.com" target="_blank" rel="noopener noreferrer">GuitarAnon</a>
+    <a href="https://droptimize.org" target="_blank" rel="noopener noreferrer">Droptimize</a>
+  </nav>
+</div>
+
+<!-- NAV -->
+<nav class="main-nav" aria-label="ResumeBuzz">
+  <div class="nav-inner">
+    <a href="/" class="wordmark" aria-label="ResumeBuzz Home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 52" width="22" height="19" aria-hidden="true">
+        <polygon points="60,26 45,0 15,0 0,26 15,52 45,52" fill="#C9A84C"/>
+        <path d="M30,12 L39,27 L34.5,27 L34.5,40 L25.5,40 L25.5,27 L21,27 Z" fill="#111"/>
+      </svg>
+      <span class="w1">Resume</span><span class="w2">Buzz</span>
+    </a>
+    <div class="nav-right" id="navRight">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</nav>
+
+<!-- AUTH SCREEN -->
+<div id="authScreen">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-mark"><span class="w1">Resume</span><span class="w2">Buzz</span></div>
+        <p style="font-size:0.85rem;color:var(--muted);margin-top:0.5rem">Job Tracker</p>
+      </div>
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" role="tab" aria-selected="true" id="tabLogin" onclick="showTab('login')">Log In</button>
+        <button class="auth-tab" role="tab" aria-selected="false" id="tabRegister" onclick="showTab('register')">Create Account</button>
+      </div>
+
+      <!-- LOGIN -->
+      <form id="loginForm" class="auth-form" onsubmit="doLogin(event)">
+        <div class="form-field">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" autocomplete="email" required placeholder="you@email.com">
+        </div>
+        <div class="form-field">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" autocomplete="current-password" required placeholder="Your password">
+        </div>
+        <div class="auth-msg" id="loginMsg"></div>
+        <button type="submit" class="btn-primary" id="loginBtn">Log In</button>
+      </form>
+
+      <!-- REGISTER -->
+      <form id="registerForm" class="auth-form" style="display:none" onsubmit="doRegister(event)">
+        <div class="form-field">
+          <label for="regName">Your Name</label>
+          <input type="text" id="regName" autocomplete="name" required placeholder="First name or full name">
+        </div>
+        <div class="form-field">
+          <label for="regEmail">Email</label>
+          <input type="email" id="regEmail" autocomplete="email" required placeholder="you@email.com">
+        </div>
+        <div class="form-field">
+          <label for="regPassword">Password</label>
+          <input type="password" id="regPassword" autocomplete="new-password" required placeholder="At least 8 characters" minlength="8">
+        </div>
+        <div class="auth-msg" id="registerMsg"></div>
+        <button type="submit" class="btn-primary" id="registerBtn">Create Account</button>
+      </form>
+
+      <p class="auth-back"><a href="/second-chance">&#8592; Back to job board</a></p>
+    </div>
+  </div>
+</div>
+
+
+<!-- DASHBOARD -->
+<main id="dashboard" style="display:none">
+  <div class="page-wrap">
+
+    <div class="page-head">
+      <div>
+        <h1>My Job Tracker</h1>
+        <p>Track applications, paste job descriptions, and build tailored resumes.</p>
+      </div>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+        <a href="/second-chance" class="btn-board" style="background:transparent;border:1px solid var(--border);color:var(--muted)">Fair-Chance Jobs</a>
+        <a href="/build" class="btn-board">Build Resume &#8599;</a>
+      </div>
+    </div>
+
+    <!-- PROFILE PANEL -->
+    <div class="profile-panel" id="profilePanel">
+      <button class="profile-trigger" onclick="toggleProfile()" aria-expanded="false" aria-controls="profileBody">
+        <div class="profile-trigger-left">
+          <span class="profile-trigger-label">My Profile</span>
+          <span class="profile-trigger-name" id="profileTriggerName">Loading...</span>
+          <span class="profile-trigger-sub">Used to pre-fill the resume builder</span>
+        </div>
+        <svg class="profile-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="profile-body" id="profileBody">
+        <div class="profile-grid">
+          <div class="profile-field">
+            <label for="pName">Full Name</label>
+            <input type="text" id="pName" placeholder="Your name" autocomplete="name">
+          </div>
+          <div class="profile-field">
+            <label for="pPhone">Phone</label>
+            <input type="tel" id="pPhone" placeholder="+1 555 000 0000" autocomplete="tel">
+          </div>
+          <div class="profile-field">
+            <label for="pLocation">City, State</label>
+            <input type="text" id="pLocation" placeholder="Atlanta, GA" autocomplete="address-level2">
+          </div>
+          <div class="profile-field">
+            <label for="pLinkedin">LinkedIn (optional)</label>
+            <input type="url" id="pLinkedin" placeholder="https://linkedin.com/in/...">
+          </div>
+          <div class="profile-field">
+            <label for="pTargetRole">Target Role</label>
+            <input type="text" id="pTargetRole" placeholder="Warehouse Lead, CDL Driver...">
+          </div>
+          <div class="profile-field full">
+            <label for="pSummary">Background / Positioning</label>
+            <textarea id="pSummary" rows="3" placeholder="Brief summary for the resume builder - career goals, transition notes, what to emphasize..."></textarea>
+          </div>
+          <div class="profile-field">
+            <label for="pSkillsTech">Technical Skills</label>
+            <textarea id="pSkillsTech" rows="2" placeholder="Forklift, welding, CDL Class A..."></textarea>
+          </div>
+          <div class="profile-field">
+            <label for="pSkillsTools">Tools &amp; Equipment</label>
+            <textarea id="pSkillsTools" rows="2" placeholder="Pallet jack, MIG welder, GPS dispatch..."></textarea>
+          </div>
+          <div class="profile-field">
+            <label for="pSkillsLang">Languages</label>
+            <textarea id="pSkillsLang" rows="2" placeholder="English - Native, Spanish - Conversational"></textarea>
+          </div>
+          <div class="profile-field">
+            <label for="pCerts">Certifications</label>
+            <textarea id="pCerts" rows="2" placeholder="OSHA 10, CDL Class A, Forklift Cert..."></textarea>
+          </div>
+          <div class="profile-field full">
+            <label for="pExperience">Work Experience Summary</label>
+            <textarea id="pExperience" rows="4" placeholder="Brief work history - titles, employers, years, key achievements. The builder will expand this into full bullets."></textarea>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <button class="btn-save-profile" onclick="saveProfile()">Save Profile</button>
+          <span class="profile-saved" id="profileSaved">Saved</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOB TRACKER -->
+    <div class="tracker-head">
+      <div>
+        <div class="tracker-label">Tracked Jobs</div>
+      </div>
+      <span class="tracker-count" id="trackerCount"></span>
+    </div>
+    <div id="trackerList" class="tracker-list">
+      <div class="tracker-empty">
+        <div style="font-size:1.5rem;margin-bottom:0.75rem">&#128269;</div>
+        <div>Loading your tracked jobs...</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+var currentUser = null;
+var currentProfile = {};
+
+// --- TAB SWITCHING ---
+function showTab(tab) {
+  document.getElementById('loginForm').style.display = tab === 'login' ? '' : 'none';
+  document.getElementById('registerForm').style.display = tab === 'register' ? '' : 'none';
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabLogin').setAttribute('aria-selected', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('tabRegister').setAttribute('aria-selected', tab === 'register');
+}
+
+function showMsg(id, text, type) {
+  var el = document.getElementById(id);
+  el.textContent = text;
+  el.className = 'auth-msg ' + type;
+  el.style.display = 'block';
+}
+
+// --- AUTH ---
+async function doLogin(e) {
+  e.preventDefault();
+  var btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Logging in...';
+  try {
+    var res = await fetch('/api/job-auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: document.getElementById('loginEmail').value, password: document.getElementById('loginPassword').value }),
+    });
+    var data = await res.json();
+    if (data.ok) { onLoggedIn({ email: data.email, name: data.name, profile: {} }); }
+    else { showMsg('loginMsg', data.error || 'Login failed', 'error'); }
+  } catch { showMsg('loginMsg', 'Network error - try again', 'error'); }
+  btn.disabled = false; btn.textContent = 'Log In';
+}
+
+async function doRegister(e) {
+  e.preventDefault();
+  var btn = document.getElementById('registerBtn');
+  btn.disabled = true; btn.textContent = 'Creating account...';
+  try {
+    var res = await fetch('/api/job-auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: document.getElementById('regName').value, email: document.getElementById('regEmail').value, password: document.getElementById('regPassword').value }),
+    });
+    var data = await res.json();
+    if (data.ok) { onLoggedIn({ email: data.email, name: data.name, profile: {} }); }
+    else { showMsg('registerMsg', data.error || 'Registration failed', 'error'); }
+  } catch { showMsg('registerMsg', 'Network error - try again', 'error'); }
+  btn.disabled = false; btn.textContent = 'Create Account';
+}
+
+async function doLogout() {
+  await fetch('/api/job-auth/logout', { method: 'POST' });
+  location.reload();
+}
+
+// --- INIT ---
+async function init() {
+  try {
+    var res = await fetch('/api/job-auth/me');
+    var data = await res.json();
+    if (data.user) { onLoggedIn(data.user); }
+    else { showAuth(); }
+  } catch { showAuth(); }
+}
+
+function showAuth() {
+  document.getElementById('authScreen').style.display = '';
+  document.getElementById('dashboard').style.display = 'none';
+}
+
+function onLoggedIn(user) {
+  currentUser = user;
+  currentProfile = user.profile || {};
+  document.getElementById('authScreen').style.display = 'none';
+  document.getElementById('dashboard').style.display = '';
+  document.getElementById('navRight').innerHTML =
+    '<span class="nav-user">Hi, <strong>' + esc(user.name) + '</strong></span>' +
+    '<button class="btn-nav-logout" onclick="doLogout()">Log Out</button>';
+  document.getElementById('profileTriggerName').textContent = user.name;
+  fillProfile(currentProfile);
+  // Auto-track any job the user tried to track before logging in
+  var pending = sessionStorage.getItem('rb_track_pending');
+  if (pending) {
+    sessionStorage.removeItem('rb_track_pending');
+    try {
+      var jobData = JSON.parse(pending);
+      fetch('/api/job-tracker', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(jobData),
+      }).then(function() { loadTracker(); });
+    } catch { loadTracker(); }
+  } else {
+    loadTracker();
+  }
+}
+
+// --- PROFILE ---
+function toggleProfile() {
+  var panel = document.getElementById('profilePanel');
+  var trigger = panel.querySelector('.profile-trigger');
+  panel.classList.toggle('open');
+  trigger.setAttribute('aria-expanded', panel.classList.contains('open'));
+}
+
+function fillProfile(p) {
+  var fields = { pName:'name', pPhone:'phone', pLocation:'location', pLinkedin:'linkedin', pTargetRole:'targetRole', pSummary:'summary', pSkillsTech:'skillsTechnical', pSkillsTools:'skillsTools', pSkillsLang:'skillsLanguages', pCerts:'certifications', pExperience:'experience' };
+  for (var id in fields) {
+    var el = document.getElementById(id);
+    if (el) el.value = p[fields[id]] || '';
+  }
+}
+
+async function saveProfile() {
+  var profile = {
+    name: document.getElementById('pName').value,
+    phone: document.getElementById('pPhone').value,
+    location: document.getElementById('pLocation').value,
+    linkedin: document.getElementById('pLinkedin').value,
+    targetRole: document.getElementById('pTargetRole').value,
+    summary: document.getElementById('pSummary').value,
+    skillsTechnical: document.getElementById('pSkillsTech').value,
+    skillsTools: document.getElementById('pSkillsTools').value,
+    skillsLanguages: document.getElementById('pSkillsLang').value,
+    certifications: document.getElementById('pCerts').value,
+    experience: document.getElementById('pExperience').value,
+  };
+  var res = await fetch('/api/job-auth/profile', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(profile),
+  });
+  var data = await res.json();
+  if (data.ok) {
+    currentProfile = data.profile;
+    var saved = document.getElementById('profileSaved');
+    saved.style.display = 'inline';
+    setTimeout(function() { saved.style.display = 'none'; }, 2500);
+  }
+}
+
+// --- TRACKER ---
+async function loadTracker() {
+  try {
+    var res = await fetch('/api/job-tracker');
+    var data = await res.json();
+    renderTracker(data.jobs || []);
+  } catch {
+    document.getElementById('trackerList').innerHTML = '<div class="tracker-empty" style="color:var(--red)">Failed to load tracker. Try refreshing.</div>';
+  }
+}
+
+function renderTracker(jobs) {
+  var count = document.getElementById('trackerCount');
+  count.textContent = jobs.length + ' job' + (jobs.length === 1 ? '' : 's') + ' tracked';
+  var list = document.getElementById('trackerList');
+  if (jobs.length === 0) {
+    list.innerHTML = '<div class="tracker-empty"><div style="font-size:1.5rem;margin-bottom:0.75rem">&#128269;</div><div>No jobs tracked yet.</div><div style="margin-top:0.5rem"><a href="/second-chance">Browse fair-chance jobs</a> and click + Track on any listing.</div></div>';
+    return;
+  }
+  list.innerHTML = jobs.map(function(j) { return buildCard(j); }).join('');
+  // Wire up events after rendering
+  list.querySelectorAll('.status-select').forEach(function(sel) {
+    sel.addEventListener('change', function() {
+      var id = this.dataset.id;
+      var status = this.value;
+      updateStatus(id, status);
+      var badge = document.querySelector('.status-badge[data-id="' + id + '"]');
+      if (badge) { badge.textContent = status; badge.dataset.status = status; }
+    });
+  });
+  list.querySelectorAll('.jd-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var card = this.closest('.jcard');
+      card.classList.toggle('expanded');
+    });
+  });
+  list.querySelectorAll('.btn-save-jd').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var id = this.dataset.id;
+      var jd = document.getElementById('jd-' + id).value;
+      var notes = document.getElementById('notes-' + id).value;
+      saveJD(id, jd, notes, this.closest('.jcard'));
+    });
+  });
+  list.querySelectorAll('.btn-delete').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var id = this.dataset.id;
+      var title = this.dataset.title;
+      if (confirm('Remove "' + title + '" from your tracker?')) {
+        deleteJob(id);
+      }
+    });
+  });
+  list.querySelectorAll('.btn-build').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var id = this.dataset.id;
+      launchBuilder(id);
+    });
+  });
+}
+
+function buildCard(j) {
+  var hasJd = j.jd && j.jd.trim().length > 0;
+  return '<div class="jcard" id="jcard-' + esc(j.id) + '">' +
+    '<div class="jcard-top">' +
+      '<div class="jcard-main">' +
+        '<div class="jcard-title">' + esc(j.title || 'Untitled Position') + '</div>' +
+        '<div class="jcard-meta">' +
+          (j.company ? '<span class="jcard-company">' + esc(j.company) + '</span>' : '') +
+          (j.location ? '<span class="jcard-loc">' + esc(j.location) + '</span>' : '') +
+          (j.salary ? '<span class="jcard-salary">' + esc(j.salary) + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="jcard-controls">' +
+        '<span class="status-badge" data-status="' + esc(j.status) + '" data-id="' + esc(j.id) + '">' + esc(j.status) + '</span>' +
+        '<select class="status-select" data-id="' + esc(j.id) + '" aria-label="Update status for ' + esc(j.title) + '">' +
+          ['Researching','Applied','Interview','Offer','Rejected'].map(function(s) {
+            return '<option value="' + s + '"' + (s === j.status ? ' selected' : '') + '>' + s + '</option>';
+          }).join('') +
+        '</select>' +
+        '<button class="btn-build" data-id="' + esc(j.id) + '" aria-label="Build resume for ' + esc(j.title) + '">Build Resume &#8599;</button>' +
+        (j.url ? '<a href="' + esc(j.url) + '" target="_blank" rel="noopener noreferrer" class="btn-apply-link" aria-label="Apply for ' + esc(j.title) + '">Apply &#8599;</a>' : '') +
+        '<button class="btn-delete" data-id="' + esc(j.id) + '" data-title="' + esc(j.title) + '" aria-label="Remove ' + esc(j.title) + ' from tracker">&#x2715;</button>' +
+      '</div>' +
+    '</div>' +
+    '<button class="jd-toggle' + (hasJd ? ' has-jd' : '') + '" aria-expanded="false">' +
+      '<svg class="jd-toggle-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>' +
+      (hasJd ? 'Job Description &amp; Notes (saved)' : 'Paste Job Description &amp; Notes') +
+    '</button>' +
+    '<div class="jcard-body">' +
+      '<div class="body-grid">' +
+        '<div class="body-field full">' +
+          '<label for="jd-' + esc(j.id) + '">Job Description</label>' +
+          '<textarea id="jd-' + esc(j.id) + '" rows="8" placeholder="Paste the full job description here. This gets sent to the resume builder to tailor your resume to this specific role.">' + esc(j.jd || '') + '</textarea>' +
+        '</div>' +
+        '<div class="body-field full">' +
+          '<label for="notes-' + esc(j.id) + '">Notes</label>' +
+          '<textarea id="notes-' + esc(j.id) + '" rows="3" placeholder="Application notes, contacts, interview prep, follow-up reminders...">' + esc(j.notes || '') + '</textarea>' +
+        '</div>' +
+      '</div>' +
+      '<div class="jcard-save-row">' +
+        '<button class="btn-save-jd" data-id="' + esc(j.id) + '">Save</button>' +
+        '<span class="jd-saved-msg" id="saved-' + esc(j.id) + '">Saved</span>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+async function updateStatus(id, status) {
+  await fetch('/api/job-tracker/' + id, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status }),
+  });
+}
+
+async function saveJD(id, jd, notes, cardEl) {
+  var res = await fetch('/api/job-tracker/' + id, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ jd, notes }),
+  });
+  if (res.ok) {
+    var msg = document.getElementById('saved-' + id);
+    if (msg) { msg.style.display = 'inline'; setTimeout(function() { msg.style.display = 'none'; }, 2000); }
+    var toggle = cardEl.querySelector('.jd-toggle');
+    if (toggle && jd.trim()) { toggle.classList.add('has-jd'); toggle.innerHTML = toggle.innerHTML.replace('Paste Job Description', 'Job Description'); }
+  }
+}
+
+async function deleteJob(id) {
+  await fetch('/api/job-tracker/' + id, { method: 'DELETE' });
+  var el = document.getElementById('jcard-' + id);
+  if (el) el.remove();
+  var count = document.getElementById('trackerCount');
+  var n = document.querySelectorAll('.jcard').length;
+  count.textContent = n + ' job' + (n === 1 ? '' : 's') + ' tracked';
+  if (n === 0) {
+    document.getElementById('trackerList').innerHTML = '<div class="tracker-empty"><div style="font-size:1.5rem;margin-bottom:0.75rem">&#128269;</div><div>No jobs tracked yet.</div><div style="margin-top:0.5rem"><a href="/second-chance">Browse fair-chance jobs</a> and click + Track on any listing.</div></div>';
+  }
+}
+
+function launchBuilder(id) {
+  var card = document.getElementById('jcard-' + id);
+  var title = card ? card.querySelector('.jcard-title') : null;
+  var jd = document.getElementById('jd-' + id);
+  var prefill = {
+    name: currentProfile.name || '',
+    email: currentUser ? currentUser.email : '',
+    phone: currentProfile.phone || '',
+    location: currentProfile.location || '',
+    linkedin: currentProfile.linkedin || '',
+    jobTitle: title ? title.textContent : '',
+    targetRole: currentProfile.targetRole || '',
+    jd: jd ? jd.value : '',
+    summary: currentProfile.summary || '',
+    skillsTechnical: currentProfile.skillsTechnical || '',
+    skillsTools: currentProfile.skillsTools || '',
+    skillsLanguages: currentProfile.skillsLanguages || '',
+    certifications: currentProfile.certifications || '',
+    experience: currentProfile.experience || '',
+  };
+  sessionStorage.setItem('rb_jb_prefill', JSON.stringify(prefill));
+  window.open('/build', '_blank');
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+init();
+</script>
+<script>window.OYEChat = { brand: 'resumebuzz', adminUrl: 'https://bink.oyecreations.com', subjects: ['AI Builder', 'Human Writer', 'CV vs Resume'], turnstileSiteKey: '0x4AAAAAADUIs5uXgonNVbPD' }</script>
+<script defer src="https://bink.oyecreations.com/assets/chat-widget.js?v=22"></script>
+</body>
+</html>

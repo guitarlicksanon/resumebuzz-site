@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResumeBuzz — Admin</title><style>
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:optional;src:url('/assets/fonts/dm-mono-500.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair-italic.woff2') format('woff2')}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;
+  --surface:#1B1B1B;
+  --surface2:#232323;
+  --border:#2E2E2E;
+  --gold:#C9A84C;
+  --gold-dim:#8A6F2E;
+  --text:#EBEBEB;
+  --muted:#8C8C8C;
+  --warm:#F5F3EE;
+  --red:#E05A3A;
+  --amber:#E8A838;
+  --green:#4CAF7D;
+}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* ── LOGIN ── */
+#loginOverlay{
+  position:fixed;inset:0;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  z-index:100;
+}
+.login-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:2.5rem 2rem;
+  width:360px;
+  display:flex;flex-direction:column;gap:1.5rem;
+}
+.login-wordmark{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;font-weight:700;
+  text-align:center;
+}
+.login-wordmark .w1{color:var(--warm)}
+.login-wordmark .w2{color:var(--gold)}
+.login-label{
+  font-family:'DM Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--muted);
+  text-align:center;margin-top:-1rem;
+}
+.login-field{display:flex;flex-direction:column;gap:0.4rem}
+.login-field label{font-size:0.75rem;color:var(--muted)}
+.pw-wrap{position:relative}
+.pw-wrap input{
+  width:100%;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:5px;
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.88rem;
+  padding:0.55rem 2.4rem 0.55rem 0.75rem;
+}
+.pw-wrap input:focus{outline:none;border-color:var(--gold-dim);box-shadow:0 0 0 2px rgba(201,168,76,0.1)}
+.eye-toggle{
+  position:absolute;right:0.6rem;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;
+  color:var(--muted);padding:0.2rem;line-height:1;
+  transition:color 0.15s;
+}
+.eye-toggle:hover{color:var(--text)}
+.btn-login{
+  width:100%;
+  background:var(--gold);color:#111;
+  font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.9rem;
+  padding:0.7rem;border-radius:6px;border:none;cursor:pointer;
+  transition:background 0.18s,opacity 0.18s;
+}
+.btn-login:hover{background:#d9b85c}
+.btn-login:disabled{opacity:0.5;cursor:not-allowed}
+.login-error{
+  font-size:0.78rem;color:var(--red);
+  text-align:center;display:none;
+}
+
+/* ── DASHBOARD SHELL ── */
+#dashboard{
+  display:none;
+  height:100vh;
+  flex-direction:column;
+}
+.dash-nav{
+  flex-shrink:0;height:52px;
+  background:rgba(17,17,17,0.96);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:0 1.5rem;z-index:50;
+}
+.dash-wordmark{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;font-weight:700;
+  display:flex;align-items:baseline;gap:0.3rem;
+}
+.dash-wordmark .w1{color:var(--warm)}
+.dash-wordmark .w2{color:var(--gold)}
+.admin-badge{
+  font-family:'DM Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--gold);
+  border:1px solid var(--gold-dim);
+  border-radius:4px;padding:0.15rem 0.5rem;
+  margin-left:0.6rem;
+  align-self:center;
+}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-right a{
+  color:var(--muted);font-size:0.78rem;
+  text-decoration:none;transition:color 0.15s;
+}
+.nav-right a:hover{color:var(--text)}
+.btn-logout{
+  background:none;border:1px solid var(--border);
+  color:var(--muted);font-family:'DM Sans',sans-serif;
+  font-size:0.78rem;padding:0.3rem 0.8rem;
+  border-radius:5px;cursor:pointer;
+  transition:border-color 0.15s,color 0.15s;
+}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
+
+.dash-body{
+  flex:1;display:flex;overflow:hidden;
+}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:200px;flex-shrink:0;
+  border-right:1px solid var(--border);
+  padding:1.25rem 0;
+  display:flex;flex-direction:column;gap:0.2rem;
+  overflow-y:auto;
+}
+.nav-item{
+  display:flex;align-items:center;gap:0.65rem;
+  padding:0.55rem 1.25rem;
+  font-size:0.83rem;color:var(--muted);
+  cursor:pointer;border-radius:0;
+  transition:color 0.15s,background 0.15s;
+  border-left:2px solid transparent;
+  user-select:none;
+}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,0.03)}
+.nav-item.active{
+  color:var(--gold);
+  border-left-color:var(--gold);
+  background:rgba(201,168,76,0.06);
+}
+.nav-icon{font-size:0.95rem;width:16px;text-align:center;flex-shrink:0}
+.sidebar-section{
+  font-family:'DM Mono',monospace;
+  font-size:0.57rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:#444;padding:1rem 1.25rem 0.35rem;
+}
+
+/* ── MAIN AREA ── */
+.main-area{
+  flex:1;overflow-y:auto;padding:2rem;
+  display:flex;flex-direction:column;gap:1.75rem;
+}
+.main-area::-webkit-scrollbar{width:5px}
+.main-area::-webkit-scrollbar-track{background:transparent}
+.main-area::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+.page-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;font-weight:600;color:var(--warm);
+}
+.page-sub{font-size:0.8rem;color:var(--muted);margin-top:0.2rem}
+
+/* ── STAT CARDS ── */
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:1rem;
+}
+.stat-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.25rem 1.5rem;
+}
+.stat-label{
+  font-family:'DM Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.6rem;
+}
+.stat-value{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;font-weight:600;color:var(--warm);
+  line-height:1;
+}
+.stat-sub{font-size:0.72rem;color:var(--muted);margin-top:0.4rem}
+.stat-card.gold .stat-value{color:var(--gold)}
+.stat-card.green .stat-value{color:var(--green)}
+
+/* ── SECTION PANEL ── */
+.panel{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+}
+.panel-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.875rem 1.25rem;
+  border-bottom:1px solid var(--border);
+}
+.panel-title{
+  font-family:'DM Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);
+}
+.panel-action{
+  background:none;border:1px solid var(--border);
+  color:var(--muted);font-family:'DM Sans',sans-serif;
+  font-size:0.73rem;padding:0.25rem 0.65rem;
+  border-radius:5px;cursor:pointer;
+  transition:border-color 0.15s,color 0.15s;
+}
+.panel-action:hover{border-color:var(--gold-dim);color:var(--text)}
+
+/* ── ORDERS TABLE ── */
+.order-table{width:100%;border-collapse:collapse}
+.order-table th{
+  font-family:'DM Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);padding:0.65rem 1.25rem;
+  text-align:left;border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+.order-table td{
+  padding:0.75rem 1.25rem;
+  font-size:0.82rem;
+  border-bottom:1px solid rgba(46,46,46,0.5);
+  vertical-align:middle;
+}
+.order-table tr:last-child td{border-bottom:none}
+.order-table tr:hover td{background:rgba(255,255,255,0.02)}
+
+.badge{
+  display:inline-block;
+  font-family:'DM Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;
+  padding:0.18rem 0.55rem;border-radius:4px;
+  white-space:nowrap;
+}
+.badge-ai{background:rgba(201,168,76,0.12);color:var(--gold)}
+.badge-human{background:rgba(76,175,125,0.12);color:var(--green)}
+.badge-sub{background:rgba(100,120,255,0.12);color:#8899ff}
+.badge-pending{background:rgba(232,168,56,0.12);color:var(--amber)}
+.badge-done{background:rgba(76,175,125,0.12);color:var(--green)}
+.badge-new{background:rgba(232,90,58,0.12);color:var(--red)}
+
+/* ── EMPTY STATE ── */
+.empty-state{
+  padding:3.5rem 1.25rem;
+  text-align:center;
+}
+.empty-icon{font-size:2.5rem;margin-bottom:1rem;opacity:0.35}
+.empty-title{font-size:0.95rem;font-weight:500;color:var(--muted);margin-bottom:0.4rem}
+.empty-sub{font-size:0.78rem;color:#555}
+
+/* ── SETTINGS ── */
+.settings-group{
+  padding:1.25rem;
+  display:flex;flex-direction:column;gap:1rem;
+}
+.settings-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.25rem;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:var(--surface2);
+}
+.settings-label{font-size:0.85rem;font-weight:500}
+.settings-desc{font-size:0.75rem;color:var(--muted);margin-top:0.15rem}
+.btn-setting{
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--muted);font-family:'DM Sans',sans-serif;
+  font-size:0.78rem;padding:0.35rem 0.85rem;
+  border-radius:5px;cursor:pointer;white-space:nowrap;
+  transition:border-color 0.15s,color 0.15s;
+}
+.btn-setting:hover{border-color:var(--gold-dim);color:var(--text)}
+.btn-setting.danger:hover{border-color:var(--red);color:var(--red)}
+
+/* ── QUICK LINKS ── */
+.quick-links{
+  display:flex;flex-wrap:wrap;gap:0.75rem;
+}
+.quick-link{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--muted);font-size:0.78rem;
+  padding:0.45rem 0.9rem;border-radius:6px;
+  text-decoration:none;cursor:pointer;
+  transition:border-color 0.15s,color 0.15s,background 0.15s;
+}
+.quick-link:hover{border-color:var(--gold-dim);color:var(--text);background:rgba(201,168,76,0.05)}
+
+/* PAGE SECTIONS */
+.tab-page{display:none}
+.tab-page.active{display:flex;flex-direction:column;gap:1.75rem}
+
+/* OYE FAMILY BAR */
+.oye-bar{flex-shrink:0;height:36px;background:#090806;border-bottom:1px solid rgba(201,168,76,0.12);display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem}
+.oye-brand{display:flex;align-items:center;gap:0.45rem;text-decoration:none;color:rgba(255,255,255,0.82);font-family:'Playfair Display',Georgia,serif;font-size:0.75rem;font-weight:600;transition:color 150ms}
+.oye-brand em{font-style:normal;color:#C9A84C;transition:color 150ms}
+.oye-brand svg ellipse,.oye-brand svg circle,.oye-brand svg line{stroke:rgba(255,255,255,0.65);transition:stroke 150ms}
+.oye-brand:hover{color:#C9A84C}
+.oye-brand:hover em{color:rgba(255,255,255,0.82)}
+.oye-brand:hover svg ellipse,.oye-brand:hover svg circle,.oye-brand:hover svg line{stroke:#C9A84C}
+.oye-nav-links{display:flex;align-items:center;gap:1.25rem}
+.oye-nav-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.82);text-decoration:none;transition:color 0.15s;white-space:nowrap}
+.oye-nav-links a:hover{color:#C9A84C}
+@media(max-width:540px){.oye-nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="loginOverlay">
+  <div class="login-card">
+    <div>
+      <div class="login-wordmark"><span class="w1">Resume</span><span class="w2">Buzz</span></div>
+      <div class="login-label">Admin Access</div>
+    </div>
+    <div class="login-field">
+      <label for="loginPw">Password</label>
+      <div class="pw-wrap">
+        <input type="password" id="loginPw" placeholder="Enter admin password" autocomplete="current-password">
+        <button class="eye-toggle" id="eyeBtn" type="button" aria-label="Toggle password visibility">
+          <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="login-error" id="loginError">Incorrect password. Try again.</div>
+    <button class="btn-login" id="loginBtn">Sign In</button>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ── -->
+<div id="dashboard">
+  <div class="oye-bar">
+    <a href="https://oyecreations.com" target="_blank" rel="noopener noreferrer" class="oye-brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" style="height:18px;width:auto" aria-hidden="true">
+        <ellipse cx="250" cy="175" rx="205" ry="135" fill="none" stroke="#C9A84C" stroke-width="13" stroke-linecap="round"/>
+        <defs><clipPath id="oyecp"><ellipse cx="250" cy="175" rx="191" ry="121"/></clipPath></defs>
+        <g clip-path="url(#oyecp)" stroke="#C9A84C" stroke-width="13" stroke-linecap="round" fill="none">
+          <circle cx="148" cy="175" r="63"/>
+          <line x1="175" y1="80" x2="250" y2="168"/><line x1="320" y1="80" x2="250" y2="168"/>
+          <line x1="250" y1="168" x2="250" y2="265"/>
+          <line x1="318" y1="112" x2="318" y2="240"/><line x1="318" y1="112" x2="388" y2="112"/>
+          <line x1="318" y1="176" x2="383" y2="176"/><line x1="318" y1="240" x2="393" y2="240"/>
+        </g>
+      </svg>
+      <span>OYE <em>Creations</em></span>
+    </a>
+    <nav class="oye-nav-links" aria-label="OYE network">
+    <a href="https://multilingo.studio" target="_blank" rel="noopener noreferrer">Multilingo</a>
+    <a href="https://guitaranon.com" target="_blank" rel="noopener noreferrer">GuitarAnon</a>
+    <a href="https://droptimize.org" target="_blank" rel="noopener noreferrer">Droptimize</a>
+  </nav>
+  </div>
+  <nav class="dash-nav">
+    <div style="display:flex;align-items:center">
+      <div class="dash-wordmark"><span class="w1">Resume</span><span class="w2">Buzz</span></div>
+      <span class="admin-badge">Admin</span>
+    </div>
+    <div class="nav-right">
+      <a href="/build" target="_blank">Open Builder ↗</a>
+      <button class="btn-logout" id="logoutBtn">Sign Out</button>
+    </div>
+  </nav>
+
+  <div class="dash-body">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-section">Main</div>
+      <div class="nav-item active" data-tab="overview"><span class="nav-icon">◈</span> Overview</div>
+      <div class="nav-item" data-tab="orders"><span class="nav-icon">◻</span> Orders</div>
+      <div class="nav-item" data-tab="requests"><span class="nav-icon">✉</span> Resume Requests</div>
+      <div class="sidebar-section">Account</div>
+      <div class="nav-item" data-tab="settings"><span class="nav-icon">◎</span> Settings</div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main-area" id="mainArea">
+
+      <!-- ── OVERVIEW ── -->
+      <div class="tab-page active" id="tab-overview">
+        <div>
+          <div class="page-title">Overview</div>
+          <div class="page-sub" id="overviewDate"></div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card gold">
+            <div class="stat-label">Revenue — All Time</div>
+            <div class="stat-value" id="statRevenue">$0</div>
+            <div class="stat-sub">Stripe not yet connected</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Orders — This Month</div>
+            <div class="stat-value" id="statOrders">0</div>
+            <div class="stat-sub">AI drafts + human written</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Active Subscriptions</div>
+            <div class="stat-value" id="statSubs">0</div>
+            <div class="stat-sub">$60 / mo unlimited</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Free Previews — This Week</div>
+            <div class="stat-value" id="statPreviews">—</div>
+            <div class="stat-sub">10 / IP / week limit</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Recent Orders</span>
+            <button class="panel-action" onclick="switchTab('orders')">View All</button>
+          </div>
+          <div class="empty-state">
+            <div class="empty-icon">🐝</div>
+            <div class="empty-title">No orders yet</div>
+            <div class="empty-sub">Orders will appear here once Stripe is connected and your first payment comes in.</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Quick Links</span></div>
+          <div style="padding:1.25rem">
+            <div class="quick-links">
+              <a class="quick-link" href="/build" target="_blank">⚡ Resume Builder</a>
+              <a class="quick-link" href="https://dashboard.stripe.com" target="_blank">Stripe Dashboard ↗</a>
+              <a class="quick-link" href="https://dash.cloudflare.com" target="_blank">Cloudflare ↗</a>
+              <a class="quick-link" href="https://console.anthropic.com" target="_blank">Anthropic Console ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ORDERS ── -->
+      <div class="tab-page" id="tab-orders">
+        <div>
+          <div class="page-title">Orders</div>
+          <div class="page-sub">All client orders — AI drafts, human-written, and subscriptions</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">All Orders</span>
+            <button class="panel-action" id="addOrderBtn">+ New Order</button>
+          </div>
+
+          <div id="ordersEmpty" class="empty-state">
+            <div class="empty-icon">📋</div>
+            <div class="empty-title">No orders yet</div>
+            <div class="empty-sub">Manual orders and Stripe-connected orders will appear here.</div>
+          </div>
+
+          <div id="ordersTableWrap" style="display:none;overflow-x:auto">
+            <table class="order-table" id="ordersTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Client</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="ordersBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ADD ORDER FORM -->
+        <div class="panel" id="addOrderPanel" style="display:none">
+          <div class="panel-header">
+            <span class="panel-title">New Manual Order</span>
+            <button class="panel-action" id="cancelOrderBtn">Cancel</button>
+          </div>
+          <div style="padding:1.25rem;display:flex;flex-direction:column;gap:0.85rem">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+              <div>
+                <label style="display:block;font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem">Client Name</label>
+                <input type="text" id="oName" placeholder="Jane Smith" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;padding:0.45rem 0.65rem">
+              </div>
+              <div>
+                <label style="display:block;font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem">Email</label>
+                <input type="email" id="oEmail" placeholder="jane@email.com" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;padding:0.45rem 0.65rem">
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem">
+              <div>
+                <label style="display:block;font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem">Order Type</label>
+                <select id="oType" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;padding:0.45rem 0.65rem;appearance:none">
+                  <option value="ai">AI Draft — $30</option>
+                  <option value="sub">Subscription — $60/mo</option>
+                  <option value="human">Human Written — $149+</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block;font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem">Amount ($)</label>
+                <input type="number" id="oAmount" placeholder="30" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;padding:0.45rem 0.65rem">
+              </div>
+              <div>
+                <label style="display:block;font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem">Status</label>
+                <select id="oStatus" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;padding:0.45rem 0.65rem;appearance:none">
+                  <option value="new">New</option>
+                  <option value="pending">In Progress</option>
+                  <option value="done">Complete</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label style="display:block;font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem">Notes</label>
+              <textarea id="oNotes" rows="3" placeholder="Any context about this order..." style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;padding:0.45rem 0.65rem;resize:vertical"></textarea>
+            </div>
+            <div style="display:flex;justify-content:flex-end">
+              <button class="btn-login" style="width:auto;padding:0.55rem 1.5rem" id="saveOrderBtn">Save Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RESUME REQUESTS ── -->
+      <div class="tab-page" id="tab-requests">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Resume Review Requests</div>
+            <button class="panel-action" onclick="loadRequests()">Refresh</button>
+          </div>
+          <div id="requestsList" style="padding:1rem 0;font-size:0.9rem;color:var(--muted)">Loading...</div>
+        </div>
+      </div>
+
+      <!-- ── SETTINGS ── -->
+      <div class="tab-page" id="tab-settings">
+        <div>
+          <div class="page-title">Settings</div>
+          <div class="page-sub">Account and configuration options</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Account</span></div>
+          <div class="settings-group">
+            <div class="settings-row">
+              <div>
+                <div class="settings-label">Admin Password</div>
+                <div class="settings-desc">Change via Cloudflare Workers secrets</div>
+              </div>
+              <button class="btn-setting" onclick="window.open('https://dash.cloudflare.com','_blank')">Open Cloudflare ↗</button>
+            </div>
+            <div class="settings-row">
+              <div>
+                <div class="settings-label">Anthropic API Key</div>
+                <div class="settings-desc">Powering the AI resume generator</div>
+              </div>
+              <button class="btn-setting" onclick="window.open('https://console.anthropic.com','_blank')">Manage Key ↗</button>
+            </div>
+            <div class="settings-row">
+              <div>
+                <div class="settings-label">Stripe Integration</div>
+                <div class="settings-desc">Not yet connected — required for payment processing</div>
+              </div>
+              <button class="btn-setting" onclick="window.open('https://dashboard.stripe.com','_blank')">Set Up Stripe ↗</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Rate Limits</span></div>
+          <div class="settings-group">
+            <div class="settings-row">
+              <div>
+                <div class="settings-label">Free Preview Limit</div>
+                <div class="settings-desc">Currently: 10 previews per IP per week</div>
+              </div>
+              <span style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--gold)">10 / week</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Session</span></div>
+          <div class="settings-group">
+            <div class="settings-row">
+              <div>
+                <div class="settings-label">Sign Out</div>
+                <div class="settings-desc">Clears your admin session cookie</div>
+              </div>
+              <button class="btn-setting danger" id="logoutBtn2">Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+
+  /* ── HELPERS ── */
+  function $(id){ return document.getElementById(id) }
+
+  /* ── AUTH ── */
+  var loginOverlay = $('loginOverlay');
+  var dashboard    = $('dashboard');
+  var loginPw      = $('loginPw');
+  var loginBtn     = $('loginBtn');
+  var loginError   = $('loginError');
+  var eyeBtn       = $('eyeBtn');
+  var eyeIcon      = $('eyeIcon');
+  var eyeVisible   = false;
+
+  eyeBtn.addEventListener('click', function(){
+    eyeVisible = !eyeVisible;
+    loginPw.type = eyeVisible ? 'text' : 'password';
+    eyeIcon.innerHTML = eyeVisible
+      ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+      : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  });
+
+  async function checkSession(){
+    try{
+      var r = await fetch('/api/auth');
+      var d = await r.json();
+      if(d.ok){
+        showDashboard();
+      } else {
+        loginOverlay.style.display = 'flex';
+        dashboard.style.display = 'none';
+      }
+    } catch(e){
+      loginOverlay.style.display = 'flex';
+      dashboard.style.display = 'none';
+    }
+  }
+
+  async function doLogin(){
+    var pw = loginPw.value;
+    if(!pw) return;
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Signing in...';
+    loginError.style.display = 'none';
+    try{
+      var r = await fetch('/api/auth', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({password: pw})
+      });
+      if(r.ok){
+        showDashboard();
+      } else {
+        loginError.style.display = 'block';
+        loginPw.value = '';
+        loginPw.focus();
+      }
+    } catch(e){
+      loginError.textContent = 'Connection error. Try again.';
+      loginError.style.display = 'block';
+    }
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Sign In';
+  }
+
+  function showDashboard(){
+    loginOverlay.style.display = 'none';
+    dashboard.style.display = 'flex';
+    dashboard.style.flexDirection = 'column';
+    initDashboard();
+  }
+
+  async function doLogout(){
+    document.cookie = 'rb_session=; Max-Age=0; Path=/';
+    loginPw.value = '';
+    loginError.style.display = 'none';
+    dashboard.style.display = 'none';
+    loginOverlay.style.display = 'flex';
+    loginPw.focus();
+  }
+
+  loginBtn.addEventListener('click', doLogin);
+  loginPw.addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+  $('logoutBtn').addEventListener('click', doLogout);
+  $('logoutBtn2').addEventListener('click', doLogout);
+
+  /* ── TABS ── */
+  var navItems = document.querySelectorAll('.nav-item[data-tab]');
+  navItems.forEach(function(item){
+    item.addEventListener('click', function(){
+      switchTab(item.getAttribute('data-tab'));
+    });
+  });
+
+  function switchTab(tab){
+    navItems.forEach(function(n){ n.classList.remove('active') });
+    document.querySelectorAll('.tab-page').forEach(function(p){ p.classList.remove('active') });
+    var target = document.querySelector('.nav-item[data-tab="'+tab+'"]');
+    if(target) target.classList.add('active');
+    var page = $('tab-'+tab);
+    if(page) page.classList.add('active');
+  }
+
+  window.switchTab = switchTab;
+
+  /* ── DASHBOARD INIT ── */
+  function initDashboard(){
+    var now = new Date();
+    $('overviewDate').textContent = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    loadOrders();
+  }
+
+  /* ── ORDERS (localStorage) ── */
+  var orders = [];
+
+  function loadOrders(){
+    try{ orders = JSON.parse(localStorage.getItem('rb_orders') || '[]') } catch(e){ orders = [] }
+    renderOrders();
+  }
+
+  function saveOrders(){
+    localStorage.setItem('rb_orders', JSON.stringify(orders));
+  }
+
+  function renderOrders(){
+    var tbody = $('ordersBody');
+    var empty = $('ordersEmpty');
+    var tableWrap = $('ordersTableWrap');
+    tbody.innerHTML = '';
+    if(orders.length === 0){
+      empty.style.display = 'block';
+      tableWrap.style.display = 'none';
+      return;
+    }
+    empty.style.display = 'none';
+    tableWrap.style.display = 'block';
+    var sorted = orders.slice().sort(function(a,b){ return new Date(b.date)-new Date(a.date) });
+    sorted.forEach(function(o, idx){
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td style="color:var(--muted);font-family:\'DM Mono\',monospace;font-size:0.72rem">#' + (sorted.length - idx) + '</td>' +
+        '<td><div style="font-weight:500">' + esc(o.name) + '</div><div style="font-size:0.72rem;color:var(--muted)">' + esc(o.email) + '</div></td>' +
+        '<td>' + typeBadge(o.type) + '</td>' +
+        '<td style="font-family:\'DM Mono\',monospace;font-size:0.82rem;color:var(--gold)">$' + parseFloat(o.amount||0).toFixed(2) + '</td>' +
+        '<td>' + statusBadge(o.status) + '</td>' +
+        '<td style="font-size:0.75rem;color:var(--muted);white-space:nowrap">' + fmtDate(o.date) + '</td>' +
+        '<td><button class="panel-action" data-id="' + o.id + '" onclick="deleteOrder(\'' + o.id + '\')">Remove</button></td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  window.deleteOrder = function(id){
+    if(!confirm('Remove this order?')) return;
+    orders = orders.filter(function(o){ return o.id !== id });
+    saveOrders();
+    renderOrders();
+  };
+
+  function typeBadge(t){
+    if(t==='ai')    return '<span class="badge badge-ai">AI Draft</span>';
+    if(t==='sub')   return '<span class="badge badge-sub">Subscription</span>';
+    if(t==='human') return '<span class="badge badge-human">Human Written</span>';
+    return '<span class="badge">—</span>';
+  }
+  function statusBadge(s){
+    if(s==='new')     return '<span class="badge badge-new">New</span>';
+    if(s==='pending') return '<span class="badge badge-pending">In Progress</span>';
+    if(s==='done')    return '<span class="badge badge-done">Complete</span>';
+    return '<span class="badge">—</span>';
+  }
+  function fmtDate(d){
+    try{ return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) } catch(e){ return d }
+  }
+  function esc(s){ var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML }
+
+  /* ── ADD ORDER FORM ── */
+  $('addOrderBtn').addEventListener('click', function(){
+    $('addOrderPanel').style.display = 'block';
+    $('addOrderBtn').style.display = 'none';
+  });
+  $('cancelOrderBtn').addEventListener('click', function(){
+    $('addOrderPanel').style.display = 'none';
+    $('addOrderBtn').style.display = 'inline-block';
+  });
+  $('saveOrderBtn').addEventListener('click', function(){
+    var name = $('oName').value.trim();
+    var email = $('oEmail').value.trim();
+    var type = $('oType').value;
+    var amount = $('oAmount').value;
+    var status = $('oStatus').value;
+    var notes = $('oNotes').value.trim();
+    if(!name){ $('oName').focus(); return; }
+    var order = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+      name: name, email: email, type: type,
+      amount: amount || 0, status: status, notes: notes,
+      date: new Date().toISOString()
+    };
+    orders.push(order);
+    saveOrders();
+    renderOrders();
+    $('oName').value='';$('oEmail').value='';$('oAmount').value='';$('oNotes').value='';
+    $('addOrderPanel').style.display = 'none';
+    $('addOrderBtn').style.display = 'inline-block';
+  });
+
+  /* ── INIT ── */
+  checkSession();
+
+})();
+
+async function loadRequests() {
+  const el = document.getElementById('requestsList');
+  if (!el) return;
+  el.innerHTML = 'Loading...';
+  try {
+    const res = await fetch('/api/resume-requests');
+    const data = await res.json();
+    if (!data.requests || data.requests.length === 0) {
+      el.innerHTML = '<p style="color:var(--muted);padding:1rem 0">No requests yet.</p>';
+      return;
+    }
+    el.innerHTML = data.requests.map(r => `
+      <div style="border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin-bottom:1rem;background:var(--surface2)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem">
+          <div>
+            <div style="font-weight:600;color:var(--warm)">${r.name}</div>
+            <div style="font-size:0.8rem;color:var(--gold);font-family:'DM Mono',monospace">${r.email}</div>
+            ${r.role ? `<div style="font-size:0.8rem;color:var(--muted);margin-top:0.2rem">Target: ${r.role}</div>` : ''}
+          </div>
+          <div style="font-size:0.75rem;color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap">${new Date(r.submitted).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}</div>
+        </div>
+        <details style="margin-top:0.5rem">
+          <summary style="cursor:pointer;font-size:0.82rem;color:var(--muted);user-select:none">View Resume</summary>
+          <pre style="margin-top:0.75rem;font-size:0.78rem;color:var(--text);white-space:pre-wrap;line-height:1.5;background:var(--bg);padding:1rem;border-radius:6px;max-height:300px;overflow-y:auto">${r.resume}</pre>
+        </details>
+        <a href="mailto:${r.email}?subject=Your Free Resume Review&body=Hi ${r.name}," class="panel-action" style="margin-top:0.75rem;display:inline-block;text-decoration:none">Reply ↗</a>
+      </div>`).join('');
+  } catch {
+    el.innerHTML = '<p style="color:var(--red)">Failed to load requests.</p>';
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResumeBuzz | Order Received</title>
+<meta name="robots" content="noindex">
+<style>
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;
+  --surface:#1B1B1B;
+  --border:#2E2E2E;
+  --gold:#C9A84C;
+  --text:#EBEBEB;
+  --muted:#8C8C8C;
+}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center}
+.icon{font-size:3rem;margin-bottom:1.5rem}
+.logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:var(--gold);margin-bottom:2rem}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;color:var(--text);margin-bottom:1rem}
+p{color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:440px;margin:0 auto 0.75rem}
+.back{display:inline-block;margin-top:2rem;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,0.3);padding:8px 18px;border-radius:6px;transition:border-color 0.15s}
+.back:hover{border-color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="logo">ResumeBuzz</div>
+<div class="icon">&#127881;</div>
+<h1>Order received. You're in the hive.</h1>
+<p>Payment confirmed. We'll reach out to your email within <strong style="color:var(--text)">24 hours</strong> to kick off your resume.</p>
+<p>Check your inbox and your spam folder just in case. The subject line will be from ResumeBuzz.</p>
+<a href="/" class="back">Back to ResumeBuzz</a>
+</body>
+</html>

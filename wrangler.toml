@@ -1,0 +1,19 @@
+name = "resumebuzz"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "JD_STORE"
+id = "0d7dd8dca8134af78ed139dc7fd459da"
+
+[vars]
+PRICE_AI_SINGLE   = "price_1TZYSkJvPEXScjfdBoxWXZnV"
+PRICE_AI_POLISH   = "price_1TZYUrJvPEXScjfdUfeSYwAO"
+PRICE_HUMAN       = "price_1TZYXaJvPEXScjfd2BQS90c5"
+PRICE_CV          = "price_1TZYZZJvPEXScjfdfgeijAO4"
+PRICE_PRO_MONTHLY = "price_1TZYdOJvPEXScjfd1mUqBWNF"
+
+# Secrets — set via Cloudflare Pages dashboard → Settings → Variables and Secrets:
+#   STRIPE_SECRET_KEY      sk_live_*
+#   STRIPE_WEBHOOK_SECRET  whsec_*
+#   RESEND_API_KEY         re_*

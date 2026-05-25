@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResumeBuzz: Build Your Resume</title><style>
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:optional;src:url('/assets/fonts/dm-mono-500.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair-italic.woff2') format('woff2')}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F0D08;
+  --surface:#1C1810;
+  --surface2:#26200E;
+  --border:#3A3018;
+  --gold:#E8B84B;
+  --gold-dim:#9A7B2E;
+  --gold-bright:#F5C840;
+  --amber:#F0A828;
+  --honey:#C97F0A;
+  --text:#F5F0E8;
+  --muted:#9A8A6A;
+  --warm:#FFF8E8;
+  --red:#E05A3A;
+  --green-gold:#A8B84C;
+  --field-bg:#FFFFFF;
+  --field-text:#000000;
+  --field-border:#E0C878;
+  --field-ph:#B8A870;
+  --label:#8A6820;
+}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:14px;
+  line-height:1.5;
+  display:flex;
+  flex-direction:column;
+}
+
+/* OYE FAMILY BAR */
+.oye-bar{flex-shrink:0;height:36px;background:#090806;border-bottom:1px solid rgba(201,168,76,0.12);display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem}
+.oye-brand{display:flex;align-items:center;gap:0.45rem;text-decoration:none;color:rgba(255,255,255,0.82);font-family:'Playfair Display',Georgia,serif;font-size:0.75rem;font-weight:600;transition:color 150ms}
+.oye-brand em{font-style:normal;color:#C9A84C;transition:color 150ms}
+.oye-brand svg ellipse,.oye-brand svg circle,.oye-brand svg line{stroke:rgba(255,255,255,0.65);transition:stroke 150ms}
+.oye-brand:hover{color:#C9A84C}
+.oye-brand:hover em{color:rgba(255,255,255,0.82)}
+.oye-brand:hover svg ellipse,.oye-brand:hover svg circle,.oye-brand:hover svg line{stroke:#C9A84C}
+.oye-nav-links{display:flex;align-items:center;gap:1.25rem}
+.oye-nav-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.82);text-decoration:none;transition:color 0.15s;white-space:nowrap}
+.oye-nav-links a:hover{color:#C9A84C}
+@media(max-width:540px){.oye-nav-links{display:none}}
+
+/* NAV */
+.nav{
+  flex-shrink:0;
+  height:54px;
+  background:linear-gradient(90deg,#1A1508 0%,#111008 100%);
+  border-bottom:2px solid var(--gold-dim);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 1.25rem;
+  z-index:50;
+}
+.wordmark{
+  font-family:'Playfair Display',serif;
+  font-size:1.25rem;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  display:flex;
+  align-items:center;
+  gap:0.45rem;
+}
+.wordmark .w1{color:var(--warm)}
+.wordmark .w2{color:var(--gold)}
+
+/* MAIN LAYOUT */
+.main{
+  flex:1;
+  display:flex;
+  overflow:hidden;
+}
+
+/* LEFT PANEL */
+.left-panel{
+  width:420px;
+  flex-shrink:0;
+  border-right:2px solid var(--border);
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  background:var(--surface);
+}
+.left-panel::-webkit-scrollbar{width:5px}
+.left-panel::-webkit-scrollbar-track{background:transparent}
+.left-panel::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:3px}
+
+/* RIGHT PANEL */
+.right-panel{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  min-width:0;
+}
+
+/* FORM SECTIONS */
+.form-section{
+  padding:1rem 1.25rem;
+  border-bottom:1px solid var(--border);
+}
+.section-header{
+  font-family:'DM Mono',monospace;
+  font-size:0.62rem;
+  letter-spacing:0.13em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:0.875rem;
+  padding-left:0.55rem;
+  border-left:2.5px solid var(--gold);
+}
+.field-group{
+  display:flex;
+  flex-direction:column;
+  gap:0.55rem;
+}
+.field-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0.55rem;
+}
+.field-row.three{
+  grid-template-columns:1fr 1fr 1fr;
+}
+label{
+  display:block;
+  font-size:0.7rem;
+  color:var(--label);
+  margin-bottom:0.22rem;
+  font-weight:600;
+  letter-spacing:0.01em;
+}
+input[type=text],
+input[type=email],
+input[type=url],
+input[type=tel],
+select,
+textarea{
+  width:100%;
+  background:var(--field-bg);
+  border:1.5px solid var(--field-border);
+  border-radius:5px;
+  color:var(--field-text);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.82rem;
+  padding:0.45rem 0.65rem;
+  transition:border-color 0.18s,box-shadow 0.18s;
+  appearance:none;
+  -webkit-appearance:none;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(232,184,75,0.18);
+}
+input::placeholder,textarea::placeholder{color:var(--field-ph);font-size:0.78rem}
+select{
+  background-color:var(--field-bg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239A7B2E'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 0.65rem center;
+  padding-right:2rem;
+}
+textarea{resize:vertical;line-height:1.55}
+
+.warning-notice{
+  background:rgba(240,168,40,0.1);
+  border:1px solid rgba(240,168,40,0.3);
+  border-radius:5px;
+  padding:0.5rem 0.7rem;
+  font-size:0.72rem;
+  color:var(--amber);
+  line-height:1.55;
+  margin-bottom:0.55rem;
+}
+
+/* SOCIAL LINKS */
+.social-list{
+  display:flex;
+  flex-direction:column;
+  gap:0.4rem;
+  margin-bottom:0.55rem;
+}
+.social-row{
+  display:flex;
+  gap:0.4rem;
+  align-items:center;
+}
+.social-row select{width:130px;flex-shrink:0}
+.social-row input{flex:1;min-width:0}
+.btn-remove-social{
+  background:none;
+  border:none;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:1rem;
+  line-height:1;
+  padding:0.2rem 0.3rem;
+  border-radius:4px;
+  transition:color 0.15s,background 0.15s;
+  flex-shrink:0;
+}
+.btn-remove-social:hover{color:var(--red);background:rgba(224,90,58,0.12)}
+.btn-add{
+  background:rgba(232,184,75,0.08);
+  border:1px solid var(--gold-dim);
+  color:var(--gold);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.75rem;
+  padding:0.32rem 0.7rem;
+  border-radius:5px;
+  cursor:pointer;
+  transition:border-color 0.18s,color 0.18s,background 0.18s;
+  display:inline-flex;
+  align-items:center;
+  gap:0.3rem;
+  font-weight:500;
+}
+.btn-add:hover{border-color:var(--gold);color:var(--warm);background:rgba(232,184,75,0.16)}
+
+/* EXPERIENCE CARDS */
+.exp-list,.edu-list{
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+  margin-bottom:0.55rem;
+}
+.exp-card{
+  background:var(--field-bg);
+  border:1.5px solid var(--field-border);
+  border-radius:6px;
+  overflow:hidden;
+}
+.exp-card-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0.5rem 0.75rem;
+  cursor:pointer;
+  user-select:none;
+  background:rgba(232,184,75,0.07);
+  border-bottom:1px solid var(--field-border);
+}
+.exp-card-title{
+  font-size:0.8rem;
+  font-weight:600;
+  color:var(--field-text);
+  flex:1;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.exp-card-actions{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  flex-shrink:0;
+}
+.btn-remove-exp{
+  background:none;
+  border:none;
+  color:#666;
+  font-size:0.72rem;
+  cursor:pointer;
+  padding:0.1rem 0.3rem;
+  transition:color 0.15s;
+}
+.btn-remove-exp:hover{color:var(--red)}
+.exp-chevron{
+  color:#666;
+  font-size:0.7rem;
+  transition:transform 0.2s;
+}
+.exp-card.open .exp-chevron{transform:rotate(180deg)}
+.exp-card-body{
+  display:none;
+  padding:0.75rem;
+  background:var(--field-bg);
+}
+.exp-card.open .exp-card-body{display:block}
+.exp-card-body .field-group{gap:0.5rem}
+.exp-card-body label,.edu-row label{color:#1a1a1a}
+.field-hint{
+  font-size:0.68rem;
+  color:#444;
+  margin-top:0.15rem;
+  line-height:1.45;
+}
+
+/* EDU ROW */
+.edu-row{
+  background:var(--field-bg);
+  border:1.5px solid var(--field-border);
+  border-radius:6px;
+  padding:0.65rem 0.75rem;
+  display:flex;
+  flex-direction:column;
+  gap:0.45rem;
+  position:relative;
+}
+.edu-remove{
+  position:absolute;
+  top:0.5rem;
+  right:0.6rem;
+  background:none;
+  border:none;
+  color:#666;
+  font-size:0.72rem;
+  cursor:pointer;
+  transition:color 0.15s;
+}
+.edu-remove:hover{color:var(--red)}
+
+/* COLLAPSIBLE ADDITIONAL */
+.collapsible-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  user-select:none;
+}
+.collapsible-toggle .section-header{margin-bottom:0}
+.collapsible-body{display:none;margin-top:0.875rem}
+.collapsible-body.open{display:block}
+.chevron{color:var(--gold-dim);font-size:0.65rem;transition:transform 0.2s}
+.chevron.open{transform:rotate(180deg)}
+
+/* GENERATE BUTTON */
+.generate-wrap{
+  padding:1rem 1.25rem;
+  position:sticky;
+  bottom:0;
+  background:linear-gradient(to top,var(--surface) 70%,transparent);
+  border-top:1px solid var(--border);
+}
+.btn-generate{
+  width:100%;
+  background:linear-gradient(135deg,var(--gold-bright) 0%,var(--amber) 100%);
+  color:#111;
+  font-family:'DM Sans',sans-serif;
+  font-weight:700;
+  font-size:0.95rem;
+  padding:0.8rem 1rem;
+  border-radius:7px;
+  border:none;
+  cursor:pointer;
+  transition:box-shadow 0.2s,transform 0.12s,opacity 0.15s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.5rem;
+  letter-spacing:0.02em;
+  box-shadow:0 4px 18px rgba(245,200,64,0.35);
+}
+.btn-generate:hover{
+  box-shadow:0 6px 28px rgba(245,200,64,0.5);
+  transform:translateY(-1px);
+}
+.btn-generate:active{transform:scale(0.98);opacity:0.9;box-shadow:none}
+.btn-generate:disabled{opacity:0.45;cursor:not-allowed;transform:none;box-shadow:none}
+.spinner{
+  width:14px;
+  height:14px;
+  border:2px solid rgba(0,0,0,0.25);
+  border-top-color:#111;
+  border-radius:50%;
+  animation:spin 0.7s linear infinite;
+  display:none;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* RIGHT PANEL INNER */
+.right-top{
+  flex-shrink:0;
+  background:var(--surface);
+  border-bottom:2px solid var(--border);
+  padding:0.65rem 1rem;
+  display:flex;
+  flex-direction:column;
+  gap:0.6rem;
+}
+.template-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.5rem;
+  align-items:center;
+}
+.template-row select{
+  background:var(--field-bg);
+  color:var(--field-text);
+  border:1.5px solid var(--field-border);
+  font-size:0.75rem;
+  padding:0.3rem 1.75rem 0.3rem 0.55rem;
+  height:30px;
+  width:auto;
+}
+.template-filename{
+  font-family:'DM Mono',monospace;
+  font-size:0.72rem;
+  color:var(--gold);
+  margin-left:0.25rem;
+  white-space:nowrap;
+  align-self:center;
+}
+.output-actions{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.btn-action{
+  background:var(--field-bg);
+  border:1.5px solid var(--field-border);
+  color:var(--field-text);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.75rem;
+  padding:0.3rem 0.7rem;
+  border-radius:5px;
+  cursor:pointer;
+  transition:border-color 0.15s,box-shadow 0.15s;
+  font-weight:500;
+}
+.btn-action:hover{border-color:var(--gold);box-shadow:0 0 0 2px rgba(232,184,75,0.15)}
+.status-line{
+  font-family:'DM Mono',monospace;
+  font-size:0.68rem;
+  color:var(--muted);
+  margin-left:auto;
+}
+
+.output-area{
+  flex:1;
+  overflow-y:auto;
+  padding:1.5rem;
+  background:#FFFFFF;
+  position:relative;
+}
+.output-area::-webkit-scrollbar{width:5px}
+.output-area::-webkit-scrollbar-track{background:transparent}
+.output-area::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:3px}
+.output-content{
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  line-height:1.7;
+  color:#1A1A1A;
+  white-space:pre-wrap;
+  word-break:break-word;
+  min-height:100%;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.output-placeholder{
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  color:#AAAAAA;
+  font-style:italic;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.output-error{
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  color:var(--red);
+}
+</style>
+</head>
+<body>
+
+<div class="oye-bar">
+  <a href="https://oyecreations.com" target="_blank" rel="noopener noreferrer" class="oye-brand">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" style="height:18px;width:auto" aria-hidden="true">
+      <ellipse cx="250" cy="175" rx="205" ry="135" fill="none" stroke="#C9A84C" stroke-width="13" stroke-linecap="round"/>
+      <defs><clipPath id="oyecp"><ellipse cx="250" cy="175" rx="191" ry="121"/></clipPath></defs>
+      <g clip-path="url(#oyecp)" stroke="#C9A84C" stroke-width="13" stroke-linecap="round" fill="none">
+        <circle cx="148" cy="175" r="63"/>
+        <line x1="175" y1="80" x2="250" y2="168"/><line x1="320" y1="80" x2="250" y2="168"/>
+        <line x1="250" y1="168" x2="250" y2="265"/>
+        <line x1="318" y1="112" x2="318" y2="240"/><line x1="318" y1="112" x2="388" y2="112"/>
+        <line x1="318" y1="176" x2="383" y2="176"/><line x1="318" y1="240" x2="393" y2="240"/>
+      </g>
+    </svg>
+    <span>OYE <em>Creations</em></span>
+  </a>
+  <nav class="oye-nav-links" aria-label="OYE network">
+    <a href="https://multilingo.studio" target="_blank" rel="noopener noreferrer">Multilingo</a>
+    <a href="https://guitaranon.com" target="_blank" rel="noopener noreferrer">GuitarAnon</a>
+    <a href="https://droptimize.org" target="_blank" rel="noopener noreferrer">Droptimize</a>
+  </nav>
+</div>
+
+<nav class="nav">
+  <a href="/" class="wordmark" style="text-decoration:none;color:inherit">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 52" width="24" height="21" aria-hidden="true" style="flex-shrink:0"><polygon points="60,26 45,0 15,0 0,26 15,52 45,52" fill="#E8B84B"/><path d="M30,12 L39,27 L34.5,27 L34.5,40 L25.5,40 L25.5,27 L21,27 Z" fill="#111"/></svg>
+    <span class="w1">Resume</span><span class="w2">Buzz</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:1.5rem">
+    <a href="/" style="color:var(--muted);font-size:0.78rem;text-decoration:none;transition:color 0.15s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">← Audit</a>
+    <a href="/admin" style="color:var(--muted);font-size:0.78rem;text-decoration:none;transition:color 0.15s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Admin →</a>
+  </div>
+</nav>
+
+<div id="limitBanner" style="display:none;background:linear-gradient(90deg,#2a1800,#1e1200);border-bottom:2px solid var(--amber);padding:0.65rem 1.5rem;font-size:0.83rem;color:var(--amber);text-align:center;font-weight:500">
+  🐝 You've used all 10 free previews this week. <a href="#pay" style="color:var(--gold-bright);text-decoration:underline;margin-left:0.5rem;font-weight:600">Subscribe for $60/mo, unlimited drafts →</a>
+</div>
+
+<!-- ── SCORE STRIP ──────────────────────────────────────────────── -->
+<div style="background:rgba(201,168,76,0.05);border-top:1px solid rgba(201,168,76,0.12);padding:9px 24px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56" style="height:16px;width:auto;flex-shrink:0;" aria-hidden="true" fill="none"><path d="M6,20 A18,18 0 0,1 42,20 Q42,38 24,54 Q6,38 6,20 Z" fill="#C9A84C"/><polyline points="13,28 24,14 35,28" stroke="#111111" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;">droptimize</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:#8C8C8C;opacity:0.5;">·</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;"><strong style="color:#C9A84C;font-weight:500;">100/100</strong> Lighthouse</span>
+    </div>
+    <a href="https://droptimize.org" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#8C8C8C;text-decoration:none;opacity:0.75;white-space:nowrap;transition:color 150ms,opacity 150ms;" onmouseover="this.style.color='#C9A84C';this.style.opacity='1'" onmouseout="this.style.color='#8C8C8C';this.style.opacity='0.75'">Site enhanced by droptimize.org &#x2192;</a>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel" id="leftPanel">
+
+    <!-- PARSE UPLOAD -->
+    <div class="form-section" style="background:rgba(232,184,75,0.04)">
+      <div class="section-header">Auto-Fill from Resume</div>
+      <div id="parseDropzone" style="border:1.5px dashed var(--gold-dim);border-radius:7px;padding:1rem;text-align:center;cursor:pointer;transition:border-color 0.18s,background 0.18s">
+        <div style="font-size:1.4rem;margin-bottom:0.3rem">📄</div>
+        <div style="font-size:0.82rem;font-weight:600;color:var(--gold);margin-bottom:0.2rem">Drop resume here or click to browse</div>
+        <div style="font-size:0.7rem;color:var(--muted)">PDF or DOCX. The hive fills it in automatically.</div>
+        <input type="file" id="parseFileInput" accept=".pdf,.doc,.docx" style="display:none">
+      </div>
+      <div id="parseStatus" style="display:none;font-size:0.78rem;margin-top:0.6rem;padding:0.45rem 0.7rem;border-radius:5px;line-height:1.5"></div>
+    </div>
+
+    <!-- DOCUMENT SETUP -->
+    <div class="form-section">
+      <div class="section-header">Document Setup</div>
+      <div class="field-group">
+        <div>
+          <label>Document Type</label>
+          <select id="docType">
+            <option value="resume">Resume</option>
+            <option value="cv">CV</option>
+            <option value="cover_letter">Cover Letter</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <div>
+            <label>Target Region</label>
+            <select id="region">
+              <option value="us">US / Canada</option>
+              <option value="uk">UK / Ireland</option>
+              <option value="au">Australia / NZ</option>
+              <option value="za">South Africa</option>
+            </select>
+          </div>
+          <div>
+            <label>Career Level</label>
+            <select id="careerLevel">
+              <option value="graduate">Graduate, 0-1 yr</option>
+              <option value="junior">Junior, 1-5 yr</option>
+              <option value="intermediate">Intermediate, 5+ yr</option>
+              <option value="senior">Senior, 10+ yr</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLIENT INFO -->
+    <div class="form-section">
+      <div class="section-header">Client Info</div>
+      <div class="field-group">
+        <div class="field-row">
+          <div>
+            <label>Full Name</label>
+            <input type="text" id="clientName" placeholder="Jane Smith">
+          </div>
+          <div>
+            <label>Email</label>
+            <input type="email" id="clientEmail" placeholder="jane@email.com">
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label>Phone</label>
+            <input type="tel" id="clientPhone" placeholder="+1 555 000 0000">
+          </div>
+          <div>
+            <label>Location</label>
+            <input type="text" id="clientLocation" placeholder="City, State">
+          </div>
+        </div>
+        <div>
+          <label>LinkedIn URL</label>
+          <input type="url" id="clientLinkedin" placeholder="https://linkedin.com/in/...">
+        </div>
+        <div>
+          <div class="warning-notice">Employers who view the resume will see the full social media profile, not just a preview. Only include links the candidate has explicitly confirmed. Don't send them somewhere they don't want to bee.</div>
+          <div class="social-list" id="socialList"></div>
+          <button class="btn-add" id="addSocialBtn">+ Add social link</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARGET ROLE -->
+    <div class="form-section">
+      <div class="section-header">Target Role</div>
+      <div class="field-group">
+        <div class="field-row">
+          <div>
+            <label>Target Role</label>
+            <input type="text" id="targetRole" placeholder="Senior Product Manager">
+          </div>
+          <div>
+            <label>Industry</label>
+            <input type="text" id="targetIndustry" placeholder="SaaS / Fintech">
+          </div>
+        </div>
+        <div>
+          <label>Job Description</label>
+          <textarea id="jobDescription" rows="6" placeholder="Paste full job description here to tailor the draft..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARY DIRECTION -->
+    <div class="form-section">
+      <div class="section-header">Summary Direction</div>
+      <textarea id="summaryNotes" rows="4" placeholder="Any specific angle or positioning: 'transitioning from military to corporate', 'career gap explanation', 'pivoting industries'... Every detail is nectar."></textarea>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="form-section">
+      <div class="section-header">Experience</div>
+      <div class="exp-list" id="expList"></div>
+      <button class="btn-add" id="addExpBtn">+ Add Experience</button>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="form-section">
+      <div class="section-header">Education</div>
+      <div class="edu-list" id="eduList"></div>
+      <button class="btn-add" id="addEduBtn">+ Add Education</button>
+    </div>
+
+    <!-- CERTIFICATIONS -->
+    <div class="form-section">
+      <div class="section-header">Certifications</div>
+      <textarea id="certifications" rows="3" placeholder="One per line: Certification Name, Issuing Body, Year"></textarea>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="form-section">
+      <div class="section-header">Skills</div>
+      <div class="field-group">
+        <div>
+          <label>Technical Skills</label>
+          <textarea id="skillsTechnical" rows="2" placeholder="Python, SQL, Tableau..."></textarea>
+        </div>
+        <div>
+          <label>Tools &amp; Platforms</label>
+          <textarea id="skillsTools" rows="2" placeholder="Salesforce, Jira, Google Analytics..."></textarea>
+        </div>
+        <div>
+          <label>Languages</label>
+          <textarea id="skillsLanguages" rows="2" placeholder="English (Native), Spanish (Professional)"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADDITIONAL (collapsible) -->
+    <div class="form-section">
+      <div class="collapsible-toggle" id="additionalToggle">
+        <div class="section-header">Additional</div>
+        <span class="chevron" id="additionalChevron">&#9660;</span>
+      </div>
+      <div class="collapsible-body" id="additionalBody">
+        <div class="field-group" style="margin-top:0.875rem">
+          <div>
+            <label>Volunteer</label>
+            <textarea id="addVolunteer" rows="2" placeholder=""></textarea>
+          </div>
+          <div>
+            <label>Publications</label>
+            <textarea id="addPublications" rows="2" placeholder=""></textarea>
+          </div>
+          <div>
+            <label>Board Memberships</label>
+            <textarea id="addBoard" rows="2" placeholder=""></textarea>
+          </div>
+          <div>
+            <label>Other</label>
+            <textarea id="addOther" rows="2" placeholder=""></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="form-section">
+      <div class="section-header">Notes</div>
+      <textarea id="writerNotes" rows="4" placeholder="Anything the client said that doesn't fit elsewhere. Tone, gaps, context, red flags. Every drop of context is honey."></textarea>
+    </div>
+
+    <div class="generate-wrap">
+      <button class="btn-generate" id="generateBtn">
+        <span class="spinner" id="generateSpinner"></span>
+        <span id="generateBtnLabel">🐝 Generate Draft</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+    <div class="right-top">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem">
+        <div class="template-row">
+          <div>
+            <select id="tplCareerStage" title="Career Stage">
+              <option value="new">New Professional</option>
+              <option value="exp">Experienced Professional</option>
+            </select>
+          </div>
+          <div>
+            <select id="tplStyle" title="Style"></select>
+          </div>
+          <div>
+            <select id="tplColor" title="Color">
+              <option value="Blue">Blue</option>
+              <option value="Green">Green</option>
+              <option value="Mono">Mono</option>
+              <option value="Purple">Purple</option>
+              <option value="Red">Red</option>
+            </select>
+          </div>
+          <div>
+            <select id="tplWeight" title="Weight">
+              <option value="Bold">Bold</option>
+              <option value="Medium">Medium</option>
+              <option value="Subtle">Subtle</option>
+              <option value="Gray">Gray</option>
+            </select>
+          </div>
+          <div>
+            <select id="tplPhoto" title="Photo">
+              <option value="NP">No Photo</option>
+              <option value="WP">With Photo</option>
+            </select>
+          </div>
+          <span class="template-filename" id="tplFilename">Template_1_NP_Bold_Blue.docx</span>
+        </div>
+        <div class="output-actions">
+          <button class="btn-action" id="copyBtn">Copy</button>
+          <button class="btn-action" id="clearBtn">Clear</button>
+          <span class="status-line" id="statusLine">Ready</span>
+        </div>
+      </div>
+    </div>
+    <div class="output-area" id="outputArea">
+      <div id="watermark" style="display:none;position:absolute;inset:0;pointer-events:none;z-index:10;overflow:hidden;border-radius:inherit">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="opacity:0.18">
+          <defs>
+            <pattern id="rbwm" x="0" y="0" width="190" height="130" patternUnits="userSpaceOnUse" patternTransform="rotate(-35 0 0)">
+              <!-- Bee wings -->
+              <ellipse cx="38" cy="62" rx="15" ry="9" fill="#D0D8FF" opacity="0.55" transform="rotate(-20 38 62)"/>
+              <ellipse cx="82" cy="62" rx="15" ry="9" fill="#D0D8FF" opacity="0.55" transform="rotate(20 82 62)"/>
+              <!-- Bee head -->
+              <circle cx="60" cy="90" r="36" fill="#C9A84C"/>
+              <!-- Body stripes -->
+              <rect x="27" y="86" width="66" height="9" fill="#1a1a1a" rx="2" opacity="0.55"/>
+              <rect x="26" y="99" width="68" height="9" fill="#1a1a1a" rx="2" opacity="0.55"/>
+              <!-- Eyes -->
+              <ellipse cx="45" cy="76" rx="6" ry="6.5" fill="#1a1a1a"/>
+              <ellipse cx="75" cy="76" rx="6" ry="6.5" fill="#1a1a1a"/>
+              <!-- Angry brows pointing down toward center -->
+              <line x1="33" y1="63" x2="52" y2="69" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="87" y1="63" x2="68" y2="69" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"/>
+              <!-- Frown -->
+              <path d="M44 113 Q60 104 76 113" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
+              <!-- Antennae -->
+              <path d="M46 55 Q40 38 34 28" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="33" cy="26" r="4" fill="#1a1a1a"/>
+              <path d="M74 55 Q80 38 86 28" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="87" cy="26" r="4" fill="#1a1a1a"/>
+              <!-- ResumeBuzz text -->
+              <text x="112" y="82" font-family="Georgia,'Times New Roman',serif" font-size="26" font-weight="700" fill="#C9A84C" letter-spacing="0.5">Resume</text>
+              <text x="112" y="112" font-family="Georgia,'Times New Roman',serif" font-size="26" font-weight="700" fill="#C9A84C" letter-spacing="0.5">Buzz</text>
+              <text x="114" y="134" font-family="Arial,sans-serif" font-size="10" fill="#C9A84C" letter-spacing="3" opacity="0.75">PREVIEW</text>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#rbwm)"/>
+        </svg>
+      </div>
+      <div class="output-placeholder" id="outputPlaceholder">Your generated draft will appear here. Good things come to those who buzz.</div>
+      <div class="output-content" id="outputContent"></div>
+
+      <!-- Score Comparison -->
+      <div id="scoreCompare" style="display:none;margin-top:2rem;border:1px solid rgba(232,184,75,0.22);border-radius:10px;overflow:hidden;font-family:'DM Sans',sans-serif">
+        <div style="padding:0.85rem 1.2rem;background:rgba(232,184,75,0.07);border-bottom:1px solid rgba(232,184,75,0.15);display:flex;align-items:center;justify-content:space-between">
+          <div style="font-weight:700;font-size:0.88rem;color:var(--gold)">📊 ATS Score Comparison</div>
+          <div style="font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:0.05em">ORIGINAL → AI-BUILT</div>
+        </div>
+        <div id="scLoading" style="padding:1.4rem;text-align:center;color:var(--muted);font-size:0.82rem">
+          🐝 Running post-build audit…
+        </div>
+        <div id="scResults" style="display:none;padding:1.2rem 1.4rem">
+          <!-- Overall -->
+          <div style="display:flex;align-items:center;justify-content:center;gap:1.8rem;padding:1rem;background:rgba(232,184,75,0.04);border-radius:8px;margin-bottom:1rem">
+            <div style="text-align:center">
+              <div id="scBefore" style="font-size:2.2rem;font-weight:800;color:rgba(255,255,255,0.35);line-height:1">—</div>
+              <div style="font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:0.3rem;letter-spacing:0.08em">ORIGINAL</div>
+            </div>
+            <div style="font-size:1.6rem;color:var(--gold-dim);line-height:1">→</div>
+            <div style="text-align:center">
+              <div id="scAfter" style="font-size:2.2rem;font-weight:800;color:var(--gold);line-height:1">—</div>
+              <div style="font-size:0.62rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:0.3rem;letter-spacing:0.08em">AI-BUILT</div>
+            </div>
+            <div id="scDelta" style="font-size:1rem;font-weight:700;margin-left:0.5rem"></div>
+          </div>
+          <!-- Category rows -->
+          <div id="scCategories" style="display:flex;flex-direction:column;gap:0.45rem"></div>
+        </div>
+      </div>
+
+    </div>
+    <div id="payCta" style="display:none;flex-direction:column;border-top:2px solid var(--gold-dim);background:linear-gradient(90deg,#1A1508,#0F0D08)">
+      <!-- Top row: label + buttons -->
+      <div style="padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+        <div>
+          <div style="font-size:0.95rem;font-weight:700;color:var(--gold)">🐝 Your draft is ready!</div>
+          <div id="paySubtitle" style="font-size:0.8rem;color:var(--muted);margin-top:0.2rem">Pay to download a clean, watermark-free copy. No strings, no stings.</div>
+        </div>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+          <a href="#" id="payOnceBtn" style="background:linear-gradient(135deg,var(--gold-bright),var(--amber));color:#111;font-weight:700;font-size:0.88rem;padding:0.6rem 1.4rem;border-radius:6px;text-decoration:none;white-space:nowrap;box-shadow:0 3px 12px rgba(245,200,64,0.3)">Pay &amp; Download $19</a>
+          <a href="#" id="paySubBtn" style="background:rgba(232,184,75,0.1);color:var(--gold);font-size:0.88rem;padding:0.6rem 1.4rem;border-radius:6px;border:1.5px solid var(--gold-dim);text-decoration:none;white-space:nowrap;font-weight:600">Go Pro $49/mo</a>
+        </div>
+      </div>
+      <!-- Promo code row -->
+      <div style="padding:0.6rem 1.5rem 0.85rem;border-top:1px solid rgba(232,184,75,0.1)">
+        <div id="promoToggle" style="font-size:0.75rem;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:0.35rem;user-select:none">
+          <span id="promoChevron" style="font-size:0.65rem;transition:transform 0.2s">▶</span>
+          Have a promo code?
+        </div>
+        <div id="promoRow" style="display:none;margin-top:0.55rem;display:none;align-items:center;gap:0.5rem;flex-wrap:wrap">
+          <input id="promoInput" type="text" placeholder="Enter code" maxlength="32"
+            style="background:#0C0A06;border:1.5px solid var(--gold-dim);color:#fff;font-family:'DM Mono',monospace;font-size:0.8rem;padding:0.38rem 0.7rem;border-radius:5px;width:160px;outline:none;text-transform:uppercase;letter-spacing:0.05em"/>
+          <button id="promoApplyBtn" style="background:rgba(232,184,75,0.12);border:1.5px solid var(--gold-dim);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;padding:0.38rem 0.85rem;border-radius:5px;cursor:pointer">Apply</button>
+          <span id="promoMsg" style="font-size:0.75rem"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+
+  // Pre-fill from job tracker dashboard
+  (function() {
+    try {
+      var raw = sessionStorage.getItem('rb_jb_prefill');
+      if (!raw) return;
+      sessionStorage.removeItem('rb_jb_prefill');
+      var d = JSON.parse(raw);
+      var map = { clientName:'name', clientEmail:'email', clientPhone:'phone', clientLocation:'location', clientLinkedin:'linkedin', targetRole:'targetRole', jobDescription:'jd', summaryNotes:'summary', skillsTechnical:'skillsTechnical', skillsTools:'skillsTools', skillsLanguages:'skillsLanguages', certifications:'certifications' };
+      for (var id in map) {
+        var val = d[map[id]];
+        if (val) { var el = document.getElementById(id); if (el) el.value = val; }
+      }
+      if (d.experience) {
+        var wr = document.getElementById('writerNotes');
+        if (wr) wr.value = (wr.value ? wr.value + '\n\n' : '') + 'EXPERIENCE:\n' + d.experience;
+      }
+    } catch {}
+  })();
+
+  var isAdmin = document.cookie.split(';').some(function(c){ return c.trim() === 'oye_admin=1'; });
+
+  var generateBtn    = document.getElementById('generateBtn');
+  var generateSpinner= document.getElementById('generateSpinner');
+  var generateLabel  = document.getElementById('generateBtnLabel');
+  var outputArea     = document.getElementById('outputArea');
+  var outputContent  = document.getElementById('outputContent');
+  var outputPlaceholder = document.getElementById('outputPlaceholder');
+  var statusLine     = document.getElementById('statusLine');
+  var copyBtn        = document.getElementById('copyBtn');
+  var clearBtn       = document.getElementById('clearBtn');
+
+  var socialList  = document.getElementById('socialList');
+  var addSocialBtn= document.getElementById('addSocialBtn');
+  var expList     = document.getElementById('expList');
+  var addExpBtn   = document.getElementById('addExpBtn');
+  var eduList     = document.getElementById('eduList');
+  var addEduBtn   = document.getElementById('addEduBtn');
+
+  var additionalToggle = document.getElementById('additionalToggle');
+  var additionalBody   = document.getElementById('additionalBody');
+  var additionalChevron= document.getElementById('additionalChevron');
+
+  var tplCareerStage = document.getElementById('tplCareerStage');
+  var tplStyle       = document.getElementById('tplStyle');
+  var tplColor       = document.getElementById('tplColor');
+  var tplWeight      = document.getElementById('tplWeight');
+  var tplPhoto       = document.getElementById('tplPhoto');
+  var tplFilename    = document.getElementById('tplFilename');
+
+  var timerInterval = null;
+  var timerSeconds  = 0;
+  var tokenCount    = 0;
+  var isGenerating  = false;
+
+  /* ── TEMPLATE PICKER ──────────────────────────────── */
+  var stylesByStage = {
+    new: ['T1','T2'],
+    exp: ['T3','T4','T5','T6','T7','T8']
+  };
+  var noPhotoTemplates = ['T4','T5','T7','T8'];
+  var templateNames = {
+    T1:'Fresh Start', T2:'New Hire',
+    T3:'Moving Up',   T4:'Career Change',
+    T5:'The Pivot',   T6:'Promotion',
+    T7:'Step Up',     T8:'Second Act'
+  };
+
+  function populateStyles(){
+    var stage = tplCareerStage.value;
+    var opts  = stylesByStage[stage];
+    tplStyle.innerHTML = '';
+    opts.forEach(function(t){
+      var o = document.createElement('option');
+      o.value = t;
+      o.textContent = templateNames[t] || 'Template ' + t.replace('T','');
+      tplStyle.appendChild(o);
+    });
+    updatePhotoOption();
+    updateFilename();
+  }
+
+  function updatePhotoOption(){
+    var t = tplStyle.value;
+    var forced = noPhotoTemplates.indexOf(t) !== -1;
+    tplPhoto.disabled = forced;
+    if(forced){
+      tplPhoto.value = 'NP';
+    }
+  }
+
+  function updateFilename(){
+    var name   = templateNames[tplStyle.value] || tplStyle.value;
+    var photo  = tplPhoto.value === 'WP' ? 'With Photo' : 'No Photo';
+    var weight = tplWeight.value;
+    var color  = tplColor.value;
+    tplFilename.textContent = name + ' · ' + color + ' · ' + weight + ' · ' + photo;
+  }
+
+  tplCareerStage.addEventListener('change', populateStyles);
+  tplStyle.addEventListener('change', function(){updatePhotoOption();updateFilename()});
+  tplColor.addEventListener('change', updateFilename);
+  tplWeight.addEventListener('change', updateFilename);
+  tplPhoto.addEventListener('change', updateFilename);
+  populateStyles();
+
+  /* ── SOCIAL LINKS ─────────────────────────────────── */
+  var socialPlatforms = ['LinkedIn','GitHub','Portfolio','Behance','Dribbble','X / Twitter','Instagram','TikTok','Other'];
+
+  addSocialBtn.addEventListener('click', function(){
+    var row = document.createElement('div');
+    row.className = 'social-row';
+    var sel = document.createElement('select');
+    socialPlatforms.forEach(function(p){
+      var o = document.createElement('option');
+      o.value = p; o.textContent = p;
+      sel.appendChild(o);
+    });
+    var inp = document.createElement('input');
+    inp.type = 'url';
+    inp.placeholder = 'https://...';
+    var rm = document.createElement('button');
+    rm.className = 'btn-remove-social';
+    rm.textContent = '×';
+    rm.type = 'button';
+    rm.addEventListener('click', function(){row.remove()});
+    row.appendChild(sel);
+    row.appendChild(inp);
+    row.appendChild(rm);
+    socialList.appendChild(row);
+  });
+
+  function getSocials(){
+    var rows = socialList.querySelectorAll('.social-row');
+    var out = [];
+    rows.forEach(function(r){
+      var sel = r.querySelector('select');
+      var inp = r.querySelector('input');
+      if(sel && inp && inp.value.trim()){
+        out.push({platform: sel.value, url: inp.value.trim()});
+      }
+    });
+    return out;
+  }
+
+  /* ── EXPERIENCE ───────────────────────────────────── */
+  var expCounter = 0;
+
+  addExpBtn.addEventListener('click', function(){ addExpCard() });
+
+  function addExpCard(data){
+    expCounter++;
+    var id = 'exp'+expCounter;
+    var card = document.createElement('div');
+    card.className = 'exp-card open';
+    card.id = id;
+
+    var header = document.createElement('div');
+    header.className = 'exp-card-header';
+
+    var title = document.createElement('span');
+    title.className = 'exp-card-title';
+    title.textContent = 'New Position';
+
+    var actions = document.createElement('div');
+    actions.className = 'exp-card-actions';
+
+    var rm = document.createElement('button');
+    rm.className = 'btn-remove-exp';
+    rm.type = 'button';
+    rm.textContent = 'Remove';
+    rm.addEventListener('click', function(e){
+      e.stopPropagation();
+      card.remove();
+    });
+
+    var chev = document.createElement('span');
+    chev.className = 'exp-chevron';
+    chev.innerHTML = '&#9660;';
+
+    actions.appendChild(rm);
+    actions.appendChild(chev);
+    header.appendChild(title);
+    header.appendChild(actions);
+
+    header.addEventListener('click', function(){
+      card.classList.toggle('open');
+    });
+
+    var body = document.createElement('div');
+    body.className = 'exp-card-body';
+
+    var fields = [
+      {id:'company',    label:'Company',          type:'text',     placeholder:'Acme Corp'},
+      {id:'jobtitle',   label:'Title',             type:'text',     placeholder:'Senior Engineer'},
+      {id:'joblocation',label:'Location',          type:'text',     placeholder:'Austin, TX'},
+    ];
+
+    var fg = document.createElement('div');
+    fg.className = 'field-group';
+
+    var r1 = document.createElement('div');
+    r1.className = 'field-row';
+    ['company','jobtitle'].forEach(function(f){
+      var fi = fields.find(function(x){return x.id===f});
+      r1.appendChild(makeField(fi, id));
+    });
+    fg.appendChild(r1);
+
+    var r2 = document.createElement('div');
+    r2.className = 'field-row three';
+    ['joblocation','start','end'].forEach(function(key){
+      var labelTxt = key === 'joblocation' ? 'Location' : key === 'start' ? 'Start' : 'End';
+      var ph = key === 'start' ? 'Jan 2020' : key === 'end' ? 'Dec 2023 or Present' : 'Austin, TX';
+      var wrap = document.createElement('div');
+      var lbl = document.createElement('label');
+      lbl.textContent = labelTxt;
+      lbl.setAttribute('for', id+'-'+key);
+      var inp = document.createElement('input');
+      inp.type = 'text';
+      inp.id = id+'-'+key;
+      inp.placeholder = ph;
+      inp.setAttribute('data-field', key);
+      if(key === 'company' || key === 'jobtitle'){
+        inp.addEventListener('input', function(){
+          var c = body.querySelector('[data-field=company]');
+          var t = body.querySelector('[data-field=jobtitle]');
+          var cv = c ? c.value : '';
+          var tv = t ? t.value : '';
+          title.textContent = (tv && cv) ? tv + ' at ' + cv : (tv || cv || 'New Position');
+        });
+      }
+      wrap.appendChild(lbl);
+      wrap.appendChild(inp);
+      r2.appendChild(wrap);
+    });
+    fg.appendChild(r2);
+
+    var descWrap = document.createElement('div');
+    var descLabel = document.createElement('label');
+    descLabel.textContent = 'Raw Notes';
+    descLabel.setAttribute('for', id+'-desc');
+    var descTa = document.createElement('textarea');
+    descTa.id = id+'-desc';
+    descTa.rows = 3;
+    descTa.placeholder = 'Day-to-day responsibilities, context, team size...';
+    descTa.setAttribute('data-field','description');
+    descWrap.appendChild(descLabel);
+    descWrap.appendChild(descTa);
+    fg.appendChild(descWrap);
+
+    var achWrap = document.createElement('div');
+    var achLabel = document.createElement('label');
+    achLabel.textContent = 'Key Achievements';
+    achLabel.setAttribute('for', id+'-ach');
+    var achTa = document.createElement('textarea');
+    achTa.id = id+'-ach';
+    achTa.rows = 3;
+    achTa.placeholder = 'One per line — numbers and specific wins';
+    achTa.setAttribute('data-field','achievements');
+    var achHint = document.createElement('div');
+    achHint.className = 'field-hint';
+    achHint.textContent = 'One per line — numbers and specific wins';
+    achWrap.appendChild(achLabel);
+    achWrap.appendChild(achTa);
+    achWrap.appendChild(achHint);
+    fg.appendChild(achWrap);
+
+    body.appendChild(fg);
+    card.appendChild(header);
+    card.appendChild(body);
+    expList.appendChild(card);
+
+    if(data){
+      var compInp = body.querySelector('[data-field=company]');
+      if(compInp) compInp.value = data.company || '';
+      var titleInp = body.querySelector('[data-field=jobtitle]');
+      if(titleInp) titleInp.value = data.title || '';
+      var locInp = body.querySelector('[data-field=joblocation]');
+      if(locInp) locInp.value = data.location || '';
+      var startInp = body.querySelector('[data-field=start]');
+      if(startInp) startInp.value = data.start || '';
+      var endInp = body.querySelector('[data-field=end]');
+      if(endInp) endInp.value = data.end || '';
+      var descInp = body.querySelector('[data-field=description]');
+      if(descInp) descInp.value = data.description || '';
+      var achInp = body.querySelector('[data-field=achievements]');
+      if(achInp) achInp.value = (data.achievements || []).join('\n');
+      if(data.company || data.title){
+        title.textContent = (data.title && data.company) ? data.title + ' at ' + data.company : (data.title || data.company);
+      }
+    }
+
+    var compField = body.querySelector('[data-field=company]');
+    var titleField = body.querySelector('[data-field=jobtitle]');
+    if(compField && titleField){
+      [compField, titleField].forEach(function(f){
+        f.addEventListener('input', function(){
+          var cv = compField.value;
+          var tv = titleField.value;
+          title.textContent = (tv && cv) ? tv + ' at ' + cv : (tv || cv || 'New Position');
+        });
+      });
+    }
+
+    return card;
+  }
+
+  function makeField(fi, prefix){
+    var wrap = document.createElement('div');
+    var lbl = document.createElement('label');
+    lbl.textContent = fi.label;
+    lbl.setAttribute('for', prefix+'-'+fi.id);
+    var inp = document.createElement('input');
+    inp.type = fi.type;
+    inp.id = prefix+'-'+fi.id;
+    inp.placeholder = fi.placeholder || '';
+    inp.setAttribute('data-field', fi.id);
+    wrap.appendChild(lbl);
+    wrap.appendChild(inp);
+    return wrap;
+  }
+
+  function getExperience(){
+    var cards = expList.querySelectorAll('.exp-card');
+    var out = [];
+    cards.forEach(function(card){
+      var g = function(f){
+        var el = card.querySelector('[data-field='+f+']');
+        return el ? el.value.trim() : '';
+      };
+      var achEl = card.querySelector('[data-field=achievements]');
+      var achRaw = achEl ? achEl.value.trim() : '';
+      var achievements = achRaw ? achRaw.split('\n').map(function(l){return l.trim()}).filter(Boolean) : [];
+      out.push({
+        company: g('company'),
+        title: g('jobtitle'),
+        location: g('joblocation'),
+        start: g('start'),
+        end: g('end'),
+        description: g('description'),
+        achievements: achievements
+      });
+    });
+    return out;
+  }
+
+  /* ── EDUCATION ────────────────────────────────────── */
+  var eduCounter = 0;
+
+  addEduBtn.addEventListener('click', function(){ addEduRow() });
+
+  function addEduRow(data){
+    eduCounter++;
+    var id = 'edu'+eduCounter;
+    var row = document.createElement('div');
+    row.className = 'edu-row';
+    row.id = id;
+
+    var rm = document.createElement('button');
+    rm.className = 'edu-remove';
+    rm.type = 'button';
+    rm.textContent = 'Remove';
+    rm.addEventListener('click', function(){row.remove()});
+
+    var r1 = document.createElement('div');
+    r1.className = 'field-row';
+    ['Degree','Major'].forEach(function(lbl){
+      var key = lbl.toLowerCase();
+      var wrap = document.createElement('div');
+      var l = document.createElement('label');
+      l.textContent = lbl;
+      l.setAttribute('for', id+'-'+key);
+      var inp = document.createElement('input');
+      inp.type = 'text';
+      inp.id = id+'-'+key;
+      inp.setAttribute('data-field', key);
+      inp.placeholder = lbl === 'Degree' ? 'B.Sc.' : 'Computer Science';
+      wrap.appendChild(l); wrap.appendChild(inp);
+      r1.appendChild(wrap);
+    });
+
+    var r2 = document.createElement('div');
+    r2.className = 'field-row three';
+    [{key:'institution',label:'Institution',ph:'University of Texas'},{key:'year',label:'Year',ph:'2019'},{key:'honors',label:'Honors / GPA',ph:'Cum Laude'}].forEach(function(f){
+      var wrap = document.createElement('div');
+      var l = document.createElement('label');
+      l.textContent = f.label;
+      l.setAttribute('for', id+'-'+f.key);
+      var inp = document.createElement('input');
+      inp.type = 'text';
+      inp.id = id+'-'+f.key;
+      inp.setAttribute('data-field', f.key);
+      inp.placeholder = f.ph;
+      wrap.appendChild(l); wrap.appendChild(inp);
+      r2.appendChild(wrap);
+    });
+
+    row.appendChild(rm);
+    row.appendChild(r1);
+    row.appendChild(r2);
+    eduList.appendChild(row);
+
+    if(data){
+      ['degree','major','institution','year','honors'].forEach(function(f){
+        var el = row.querySelector('[data-field='+f+']');
+        if(el && data[f]) el.value = data[f];
+      });
+    }
+
+    return row;
+  }
+
+  function getEducation(){
+    var rows = eduList.querySelectorAll('.edu-row');
+    var out = [];
+    rows.forEach(function(row){
+      var g = function(f){
+        var el = row.querySelector('[data-field='+f+']');
+        return el ? el.value.trim() : '';
+      };
+      out.push({
+        degree: g('degree'),
+        major: g('major'),
+        institution: g('institution'),
+        year: g('year'),
+        honors: g('honors'),
+        gpa: ''
+      });
+    });
+    return out;
+  }
+
+  /* ── COLLAPSIBLE ADDITIONAL ───────────────────────── */
+  additionalToggle.addEventListener('click', function(){
+    additionalBody.classList.toggle('open');
+    additionalChevron.classList.toggle('open');
+  });
+
+  /* ── COLLECT FORM ─────────────────────────────────── */
+  function collectIntake(){
+    var certsRaw = document.getElementById('certifications').value.trim();
+    var certs = certsRaw ? certsRaw.split('\n').map(function(l){return l.trim()}).filter(Boolean) : [];
+
+    var splitLines = function(id){
+      var el = document.getElementById(id);
+      var v = el ? el.value.trim() : '';
+      return v ? v.split('\n').map(function(l){return l.trim()}).filter(Boolean) : [];
+    };
+
+    var tNum = tplStyle.value.replace('T','');
+    var tpl = 'Template_' + tNum + '_' + tplPhoto.value + '_' + tplWeight.value + '_' + tplColor.value;
+
+    return {
+      docType: document.getElementById('docType').value,
+      region: document.getElementById('region').value,
+      client: {
+        name: document.getElementById('clientName').value.trim(),
+        email: document.getElementById('clientEmail').value.trim(),
+        phone: document.getElementById('clientPhone').value.trim(),
+        location: document.getElementById('clientLocation').value.trim(),
+        linkedin: document.getElementById('clientLinkedin').value.trim(),
+        social: getSocials()
+      },
+      target: {
+        role: document.getElementById('targetRole').value.trim(),
+        industry: document.getElementById('targetIndustry').value.trim(),
+        seniority: document.getElementById('careerLevel').value,
+        job_description: document.getElementById('jobDescription').value.trim()
+      },
+      summary_notes: document.getElementById('summaryNotes').value.trim(),
+      experience: getExperience(),
+      education: getEducation(),
+      certifications: certs,
+      skills: {
+        technical: splitLines('skillsTechnical'),
+        tools: splitLines('skillsTools'),
+        languages: splitLines('skillsLanguages')
+      },
+      additional: {
+        volunteer: document.getElementById('addVolunteer').value.trim(),
+        publications: document.getElementById('addPublications').value.trim(),
+        board: document.getElementById('addBoard').value.trim(),
+        other: document.getElementById('addOther').value.trim()
+      },
+      writer_notes: document.getElementById('writerNotes').value.trim(),
+      template: tpl
+    };
+  }
+
+  /* ── GENERATE ─────────────────────────────────────── */
+  generateBtn.addEventListener('click', function(){
+    if(isGenerating) return;
+    startGenerate();
+  });
+
+  function setGenerating(v){
+    isGenerating = v;
+    generateBtn.disabled = v;
+    generateSpinner.style.display = v ? 'block' : 'none';
+    generateLabel.textContent = v ? 'Generating...' : '🐝 Generate Draft';
+  }
+
+  function startTimer(){
+    timerSeconds = 0;
+    tokenCount = 0;
+    statusLine.textContent = 'Generating... 0:00 elapsed';
+    timerInterval = setInterval(function(){
+      timerSeconds++;
+      var m = Math.floor(timerSeconds/60);
+      var s = timerSeconds % 60;
+      statusLine.textContent = 'Generating... ' + m + ':' + (s<10?'0':'')+s + ' elapsed';
+    }, 1000);
+  }
+
+  function stopTimer(){
+    if(timerInterval){ clearInterval(timerInterval); timerInterval = null; }
+  }
+
+  async function startGenerate(){
+    // Check remaining usage before generating
+    try{
+      var checkRes = await fetch('/api/generate');
+      var checkData = await checkRes.json();
+      if(checkData.remaining === 0){
+        document.getElementById('limitBanner').style.display = 'block';
+        generateBtn.disabled = true;
+        return;
+      }
+    } catch(e){}
+
+    var intake = collectIntake();
+    outputContent.textContent = '';
+    outputPlaceholder.style.display = 'none';
+    document.getElementById('watermark').style.display = 'none';
+    document.getElementById('payCta').style.display = 'none';
+    setGenerating(true);
+    startTimer();
+
+    try{
+      var res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(intake)
+      });
+
+      if(res.status === 429){
+        stopTimer();
+        setGenerating(false);
+        document.getElementById('limitBanner').style.display = 'block';
+        generateBtn.disabled = true;
+        outputContent.className = 'output-content';
+        outputContent.textContent = "You've used all 10 free previews this week.";
+        return;
+      }
+
+      if(!res.ok){
+        stopTimer();
+        setGenerating(false);
+        var errText = 'Error ' + res.status + ': ' + res.statusText;
+        try{ var errJson = await res.json(); errText = errJson.error || errText; } catch(e){}
+        outputContent.className = 'output-error';
+        outputContent.textContent = errText;
+        statusLine.textContent = 'Error';
+        return;
+      }
+
+      outputContent.className = 'output-content';
+      var reader = res.body.getReader();
+      var decoder = new TextDecoder();
+      var buf = '';
+
+      while(true){
+        var chunk = await reader.read();
+        if(chunk.done) break;
+        buf += decoder.decode(chunk.value, {stream:true});
+        var lines = buf.split('\n');
+        buf = lines.pop();
+        for(var i=0;i<lines.length;i++){
+          var line = lines[i].trim();
+          if(!line) continue;
+          if(line.startsWith('data:')){
+            var jsonStr = line.slice(5).trim();
+            if(jsonStr === '[DONE]') continue;
+            try{
+              var evt = JSON.parse(jsonStr);
+              if(evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta'){
+                outputContent.textContent += evt.delta.text;
+                tokenCount++;
+                outputArea.scrollTop = outputArea.scrollHeight;
+              } else if(evt.type === 'message_stop'){
+                stopTimer();
+                setGenerating(false);
+                var m2 = Math.floor(timerSeconds/60);
+                var s2 = timerSeconds % 60;
+                statusLine.textContent = 'Done — ' + tokenCount + ' chunks · ' + m2 + ':' + (s2<10?'0':'')+s2;
+                if (!isAdmin) document.getElementById('watermark').style.display = 'block';
+                if (!isAdmin) document.getElementById('payCta').style.display = 'flex';
+                runPostBuildAudit();
+              }
+            } catch(e){}
+          }
+        }
+      }
+
+      stopTimer();
+      if(isGenerating){
+        setGenerating(false);
+        statusLine.textContent = 'Done — ' + tokenCount + ' chunks';
+        if (!isAdmin) document.getElementById('watermark').style.display = 'block';
+        if (!isAdmin) document.getElementById('payCta').style.display = 'flex';
+        runPostBuildAudit();
+      }
+
+    } catch(e){
+      stopTimer();
+      setGenerating(false);
+      outputContent.className = 'output-error';
+      outputContent.textContent = 'Request failed: ' + (e.message || 'unknown error');
+      statusLine.textContent = 'Error';
+    }
+  }
+
+  /* ── COPY / CLEAR ─────────────────────────────────── */
+  copyBtn.addEventListener('click', function(){
+    var wm = document.getElementById('watermark');
+    if(wm && wm.style.display !== 'none'){
+      copyBtn.textContent = 'Pay to copy';
+      setTimeout(function(){copyBtn.textContent = 'Copy'}, 1800);
+      return;
+    }
+    var text = outputContent.textContent;
+    if(!text) return;
+    navigator.clipboard.writeText(text).then(function(){
+      copyBtn.textContent = 'Copied!';
+      setTimeout(function(){copyBtn.textContent = 'Copy'}, 1500);
+    }).catch(function(){
+      copyBtn.textContent = 'Failed';
+      setTimeout(function(){copyBtn.textContent = 'Copy'}, 1500);
+    });
+  });
+
+  /* ── COPY PROTECTION ───────────────────────────────── */
+  if (!isAdmin) {
+    outputContent.addEventListener('copy', function(e){ e.preventDefault(); });
+    outputContent.addEventListener('cut', function(e){ e.preventDefault(); });
+    outputContent.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+    outputContent.addEventListener('keydown', function(e){
+      if((e.ctrlKey || e.metaKey) && ['a','c','x'].indexOf(e.key.toLowerCase()) !== -1){
+        e.preventDefault();
+      }
+    });
+  }
+
+  clearBtn.addEventListener('click', function(){
+    outputContent.textContent = '';
+    outputContent.className = 'output-content';
+    outputPlaceholder.style.display = 'block';
+    document.getElementById('watermark').style.display = 'none';
+    document.getElementById('payCta').style.display = 'none';
+    document.getElementById('scoreCompare').style.display = 'none';
+    statusLine.textContent = 'Ready';
+    stopTimer();
+    if(isGenerating){
+      setGenerating(false);
+    }
+  });
+
+  /* ── PARSE / AUTO-FILL ───────────────────────────────── */
+  var parseDropzone  = document.getElementById('parseDropzone');
+  var parseFileInput = document.getElementById('parseFileInput');
+  var parseStatus    = document.getElementById('parseStatus');
+
+  parseDropzone.addEventListener('click', function(){ parseFileInput.click(); });
+
+  parseDropzone.addEventListener('dragover', function(e){
+    e.preventDefault();
+    this.style.borderColor = 'var(--gold)';
+    this.style.background  = 'rgba(232,184,75,0.08)';
+  });
+  parseDropzone.addEventListener('dragleave', function(){
+    this.style.borderColor = 'var(--gold-dim)';
+    this.style.background  = 'transparent';
+  });
+  parseDropzone.addEventListener('drop', function(e){
+    e.preventDefault();
+    this.style.borderColor = 'var(--gold-dim)';
+    this.style.background  = 'transparent';
+    var f = e.dataTransfer.files[0];
+    if(f) doParseResume(f);
+  });
+  parseFileInput.addEventListener('change', function(){
+    if(this.files && this.files[0]) doParseResume(this.files[0]);
+    this.value = '';
+  });
+
+  function showParseStatus(msg, type){
+    parseStatus.style.display = 'block';
+    parseStatus.textContent = msg;
+    var bg, color, border;
+    if(type === 'loading'){ bg='rgba(232,184,75,0.08)'; color='var(--gold)'; border='1px solid rgba(232,184,75,0.25)'; }
+    else if(type === 'success'){ bg='rgba(168,184,76,0.1)'; color='#A8C84C'; border='1px solid rgba(168,184,76,0.3)'; }
+    else { bg='rgba(224,90,58,0.1)'; color='var(--red)'; border='1px solid rgba(224,90,58,0.3)'; }
+    parseStatus.style.background = bg;
+    parseStatus.style.color = color;
+    parseStatus.style.border = border;
+  }
+
+  async function doParseResume(file){
+    showParseStatus('🐝 Reading resume...', 'loading');
+    var fd = new FormData();
+    fd.append('resume', file);
+    try{
+      var res  = await fetch('/api/parse', {method:'POST', body:fd});
+      var data = await res.json();
+      if(data.error){
+        showParseStatus('Could not parse: ' + data.error, 'error');
+        return;
+      }
+      populateFromParsed(data);
+      showParseStatus('✓ Form filled from ' + file.name + ' — review and adjust as needed', 'success');
+      setTimeout(function(){ parseStatus.style.display = 'none'; }, 6000);
+    } catch(e){
+      showParseStatus('Connection error. Please try again.', 'error');
+    }
+  }
+
+  function populateFromParsed(data){
+    var set = function(id, val){
+      var el = document.getElementById(id);
+      if(el) el.value = val || '';
+    };
+    var c = data.client || {};
+    set('clientName',     c.name);
+    set('clientEmail',    c.email);
+    set('clientPhone',    c.phone);
+    set('clientLocation', c.location);
+    set('clientLinkedin', c.linkedin);
+    set('summaryNotes',   data.summary_notes);
+
+    var t = data.target || {};
+    set('targetRole',     t.role);
+    set('targetIndustry', t.industry);
+
+    // Experience
+    expList.innerHTML = '';
+    expCounter = 0;
+    var exps = data.experience || [];
+    if(exps.length > 0){ exps.forEach(function(j){ addExpCard(j); }); }
+    else { addExpCard(); }
+
+    // Education
+    eduList.innerHTML = '';
+    eduCounter = 0;
+    var edus = data.education || [];
+    if(edus.length > 0){ edus.forEach(function(e){ addEduRow(e); }); }
+    else { addEduRow(); }
+
+    // Skills
+    var sk = data.skills || {};
+    set('skillsTechnical', (sk.technical || []).join('\n'));
+    set('skillsTools',     (sk.tools     || []).join('\n'));
+    set('skillsLanguages', (sk.languages || []).join('\n'));
+
+    // Certifications
+    set('certifications', (data.certifications || []).join('\n'));
+
+    // Scroll back to top
+    document.getElementById('leftPanel').scrollTop = 0;
+  }
+
+  /* ── POST-BUILD AUDIT ─────────────────────────────── */
+  async function runPostBuildAudit() {
+    var preAudit = null;
+    try { preAudit = JSON.parse(sessionStorage.getItem('rb_pre_audit')); } catch(e) {}
+
+    var sc       = document.getElementById('scoreCompare');
+    var scLoad   = document.getElementById('scLoading');
+    var scRes    = document.getElementById('scResults');
+    sc.style.display   = 'block';
+    scLoad.style.display = 'block';
+    scRes.style.display  = 'none';
+    outputArea.scrollTop = outputArea.scrollHeight;
+
+    try {
+      var res = await fetch('/api/score', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({text: outputContent.textContent.trim()})
+      });
+      if (!res.ok) throw new Error('score ' + res.status);
+      var data = await res.json();
+
+      scLoad.style.display = 'none';
+      scRes.style.display  = 'block';
+
+      // Overall score row
+      var before = preAudit ? preAudit.overall : null;
+      var after  = data.overall_score;
+      document.getElementById('scBefore').textContent = before !== null ? before : '—';
+      document.getElementById('scAfter').textContent  = after;
+
+      var deltaEl = document.getElementById('scDelta');
+      if (before !== null) {
+        var diff = after - before;
+        deltaEl.textContent = (diff >= 0 ? '▲ +' : '▼ ') + diff;
+        deltaEl.style.color = diff > 0 ? '#5CB85C' : diff < 0 ? '#E05555' : 'var(--muted)';
+      }
+
+      // Category rows
+      var cats = [
+        {key:'ats_compatibility', label:'ATS Compat.',  preKey:'ats'},
+        {key:'keyword_density',   label:'Keywords',     preKey:'keywords'},
+        {key:'impact_language',   label:'Impact Lang.', preKey:'impact'},
+        {key:'structure',         label:'Structure',    preKey:'structure'},
+      ];
+      var catDiv = document.getElementById('scCategories');
+      catDiv.innerHTML = '';
+      cats.forEach(function(c) {
+        var afterScore  = data[c.key] ? data[c.key].score : null;
+        var beforeScore = preAudit ? preAudit[c.preKey] : null;
+        var diff2 = (beforeScore !== null && afterScore !== null) ? afterScore - beforeScore : null;
+        var dStr  = diff2 !== null ? (diff2 >= 0 ? '▲ +' : '▼ ') + diff2 : '';
+        var dCol  = diff2 > 0 ? '#5CB85C' : diff2 < 0 ? '#E05555' : 'var(--muted)';
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:0.8rem;padding:0.42rem 0.7rem;background:rgba(255,255,255,0.02);border-radius:6px';
+        row.innerHTML =
+          '<span style="font-size:0.77rem;color:var(--muted);width:90px;flex-shrink:0">' + c.label + '</span>' +
+          '<span style="font-family:DM Mono,monospace;font-size:0.77rem;color:rgba(255,255,255,0.35);width:42px">' + (beforeScore !== null ? beforeScore + '/25' : '—') + '</span>' +
+          '<span style="color:var(--gold-dim);font-size:0.72rem">→</span>' +
+          '<span style="font-family:DM Mono,monospace;font-size:0.77rem;color:var(--gold);width:42px">' + (afterScore !== null ? afterScore + '/25' : '—') + '</span>' +
+          (dStr ? '<span style="font-size:0.77rem;font-weight:700;color:' + dCol + '">' + dStr + '</span>' : '');
+        catDiv.appendChild(row);
+      });
+
+      outputArea.scrollTop = outputArea.scrollHeight;
+    } catch(e) {
+      scLoad.textContent = 'Score check unavailable.';
+    }
+  }
+
+  /* ── PROMO CODE ────────────────────────────────────── */
+  var promoUnlocked = false;
+
+  document.getElementById('promoToggle').addEventListener('click', function(){
+    var row = document.getElementById('promoRow');
+    var chevron = document.getElementById('promoChevron');
+    var open = row.style.display === 'flex';
+    row.style.display = open ? 'none' : 'flex';
+    chevron.style.transform = open ? '' : 'rotate(90deg)';
+    if (!open) setTimeout(function(){ document.getElementById('promoInput').focus(); }, 50);
+  });
+
+  document.getElementById('promoInput').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') document.getElementById('promoApplyBtn').click();
+  });
+
+  document.getElementById('promoApplyBtn').addEventListener('click', async function(){
+    var code = document.getElementById('promoInput').value.trim();
+    var msg  = document.getElementById('promoMsg');
+    if (!code) return;
+    this.textContent = '…';
+    this.disabled = true;
+    try {
+      var res = await fetch('/api/promo', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({code: code})
+      });
+      var data = await res.json();
+      if (data.valid) {
+        promoUnlocked = true;
+        msg.textContent = '✓ Code applied';
+        msg.style.color = '#5CB85C';
+        // Update download button
+        var btn = document.getElementById('payOnceBtn');
+        btn.textContent = 'Download Free';
+        btn.style.background = 'linear-gradient(135deg,#5CB85C,#3d8b3d)';
+        btn.style.boxShadow = '0 3px 12px rgba(92,184,92,0.3)';
+        document.getElementById('paySubtitle').textContent = 'Promo code applied — download your resume for free';
+        document.getElementById('promoRow').style.display = 'none';
+        document.getElementById('promoToggle').style.display = 'none';
+      } else {
+        msg.textContent = 'Invalid code';
+        msg.style.color = '#E05555';
+        this.textContent = 'Apply';
+        this.disabled = false;
+      }
+    } catch(e) {
+      msg.textContent = 'Error — try again';
+      msg.style.color = '#E05555';
+      this.textContent = 'Apply';
+      this.disabled = false;
+    }
+  });
+
+  /* ── PLAN DETECTION ───────────────────────────────── */
+  var urlPlan = (new URLSearchParams(window.location.search)).get('plan') || 'single';
+  var planPrices = { single: '$19', polish: '$79' };
+  var planPrice  = planPrices[urlPlan] || '$19';
+  document.getElementById('payOnceBtn').textContent = 'Pay & Download — ' + planPrice;
+  if (urlPlan === 'polish') {
+    document.getElementById('paySubtitle').textContent = 'Pay to download your AI draft. Our writer will polish and email the final version within 2 business days.';
+  }
+
+  /* ── DOWNLOAD / CHECKOUT ───────────────────────────── */
+  document.getElementById('payOnceBtn').addEventListener('click', async function(e){
+    e.preventDefault();
+    var md = (outputContent.textContent || '').trim();
+    if(!md){ alert('Generate a resume preview first.'); return; }
+
+    // Promo code unlocked — free direct download
+    if (promoUnlocked) {
+      var btn = this;
+      btn.textContent = '⏳ Preparing…';
+      btn.style.pointerEvents = 'none';
+      try {
+        var name = (document.getElementById('clientName').value || 'Resume').trim();
+        var res = await fetch('/api/download', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ markdown: md, filename: name })
+        });
+        if(!res.ok) throw new Error('Download failed (' + res.status + ')');
+        var blob = await res.blob();
+        var url  = URL.createObjectURL(blob);
+        var a    = document.createElement('a');
+        a.href = url;
+        a.download = name.replace(/[^a-zA-Z0-9 _-]/g,'').trim() + '.docx';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 2000);
+        btn.textContent = '✓ Downloaded';
+        setTimeout(function(){ btn.textContent = 'Download Free'; btn.style.pointerEvents = ''; }, 3000);
+      } catch(err) {
+        alert(err.message || 'Download error. Please try again.');
+        btn.textContent = 'Download Free';
+        btn.style.pointerEvents = '';
+      }
+      return;
+    }
+
+    // Paid path — go through Stripe Checkout
+    var btn = this;
+    btn.textContent = '⏳ Preparing checkout…';
+    btn.style.pointerEvents = 'none';
+    try {
+      var name  = (document.getElementById('clientName').value || 'Resume').trim();
+      var email = (document.getElementById('clientEmail').value || '').trim();
+      var res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ markdown: md, filename: name, email: email, plan: urlPlan })
+      });
+      var data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || 'Checkout failed');
+      window.location.href = data.url;
+    } catch(err) {
+      alert(err.message || 'Could not start checkout. Please try again.');
+      btn.textContent = 'Pay & Download — ' + planPrice;
+      btn.style.pointerEvents = '';
+    }
+  });
+
+  /* ── PRO SUBSCRIPTION BUTTON ───────────────────────── */
+  document.getElementById('paySubBtn').addEventListener('click', async function(e){
+    e.preventDefault();
+    var btn = this;
+    btn.textContent = '⏳ Loading…';
+    btn.style.pointerEvents = 'none';
+    try {
+      var email = (document.getElementById('clientEmail').value || '').trim();
+      var res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ markdown: '', filename: '', email: email, plan: 'pro' })
+      });
+      var data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || 'Checkout failed');
+      window.location.href = data.url;
+    } catch(err) {
+      alert(err.message || 'Could not start checkout. Please try again.');
+      btn.textContent = 'Go Pro — $49/mo';
+      btn.style.pointerEvents = '';
+    }
+  });
+
+  /* ── INIT ─────────────────────────────────────────── */
+  addExpCard();
+  addEduRow();
+
+  // Auto-fill from resume uploaded on audit page
+  (function(){
+    var stored = sessionStorage.getItem('rb_resume');
+    if(!stored) return;
+    sessionStorage.removeItem('rb_resume');
+    try {
+      var meta = JSON.parse(stored);
+      var parts = meta.dataUrl.split(',');
+      var bstr  = atob(parts[1]);
+      var u8    = new Uint8Array(bstr.length);
+      for(var i=0;i<bstr.length;i++) u8[i] = bstr.charCodeAt(i);
+      var file = new File([u8], meta.name, {type: meta.type});
+      doParseResume(file);
+    } catch(e){}
+  })();
+
+  async function checkUsage(){
+    try{
+      var r = await fetch('/api/generate');
+      var d = await r.json();
+      if(d.remaining === 0){
+        document.getElementById('limitBanner').style.display = 'block';
+        document.getElementById('generateBtn').disabled = true;
+      }
+    } catch(e){}
+  }
+  checkUsage();
+
+})();
+</script>
+<script>window.OYEChat = { brand: 'resumebuzz', adminUrl: 'https://bink.oyecreations.com', subjects: ['AI Builder', 'Human Writer', 'CV vs Resume'], turnstileSiteKey: '0x4AAAAAADUIs5uXgonNVbPD' };</script>
+<script defer src="https://bink.oyecreations.com/assets/chat-widget.js?v=22"></script>
+</body>
+</html>

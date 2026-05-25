@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResumeBuzz | Place Your Order</title>
+<meta name="robots" content="noindex">
+<style>
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;
+  --surface:#1B1B1B;
+  --border:#2E2E2E;
+  --gold:#C9A84C;
+  --gold-dim:#8A6F2E;
+  --text:#EBEBEB;
+  --muted:#8C8C8C;
+}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2.5rem 2rem;max-width:420px;width:100%}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--gold);margin-bottom:2rem;text-align:center}
+.plan-badge{display:inline-block;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:4px 14px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.plan-name{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:0.35rem}
+.plan-price{font-family:'DM Mono',monospace;font-size:2rem;font-weight:500;color:var(--gold);margin-bottom:1.5rem}
+.plan-desc{font-size:0.88rem;color:var(--muted);line-height:1.6;margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border)}
+label{display:block;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
+input[type=email],select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.95rem;padding:0.7rem 0.9rem;transition:border-color 0.15s;margin-bottom:1.25rem;appearance:none;-webkit-appearance:none}
+input[type=email]:focus,select:focus{outline:none;border-color:var(--gold-dim)}
+input[type=email]::placeholder{color:var(--muted)}
+select option{background:var(--surface)}
+.field-row{position:relative}
+.auto-badge{position:absolute;right:0;top:0;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);opacity:0.7;display:none}
+.btn-order{display:block;width:100%;background:var(--gold);color:#111;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1rem;padding:0.85rem;border-radius:8px;border:none;cursor:pointer;transition:opacity 0.18s,transform 0.15s}
+.btn-order:hover:not(:disabled){opacity:0.88;transform:translateY(-1px)}
+.btn-order:disabled{opacity:0.5;cursor:not-allowed}
+.note{font-size:0.78rem;color:var(--muted);text-align:center;margin-top:1rem;line-height:1.6}
+.error{display:none;background:rgba(224,90,58,0.1);border:1px solid rgba(224,90,58,0.3);color:#E05A3A;font-size:0.83rem;border-radius:6px;padding:0.65rem 0.9rem;margin-bottom:1rem}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">ResumeBuzz</div>
+  <div id="planBadge" class="plan-badge">Professional Resume</div>
+  <div id="planName" class="plan-name">Human Written Resume</div>
+  <div id="planPrice" class="plan-price">$149</div>
+  <div id="planDesc" class="plan-desc">Resume + cover letter, written by a professional. We'll reach out within 24 hours to start your order.</div>
+  <div id="errMsg" class="error" role="alert"></div>
+  <div class="field-row">
+    <label for="marketSelect">Target job market <span class="auto-badge" id="marketBadge">auto-detected</span></label>
+    <select id="marketSelect">
+      <option value="us">United States</option>
+      <option value="canada">Canada</option>
+      <option value="uk">United Kingdom</option>
+      <option value="ireland">Ireland</option>
+      <option value="australia">Australia / New Zealand</option>
+      <option value="dach">Germany / Austria / Switzerland</option>
+      <option value="france">France</option>
+      <option value="spain">Spain</option>
+      <option value="mexico">Mexico</option>
+      <option value="colombia">Colombia</option>
+      <option value="rioplatense">Argentina / Uruguay</option>
+      <option value="chile">Chile</option>
+      <option value="peru">Peru</option>
+      <option value="latam">Latin America (other)</option>
+      <option value="india">India</option>
+      <option value="mena">Middle East / North Africa</option>
+      <option value="japan">Japan</option>
+      <option value="southeast_asia">Southeast Asia</option>
+    </select>
+  </div>
+  <div class="field-row">
+    <label for="langSelect">Resume language <span class="auto-badge" id="langBadge">auto-detected</span></label>
+    <select id="langSelect">
+      <option value="English">English</option>
+      <option value="Spanish">Spanish</option>
+      <option value="French">French</option>
+      <option value="German">German</option>
+      <option value="Portuguese">Portuguese</option>
+      <option value="Arabic">Arabic</option>
+      <option value="Japanese">Japanese</option>
+      <option value="Korean">Korean</option>
+      <option value="Italian">Italian</option>
+      <option value="Chinese (Simplified)">Chinese (Simplified)</option>
+      <option value="Chinese (Traditional)">Chinese (Traditional)</option>
+    </select>
+  </div>
+  <label for="emailInput">Your email address</label>
+  <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email" required>
+  <button class="btn-order" id="orderBtn">Proceed to Payment &rarr;</button>
+  <p class="note">You'll be taken to our secure checkout. After payment we'll email you within 24 hours to get started.</p>
+</div>
+
+<script>
+(function() {
+  var plans = {
+    human: { badge: 'Professional Resume', name: 'Human Written Resume', price: '$149', desc: 'Resume + cover letter, written by a professional. We\'ll reach out within 24 hours to start your order.' },
+    cv:    { badge: 'Academic / International', name: 'CV Package', price: '$199', desc: 'International or academic CV + cover letter, written by a professional. We\'ll reach out within 24 hours to get started.' }
+  };
+
+  var params = new URLSearchParams(window.location.search);
+  var plan = params.get('plan');
+  var info = plans[plan];
+
+  if (info) {
+    document.getElementById('planBadge').textContent = info.badge;
+    document.getElementById('planName').textContent = info.name;
+    document.getElementById('planPrice').textContent = info.price;
+    document.getElementById('planDesc').textContent = info.desc;
+  } else {
+    window.location.href = '/';
+  }
+
+  // Auto-detect region from bink
+  var MARKET_MAP = {
+    us: 'us', canada: 'canada',
+    'United Kingdom': 'uk', 'Ireland': 'ireland',
+    'Australia': 'australia',
+    'DACH': 'dach',
+    'France': 'france', 'Western Europe': null,
+    'Spain': 'spain',
+    'Mexico': 'mexico', 'Colombia': 'colombia',
+    'Rioplatense': 'rioplatense', 'Chile': 'chile',
+    'Peru': 'peru', 'Central America': 'latam',
+    'Latin America': 'latam', 'Caribbean Spanish': 'latam',
+    'Andean': 'latam',
+    'South Asia': 'india',
+    'MENA': 'mena',
+    'Japan': 'japan',
+    'Southeast Asia': 'southeast_asia',
+    'East Asia': null, 'West Africa': null,
+    'Central Africa': null, 'East Africa': null,
+    'Southern Africa': null, 'North America': 'us',
+    'Global': null
+  };
+  fetch('https://bink.oyecreations.com/api/region')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var market = MARKET_MAP[d.regionLabel] || MARKET_MAP[d.region] || null;
+      if (market) {
+        var sel = document.getElementById('marketSelect');
+        for (var i = 0; i < sel.options.length; i++) {
+          if (sel.options[i].value === market) {
+            sel.selectedIndex = i;
+            document.getElementById('marketBadge').style.display = 'inline';
+            break;
+          }
+        }
+      }
+      if (d.language && d.language !== 'English') {
+        var lsel = document.getElementById('langSelect');
+        for (var j = 0; j < lsel.options.length; j++) {
+          if (lsel.options[j].value === d.language) {
+            lsel.selectedIndex = j;
+            document.getElementById('langBadge').style.display = 'inline';
+            break;
+          }
+        }
+      }
+    })
+    .catch(function() {});
+
+  document.getElementById('orderBtn').addEventListener('click', function() {
+    var email = document.getElementById('emailInput').value.trim();
+    var market = document.getElementById('marketSelect').value;
+    var language = document.getElementById('langSelect').value;
+    var err = document.getElementById('errMsg');
+    err.style.display = 'none';
+
+    if (!email || !email.includes('@')) {
+      err.textContent = 'Please enter a valid email address.';
+      err.style.display = 'block';
+      return;
+    }
+
+    var btn = this;
+    btn.disabled = true;
+    btn.textContent = 'Redirecting to checkout...';
+
+    fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan: plan, email: email, market: market, language: language })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        err.textContent = data.error || 'Something went wrong. Please try again.';
+        err.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Proceed to Payment →';
+      }
+    })
+    .catch(function() {
+      err.textContent = 'Network error. Please try again.';
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Proceed to Payment →';
+    });
+  });
+})();
+</script>
+</body>
+</html>

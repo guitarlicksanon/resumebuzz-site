@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About ResumeBuzz</title>
+<meta name="description" content="Meet Buzz and the guy who handles the chat corner. Two bees. Very different energy.">
+<link rel="canonical" href="https://buzzresume.com/about" />
+<style>
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:optional;src:url('/assets/fonts/dm-mono-500.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair-italic.woff2') format('woff2')}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;
+  --surface:#1B1B1B;
+  --surface2:#232323;
+  --border:#2E2E2E;
+  --gold:#C9A84C;
+  --gold-dim:#8A6F2E;
+  --text:#EBEBEB;
+  --muted:#8C8C8C;
+  --warm:#F5F3EE;
+  --red:#E05A3A;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:1rem;line-height:1.6;min-height:100vh}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;line-height:1.2}
+a{color:inherit;text-decoration:none}
+
+/* OYE BAR */
+.oye-bar{height:36px;background:#090806;border-bottom:1px solid rgba(201,168,76,0.12);display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;position:sticky;top:0;z-index:101}
+.oye-brand{display:flex;align-items:center;gap:0.45rem;text-decoration:none;color:rgba(255,255,255,0.82);font-family:'Playfair Display',Georgia,serif;font-size:0.75rem;font-weight:600;transition:color 150ms}
+.oye-brand em{font-style:normal;color:#C9A84C;transition:color 150ms}
+.oye-brand svg ellipse,.oye-brand svg circle,.oye-brand svg line{stroke:rgba(255,255,255,0.65);transition:stroke 150ms}
+.oye-brand:hover{color:#C9A84C}
+.oye-brand:hover em{color:rgba(255,255,255,0.82)}
+.oye-brand:hover svg ellipse,.oye-brand:hover svg circle,.oye-brand:hover svg line{stroke:#C9A84C}
+.oye-nav-links{display:flex;align-items:center;gap:1.25rem}
+.oye-nav-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.82);text-decoration:none;transition:color 0.15s;white-space:nowrap}
+.oye-nav-links a:hover{color:#C9A84C}
+@media(max-width:540px){.oye-nav-links{display:none}}
+
+/* NAV */
+nav{position:sticky;top:36px;z-index:100;background:rgba(17,17,17,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 1.5rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.wordmark{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:-0.01em;cursor:default}
+.wordmark .w1{color:var(--warm);transition:color 220ms}
+.wordmark .w2{color:var(--gold);transition:color 220ms}
+.wordmark:hover .w1{color:var(--gold)}
+.wordmark:hover .w2{color:var(--warm)}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);transition:color 0.15s}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted)}
+@media(max-width:720px){
+  .nav-links{display:none;position:fixed;top:100px;left:0;right:0;background:rgba(17,17,17,0.97);backdrop-filter:blur(12px);flex-direction:column;padding:1.5rem;gap:1.25rem;border-bottom:1px solid var(--border);z-index:99}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+}
+
+/* PAGE */
+main{max-width:900px;margin:0 auto;padding:5rem 1.5rem 8rem}
+
+.page-eyebrow{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem}
+.page-heading{font-size:clamp(2rem,5vw,3.25rem);font-weight:800;margin-bottom:1rem}
+.page-sub{font-size:1.05rem;color:var(--muted);max-width:520px;line-height:1.7;margin-bottom:5rem}
+.page-heading .w1{color:var(--warm);transition:color 220ms}
+.page-heading .w2{color:var(--gold);transition:color 220ms}
+.page-heading:hover .w1{color:var(--gold)}
+.page-heading:hover .w2{color:var(--warm)}
+
+/* CARDS */
+.bee-cards-featured{margin-bottom:2rem}
+.bee-cards{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media(max-width:580px){.bee-cards{grid-template-columns:1fr}}
+
+.bee-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem 2rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.75rem;position:relative;overflow:hidden}
+.bee-card::before{content:'';position:absolute;inset:0;border-radius:16px;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.06) 0%,transparent 70%);pointer-events:none}
+.bee-card-featured{background:var(--surface);border:1px solid rgba(201,168,76,0.25);border-radius:16px;padding:3rem 2.5rem;display:flex;flex-direction:row;align-items:flex-start;gap:3rem;position:relative;overflow:hidden}
+.bee-card-featured::before{content:'';position:absolute;inset:0;border-radius:16px;background:radial-gradient(ellipse at 30% 0%,rgba(201,168,76,0.09) 0%,transparent 60%);pointer-events:none}
+.bee-card-featured .bee-svg-wrap{flex-shrink:0;width:130px}
+.bee-card-featured .bee-bio{text-align:left}
+.bee-card-featured .bee-stat-row{flex-direction:row;gap:2.5rem;flex-wrap:wrap}
+.bee-card-featured .bee-stat{flex-direction:column;gap:0.2rem;align-items:flex-start}
+.bee-song-credit{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);opacity:0.85;margin-top:1.5rem}
+.bee-song-credit a{color:var(--gold);text-decoration:underline;text-underline-offset:3px;opacity:0.7;transition:opacity 0.15s}
+.bee-song-credit a:hover{opacity:1}
+@media(max-width:720px){
+  .bee-card-featured{flex-direction:column;align-items:center}
+  .bee-card-featured .bee-bio{text-align:center}
+  .bee-card-featured .bee-stat-row{justify-content:center}
+  .bee-card-featured .bee-stat{align-items:center}
+}
+
+.bee-svg-wrap{width:110px;height:auto;filter:drop-shadow(0 4px 20px rgba(245,200,0,0.18));flex-shrink:0;background:radial-gradient(ellipse at 50% 28%,rgba(201,168,76,0.15) 0%,transparent 68%);border-radius:50%}
+
+.bee-title{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.35rem}
+.bee-char-name{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:800;color:var(--warm);margin-bottom:0.2rem;line-height:1.2}
+.bee-name{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;color:var(--warm);margin-bottom:0.5rem;line-height:1.1}
+.bee-role{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem}
+.bee-bio{font-size:0.93rem;color:var(--muted);line-height:1.72;text-align:left}
+.bee-bio p+p{margin-top:0.9rem}
+
+.bee-stat-row{display:flex;flex-direction:column;gap:0.75rem;padding-top:1.25rem;border-top:1px solid var(--border);width:100%}
+.bee-stat{display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem}
+.bee-stat-n{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:800;color:var(--gold);line-height:1;white-space:nowrap}
+.bee-stat-l{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+
+/* ANIMATIONS */
+@keyframes wingFlap{0%,100%{transform:scaleY(1)}50%{transform:scaleY(0.55)}}
+@keyframes wingFlapR{0%,100%{transform:scaleY(1)}50%{transform:scaleY(0.55)}}
+@keyframes buzzFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes beeBlink{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(0.08)}}
+@keyframes bmWingL{0%,88%,100%{transform:rotate(-22deg)}92%,96%{transform:rotate(-14deg)}}
+@keyframes bmWingR{0%,88%,100%{transform:rotate(22deg)}92%,96%{transform:rotate(14deg)}}
+@keyframes phoneGlow{0%,72%,100%{opacity:1}76%{opacity:0.5}79%{opacity:1}82%{opacity:0.6}85%{opacity:1}}
+@keyframes apprenticeScroll{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes fastType{0%,100%{fill:#1565C0}33%{fill:#1976D2}66%{fill:#1565C0}}
+@keyframes appWingFlutterL{0%,70%{transform:rotate(-22deg)}72%{transform:rotate(-6deg)}74%{transform:rotate(-22deg)}76%{transform:rotate(-6deg)}78%{transform:rotate(-22deg)}80%{transform:rotate(-6deg)}82%,100%{transform:rotate(-22deg)}}
+@keyframes appWingFlutterR{0%,70%{transform:rotate(22deg)}72%{transform:rotate(6deg)}74%{transform:rotate(22deg)}76%{transform:rotate(6deg)}78%{transform:rotate(22deg)}80%{transform:rotate(6deg)}82%,100%{transform:rotate(22deg)}}
+
+/* THEME SONG */
+.theme-song{margin:2rem 0 3rem;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.theme-song-label{padding:1rem 1.5rem 0.75rem;display:flex;align-items:center;gap:0.75rem}
+.theme-song-label span:first-child{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold)}
+.theme-song-label span:last-child{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--text);opacity:0.75}
+.theme-song-label a{color:var(--gold);text-decoration:underline;text-underline-offset:3px;opacity:0.8;transition:opacity 0.15s}
+.theme-song-label a:hover{opacity:1}
+.theme-song-embed{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
+.theme-song-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
+
+/* ASSOCIATE BUBBLE */
+.assoc-bubble-wrap{position:relative;display:inline-block}
+.assoc-bubble{position:absolute;bottom:108%;left:50%;transform:translateX(-50%) translateY(5px);background:#E8E8EA;color:#111;border-radius:16px 16px 16px 4px;padding:6px 11px;font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.04em;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.25s ease,transform 0.25s ease;box-shadow:0 2px 10px rgba(0,0,0,0.25);z-index:2}
+.assoc-bubble.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* COLONY */
+.colony-section{margin-top:5rem}
+.colony-heading{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;margin-bottom:0.6rem;cursor:default}
+.colony-heading .w1{color:var(--warm);transition:color 220ms}
+.colony-heading .w2{color:var(--gold);transition:color 220ms}
+.colony-heading:hover .w1{color:var(--gold)}
+.colony-heading:hover .w2{color:var(--warm)}
+.colony-sub{font-size:0.88rem;color:var(--muted);max-width:480px;line-height:1.7;margin-bottom:2.5rem}
+.colony-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+@media(max-width:700px){.colony-grid{grid-template-columns:1fr 1fr}}
+.colony-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.75rem 1rem 1.5rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.55rem;position:relative;overflow:hidden}
+.colony-card::before{content:'';position:absolute;inset:0;border-radius:12px;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.05) 0%,transparent 65%);pointer-events:none}
+.colony-bee{width:68px;filter:drop-shadow(0 2px 10px rgba(245,200,0,0.15))}
+.colony-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:800;color:var(--warm);margin-top:0.2rem}
+.colony-role{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);opacity:0.6}
+.colony-bio{font-size:0.78rem;color:var(--muted);line-height:1.65;margin-top:0.2rem}
+@keyframes colWingL{0%,78%,100%{transform:scaleY(1)}80%{transform:scaleY(0.4)}82%{transform:scaleY(1)}84%{transform:scaleY(0.4)}86%{transform:scaleY(1)}}
+@keyframes colWingR{0%,78%,100%{transform:scaleY(1)}80%{transform:scaleY(0.4)}82%{transform:scaleY(1)}84%{transform:scaleY(0.4)}86%{transform:scaleY(1)}}
+@keyframes colFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);margin-top:6rem;padding:2.5rem 1.5rem;text-align:center}
+.footer-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:0.75rem}
+.footer-inner span{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted)}
+.footer-inner a{color:var(--muted);transition:color 0.15s}
+.footer-inner a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<div class="oye-bar">
+  <a href="https://oyecreations.com" target="_blank" rel="noopener noreferrer" class="oye-brand">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" style="height:18px;width:auto" aria-hidden="true">
+      <ellipse cx="250" cy="175" rx="205" ry="135" fill="none" stroke="#C9A84C" stroke-width="13" stroke-linecap="round"/>
+      <defs><clipPath id="oyecp"><ellipse cx="250" cy="175" rx="191" ry="121"/></clipPath></defs>
+      <g clip-path="url(#oyecp)" stroke="#C9A84C" stroke-width="13" stroke-linecap="round" fill="none">
+        <circle cx="148" cy="175" r="63"/>
+        <line x1="175" y1="80" x2="250" y2="168"/><line x1="320" y1="80" x2="250" y2="168"/>
+        <line x1="250" y1="168" x2="250" y2="265"/>
+        <line x1="318" y1="112" x2="318" y2="240"/><line x1="318" y1="112" x2="388" y2="112"/>
+        <line x1="318" y1="176" x2="383" y2="176"/><line x1="318" y1="240" x2="393" y2="240"/>
+      </g>
+    </svg>
+    <span>OYE <em>Creations</em></span>
+  </a>
+  <nav class="oye-nav-links" aria-label="OYE network">
+    <a href="https://multilingo.studio" target="_blank" rel="noopener noreferrer">Multilingo</a>
+    <a href="https://guitaranon.com" target="_blank" rel="noopener noreferrer">GuitarAnon</a>
+    <a href="https://droptimize.org" target="_blank" rel="noopener noreferrer">Droptimize</a>
+  </nav>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="wordmark" style="text-decoration:none">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 52" width="26" height="23" style="vertical-align:middle;margin-right:0.35rem;flex-shrink:0" aria-hidden="true"><polygon points="60,26 45,0 15,0 0,26 15,52 45,52" fill="#C9A84C"/><path d="M30,12 L39,27 L34.5,27 L34.5,40 L25.5,40 L25.5,27 L21,27 Z" fill="#111"/></svg>
+      <span class="w1">Resume</span><span class="w2">Buzz</span>
+    </a>
+    <button class="hamburger" aria-label="Toggle menu" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="/">Audit</a>
+      <a href="/build">Build</a>
+      <a href="/about" class="active">About</a>
+      <a href="https://block.buzzresume.com">Second Chance</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <p class="page-eyebrow">The Colony</p>
+  <h1 class="page-heading"><span class="w1">Meet </span><span class="w2">the bees</span></h1>
+  <p class="page-sub">Two bees. Fourteen years of resume work between them. Very different ideas about how to spend a Tuesday.</p>
+  <p style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:-0.5rem;margin-bottom:2.5rem">Functionality with a purpose.</p>
+
+  <div class="bee-cards-featured">
+
+    <!-- BUZZ -->
+    <div class="bee-card-featured">
+      <div class="bee-svg-wrap" style="animation:buzzFloat 3.5s ease-in-out infinite">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" style="overflow:visible;display:block;width:100%;height:auto">
+          <defs>
+            <clipPath id="buzz-body"><ellipse cx="50" cy="95" rx="21" ry="30"/></clipPath>
+          </defs>
+          <ellipse cx="22" cy="58" rx="22" ry="13" fill="rgba(255,255,255,0.75)" stroke="rgba(200,200,200,0.4)" stroke-width="0.8" style="transform-box:fill-box;transform-origin:right center;animation:wingFlap 0.14s linear infinite"/>
+          <ellipse cx="78" cy="58" rx="22" ry="13" fill="rgba(255,255,255,0.75)" stroke="rgba(200,200,200,0.4)" stroke-width="0.8" style="transform-box:fill-box;transform-origin:left center;animation:wingFlapR 0.14s linear infinite"/>
+          <ellipse cx="50" cy="95" rx="21" ry="30" fill="#F5C800"/>
+          <rect x="29" y="80" width="42" height="8" fill="#111" clip-path="url(#buzz-body)"/>
+          <rect x="29" y="95" width="42" height="8" fill="#111" clip-path="url(#buzz-body)"/>
+          <rect x="29" y="110" width="42" height="8" fill="#111" clip-path="url(#buzz-body)"/>
+          <path d="M44,123 Q50,130 56,123" stroke="#111" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <line x1="36" y1="83" x2="22" y2="96" stroke="#111" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="20" cy="98" r="3.5" fill="#F5C800" stroke="#111" stroke-width="0.8"/>
+          <line x1="64" y1="83" x2="78" y2="96" stroke="#111" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="80" cy="98" r="3.5" fill="#F5C800" stroke="#111" stroke-width="0.8"/>
+          <circle cx="50" cy="38" r="24" fill="#F5C800"/>
+          <circle cx="37" cy="44" r="5.5" fill="#FFA040" opacity="0.2"/>
+          <circle cx="63" cy="44" r="5.5" fill="#FFA040" opacity="0.2"/>
+          <rect x="29" y="25" width="21" height="21" rx="5" fill="white" stroke="#111" stroke-width="3"/>
+          <rect x="51" y="25" width="21" height="21" rx="5" fill="white" stroke="#111" stroke-width="3"/>
+          <line x1="50" y1="34" x2="51" y2="34" stroke="#111" stroke-width="3" stroke-linecap="round"/>
+          <line x1="29" y1="33" x2="23" y2="31" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="72" y1="33" x2="78" y2="31" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+          <g style="transform-box:fill-box;transform-origin:50% 50%;animation:beeBlink 6s ease-in-out infinite">
+            <circle cx="40" cy="36.5" r="4" fill="#111"/>
+            <circle cx="61" cy="36.5" r="4" fill="#111"/>
+            <circle cx="41.5" cy="34" r="1.5" fill="white" opacity="0.9"/>
+            <circle cx="62.5" cy="34" r="1.5" fill="white" opacity="0.9"/>
+          </g>
+          <path d="M40,48 Q50,56 60,48" stroke="#111" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <line x1="43" y1="16" x2="35" y2="4" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="33" cy="2" r="3.5" fill="#111"/>
+          <line x1="57" y1="16" x2="65" y2="4" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="67" cy="2" r="3.5" fill="#111"/>
+        </svg>
+      </div>
+
+      <div>
+        <p class="bee-title">ResumeBuzz Mascot</p>
+        <h2 class="bee-name">Buzz</h2>
+        <p class="bee-role">Field Operative &middot; Colony Lead</p>
+        <div class="bee-bio">
+          <p>Born a larva on the wrong side of the hive. Raised on the streets. For a stretch he was into all the wrong things, addicted to drugs, a life of crime, crazy and lazy and just biding his time. Nobody saw what was coming.</p>
+          <p>Then he got clean. And the moment his first real opportunity showed up, he transformed. Never looked back. Loves to work. Loves to learn. Has held more jobs than he'll admit, dolphin training, exotic dancing, things he does not put on his own resume. That is exactly why he gets yours. He's been in positions you can't even make up. And he came back every time.</p>
+          <p>Fired? Laid off? Doesn't matter how you got here. Gather round. Sit down. He has seen it all, and he has the knowledge to get you out. Essential advice. Bee puns he will absolutely deploy whether you asked for them or not.</p>
+          <p>He is the hardest worker bee there ever was. Make a bee line for ResumeBuzz.</p>
+        </div>
+        <div class="bee-stat-row">
+          <div class="bee-stat">
+            <div class="bee-stat-n">14</div>
+            <div class="bee-stat-l">Years in</div>
+          </div>
+          <div class="bee-stat">
+            <div class="bee-stat-n">1,000+</div>
+            <div class="bee-stat-l">Clients</div>
+          </div>
+          <div class="bee-stat">
+            <div class="bee-stat-n">6</div>
+            <div class="bee-stat-l">Continents</div>
+          </div>
+          <div class="bee-stat">
+            <div class="bee-stat-n">18</div>
+            <div class="bee-stat-l">Job markets</div>
+          </div>
+        </div>
+        <p class="bee-song-credit">Theme song written by Blake &middot; Performed and produced by Chris DeMakes (Less Than Jake) &middot; <a href="/lyrics">Read the lyrics</a></p>
+      </div>
+    </div>
+
+  </div><!-- end .bee-cards-featured -->
+
+  <div class="theme-song">
+    <div class="theme-song-label">
+      <span>The Worker Bees Theme Song</span>
+      <span>Written by Blake &middot; Performed and produced by Chris DeMakes (Less Than Jake) &middot; <a href="/lyrics">Lyrics</a></span>
+    </div>
+    <div class="theme-song-embed">
+      <iframe src="https://www.youtube.com/embed/7Wfe62BIFt8" title="Worker Bees Theme Song - performed by Chris DeMakes" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <div class="bee-cards">
+
+    <!-- THE GUY -->
+    <div class="bee-card">
+      <div class="assoc-bubble-wrap">
+        <div id="assoc-bubble" class="assoc-bubble"></div>
+      <div class="bee-svg-wrap">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140" style="overflow:visible;display:block;width:100%;height:auto">
+          <defs><clipPath id="mgmt-body"><ellipse cx="50" cy="92" rx="22" ry="18"/></clipPath></defs>
+          <ellipse cx="31" cy="78" rx="14" ry="6" fill="rgba(200,240,255,0.32)" stroke="rgba(200,240,255,0.5)" stroke-width="0.6" style="transform-box:fill-box;transform-origin:right center;transform:rotate(-22deg);animation:bmWingL 9s ease-in-out infinite"/>
+          <ellipse cx="69" cy="78" rx="14" ry="6" fill="rgba(200,240,255,0.32)" stroke="rgba(200,240,255,0.5)" stroke-width="0.6" style="transform-box:fill-box;transform-origin:left center;transform:rotate(22deg);animation:bmWingR 9s ease-in-out infinite"/>
+          <ellipse cx="50" cy="92" rx="22" ry="18" fill="#F5C800"/>
+          <rect x="28" y="84" width="44" height="6" fill="#111" clip-path="url(#mgmt-body)"/>
+          <rect x="28" y="95" width="44" height="6" fill="#111" clip-path="url(#mgmt-body)"/>
+          <path d="M47,109 Q50,115 53,109" stroke="#111" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <line x1="37" y1="86" x2="25" y2="100" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="23" cy="102" r="3" fill="#F5C800" stroke="#111" stroke-width="0.8"/>
+          <line x1="63" y1="86" x2="75" y2="100" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="77" cy="102" r="3" fill="#F5C800" stroke="#111" stroke-width="0.8"/>
+          <line x1="40" y1="107" x2="34" y2="122" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="34" y1="122" x2="30" y2="127" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="60" y1="107" x2="66" y2="122" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="66" y1="122" x2="70" y2="127" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+          <g transform="translate(0,12)">
+            <circle cx="50" cy="40" r="22" fill="#F5C800"/>
+            <circle cx="38" cy="46" r="5" fill="#FFA040" opacity="0.2"/>
+            <circle cx="62" cy="46" r="5" fill="#FFA040" opacity="0.2"/>
+            <rect x="27" y="28" width="18" height="15" rx="2.5" fill="white"/>
+            <rect x="55" y="28" width="18" height="15" rx="2.5" fill="white"/>
+            <ellipse cx="42" cy="38" rx="4.5" ry="4.5" fill="#111"/>
+            <ellipse cx="58" cy="38" rx="4.5" ry="4.5" fill="#111"/>
+            <circle cx="43.5" cy="36.5" r="1.3" fill="white" opacity="0.85"/>
+            <circle cx="59.5" cy="36.5" r="1.3" fill="white" opacity="0.85"/>
+            <rect x="37" y="33" width="10" height="5.5" rx="2.5" fill="white" style="transform-box:fill-box;transform-origin:center top;animation:beeBlink 7s ease-in-out infinite"/>
+            <rect x="53" y="33" width="10" height="5.5" rx="2.5" fill="white" style="transform-box:fill-box;transform-origin:center top;animation:beeBlink 7s ease-in-out infinite 0.08s"/>
+            <rect x="26" y="27" width="20" height="17" rx="3" fill="none" stroke="#111" stroke-width="2.8"/>
+            <rect x="54" y="27" width="20" height="17" rx="3" fill="none" stroke="#111" stroke-width="2.8"/>
+            <line x1="46" y1="35.5" x2="54" y2="35.5" stroke="#111" stroke-width="2.8"/>
+            <line x1="26" y1="35.5" x2="20" y2="38" stroke="#111" stroke-width="2.5"/>
+            <line x1="74" y1="35.5" x2="80" y2="38" stroke="#111" stroke-width="2.5"/>
+            <path d="M43,51 Q50,50 57,51" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="43" y1="20" x2="35" y2="6" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="33" cy="4" r="3" fill="#111"/>
+            <line x1="57" y1="20" x2="65" y2="6" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="67" cy="4" r="3" fill="#111"/>
+          </g>
+          <g style="animation:phoneGlow 15s ease-in-out infinite">
+            <rect x="10" y="88" width="16" height="24" rx="2.5" fill="#111" stroke="#333" stroke-width="0.8"/>
+            <rect x="11.5" y="92" width="13" height="17" rx="1" fill="#1565C0"/>
+            <line x1="13" y1="95" x2="23" y2="95" stroke="white" stroke-width="0.8" opacity="0.8"/>
+            <line x1="13" y1="98" x2="21" y2="98" stroke="white" stroke-width="0.8" opacity="0.5"/>
+            <rect x="13" y="102" width="10" height="4" rx="1" fill="#F5C800" opacity="0.95"/>
+            <line x1="15" y1="109" x2="21" y2="109" stroke="#444" stroke-width="1" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+      </div><!-- end .assoc-bubble-wrap -->
+
+      <div>
+        <p class="bee-char-name">Morty</p>
+        <p class="bee-title">Senior Associate</p>
+        <h2 class="bee-name">The Associate</h2>
+        <p class="bee-role">Chat Corner &middot; Occasional Posting</p>
+        <div class="bee-bio">
+          <p>Title: unclear. Tenure: longer than anyone can verify. He was here before the rebrand and will probably be here after the next one.</p>
+          <p>Manages the chat corner. Posts to social media when the mood strikes. Has not been asked to do more and has not volunteered to. HR has his paperwork. Nobody has read it.</p>
+          <p>Not disengaged. Just settled. There is a difference, and he would explain it if he could be bothered. Has an opinion about the new guy. Has not shared it. Has no plans to.</p>
+        </div>
+      </div>
+
+      <div class="bee-stat-row">
+        <div class="bee-stat">
+          <div class="bee-stat-n">?</div>
+          <div class="bee-stat-l">Years in</div>
+        </div>
+        <div class="bee-stat">
+          <div class="bee-stat-n">occ.</div>
+          <div class="bee-stat-l">Posts/day</div>
+        </div>
+        <div class="bee-stat">
+          <div class="bee-stat-n">1</div>
+          <div class="bee-stat-l">Corner</div>
+        </div>
+        <div class="bee-stat">
+          <div class="bee-stat-n">?</div>
+          <div class="bee-stat-l">Retirement</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE APPRENTICE -->
+    <div class="bee-card">
+      <div class="bee-svg-wrap" style="animation:apprenticeScroll 2.2s ease-in-out infinite;width:90px">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140" style="overflow:visible;display:block;width:100%;height:auto">
+          <defs><clipPath id="app-body"><ellipse cx="50" cy="92" rx="14" ry="18"/></clipPath></defs>
+          <ellipse cx="31" cy="78" rx="14" ry="6" fill="rgba(200,240,255,0.5)" stroke="rgba(200,240,255,0.7)" stroke-width="0.8" style="transform-box:fill-box;transform-origin:right center;animation:appWingFlutterL 11s ease-in-out infinite"/>
+          <ellipse cx="69" cy="78" rx="14" ry="6" fill="rgba(200,240,255,0.5)" stroke="rgba(200,240,255,0.7)" stroke-width="0.8" style="transform-box:fill-box;transform-origin:left center;animation:appWingFlutterR 11s ease-in-out infinite 0.4s"/>
+          <ellipse cx="50" cy="92" rx="14" ry="18" fill="#F5C800"/>
+          <rect x="28" y="84" width="44" height="6" fill="#111" clip-path="url(#app-body)"/>
+          <rect x="28" y="95" width="44" height="6" fill="#111" clip-path="url(#app-body)"/>
+          <path d="M48,109 Q50,114 52,109" stroke="#111" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <line x1="37" y1="86" x2="20" y2="96" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="18" cy="98" r="3" fill="#F5C800" stroke="#111" stroke-width="0.8"/>
+          <line x1="63" y1="86" x2="22" y2="100" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="20" cy="102" r="3" fill="#F5C800" stroke="#111" stroke-width="0.8"/>
+          <line x1="40" y1="107" x2="34" y2="122" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="34" y1="122" x2="30" y2="127" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="60" y1="107" x2="66" y2="122" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="66" y1="122" x2="70" y2="127" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+          <g transform="translate(0,12)">
+            <circle cx="50" cy="40" r="22" fill="#F5C800"/>
+            <circle cx="38" cy="46" r="5" fill="#FFA040" opacity="0.25"/>
+            <circle cx="62" cy="46" r="5" fill="#FFA040" opacity="0.25"/>
+            <g id="app-eyes" style="transform-box:fill-box;transform-origin:50% 50%">
+              <ellipse cx="40" cy="37" rx="7" ry="7" fill="#111"/>
+              <ellipse cx="60" cy="37" rx="7" ry="7" fill="#111"/>
+              <circle cx="42" cy="34.5" r="2.2" fill="white" opacity="0.9"/>
+              <circle cx="62" cy="34.5" r="2.2" fill="white" opacity="0.9"/>
+            </g>
+            <rect x="31" y="28" width="18" height="18" rx="3" fill="none" stroke="#111" stroke-width="2.5"/>
+            <rect x="51" y="28" width="18" height="18" rx="3" fill="none" stroke="#111" stroke-width="2.5"/>
+            <line x1="49" y1="37" x2="51" y2="37" stroke="#111" stroke-width="2.5"/>
+            <line x1="31" y1="37" x2="22" y2="40" stroke="#111" stroke-width="2"/>
+            <line x1="69" y1="37" x2="78" y2="40" stroke="#111" stroke-width="2"/>
+            <path d="M43,51 Q50,56 57,51" stroke="#111" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <line x1="43" y1="20" x2="34" y2="-2" stroke="#111" stroke-width="1" stroke-linecap="round"/>
+            <circle cx="33" cy="-4" r="2" fill="#111"/>
+            <line x1="57" y1="20" x2="66" y2="-2" stroke="#111" stroke-width="1" stroke-linecap="round"/>
+            <circle cx="67" cy="-4" r="2" fill="#111"/>
+          </g>
+          <g>
+            <rect x="8" y="86" width="17" height="26" rx="3" fill="#111" stroke="#444" stroke-width="0.8"/>
+            <rect x="9.5" y="90" width="14" height="19" rx="1.2" style="animation:fastType 1.8s linear infinite" fill="#1565C0"/>
+            <line x1="11" y1="93" x2="22" y2="93" stroke="white" stroke-width="0.9" opacity="0.9"/>
+            <line x1="11" y1="96" x2="20" y2="96" stroke="white" stroke-width="0.9" opacity="0.7"/>
+            <line x1="11" y1="99" x2="22" y2="99" stroke="white" stroke-width="0.9" opacity="0.9"/>
+            <line x1="11" y1="102" x2="18" y2="102" stroke="white" stroke-width="0.9" opacity="0.6"/>
+            <rect x="11" y="105" width="12" height="3.5" rx="1" fill="#F5C800" opacity="0.95"/>
+          </g>
+        </svg>
+      </div>
+
+      <div>
+        <p class="bee-char-name">Melvin <span style="font-size:0.85em;color:var(--gold);font-style:italic">goes by Mel</span></p>
+        <h2 class="bee-name">The Apprentice</h2>
+        <p class="bee-role">Digital Engagement &middot; Always Available</p>
+        <div class="bee-bio">
+          <p>Nobody is entirely sure when he started. He was just there one day, phone in hand, fully logged in, ready to post. Nobody interviewed him. He simply arrived.</p>
+          <p>His engagement numbers are excellent. His strategy is unclear. He posts constantly, responds immediately, and has never once looked up from his phone long enough for anyone to get a clear look at him.</p>
+          <p>He is on every platform. He is always online. This is his whole thing.</p>
+          <p style="margin-top:1.2rem;font-size:0.72rem;color:var(--muted);opacity:0.45;font-family:'DM Mono',monospace;letter-spacing:0.04em">catch him on his phone. he owes you one.</p>
+        </div>
+      </div>
+
+      <div class="bee-stat-row">
+        <div class="bee-stat">
+          <div class="bee-stat-n">?</div>
+          <div class="bee-stat-l">Start date</div>
+        </div>
+        <div class="bee-stat">
+          <div class="bee-stat-n">all</div>
+          <div class="bee-stat-l">Platforms</div>
+        </div>
+        <div class="bee-stat">
+          <div class="bee-stat-n">0</div>
+          <div class="bee-stat-l">Days offline</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end .bee-cards -->
+
+  <section class="colony-section">
+    <p class="page-eyebrow">Still in the hive</p>
+    <h2 class="colony-heading"><span class="w1">The </span><span class="w2">Colony</span></h2>
+    <p class="colony-sub">They didn't leave. Some are waiting for the right moment. Some forgot they had a choice. Some are completely fine with everything, and they would like you to know that.</p>
+    <div class="colony-grid">
+
+      <!-- NORM -->
+      <div class="colony-card">
+        <div class="colony-bee" style="animation:colFloat 4.2s ease-in-out infinite">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" style="overflow:visible;display:block;width:100%;height:auto">
+            <defs><clipPath id="cb-n"><ellipse cx="50" cy="95" rx="21" ry="30"/></clipPath></defs>
+            <ellipse cx="22" cy="58" rx="22" ry="13" fill="rgba(255,255,255,0.75)" stroke="rgba(200,200,200,0.4)" stroke-width="0.8" style="transform-box:fill-box;transform-origin:right center;animation:colWingL 7s ease-in-out infinite"/>
+            <ellipse cx="78" cy="58" rx="22" ry="13" fill="rgba(255,255,255,0.75)" stroke="rgba(200,200,200,0.4)" stroke-width="0.8" style="transform-box:fill-box;transform-origin:left center;animation:colWingR 7s ease-in-out infinite 0.12s"/>
+            <ellipse cx="50" cy="95" rx="21" ry="30" fill="#F5C800"/>
+            <rect x="29" y="83" width="42" height="10" fill="#111" clip-path="url(#cb-n)"/>
+            <rect x="29" y="101" width="42" height="10" fill="#111" clip-path="url(#cb-n)"/>
+            <polygon points="46,124 54,124 50,130" fill="#E8A838"/>
+            <rect x="46" y="70" width="8" height="6" rx="1" fill="#555"/>
+            <polygon points="44,76 56,76 53,98 50,102 47,98" fill="#666"/>
+            <line x1="50" y1="78" x2="50" y2="100" stroke="#F5C800" stroke-width="2.5"/>
+            <circle cx="50" cy="44" r="30" fill="#F5C800"/>
+            <circle cx="36" cy="44" r="11" fill="white"/>
+            <circle cx="36" cy="44" r="5.5" fill="#111"/>
+            <circle cx="33" cy="41" r="2" fill="white"/>
+            <circle cx="64" cy="44" r="11" fill="white"/>
+            <circle cx="64" cy="44" r="5.5" fill="#111"/>
+            <circle cx="61" cy="41" r="2" fill="white"/>
+            <rect x="23" y="31" width="26" height="22" rx="4" fill="none" stroke="#111" stroke-width="3.5"/>
+            <rect x="51" y="31" width="26" height="22" rx="4" fill="none" stroke="#111" stroke-width="3.5"/>
+            <line x1="49" y1="42" x2="51" y2="42" stroke="#111" stroke-width="3.5"/>
+            <line x1="23" y1="42" x2="16" y2="44" stroke="#111" stroke-width="3"/>
+            <line x1="77" y1="42" x2="84" y2="44" stroke="#111" stroke-width="3"/>
+            <line x1="38" y1="16" x2="30" y2="4" stroke="#111" stroke-width="2.5"/>
+            <circle cx="29" cy="3" r="3.5" fill="#111"/>
+            <line x1="62" y1="16" x2="70" y2="4" stroke="#111" stroke-width="2.5"/>
+            <circle cx="71" cy="3" r="3.5" fill="#111"/>
+            <path d="M 38 58 Q 50 63 62 58" stroke="#111" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="colony-name">Norm</p>
+        <p class="colony-role">Senior Honey Technician II</p>
+        <p class="colony-bio">Been in the hive since it was a hive. Does not complain. Does not celebrate. Sends follow-up emails three days later. Nobody has ever asked how his weekend went because nobody wants to find out. Solid guy.</p>
+      </div>
+
+      <!-- BEA -->
+      <div class="colony-card">
+        <div class="colony-bee" style="animation:colFloat 3.8s ease-in-out infinite 0.7s">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" style="overflow:visible;display:block;width:100%;height:auto">
+            <defs><clipPath id="cb-g"><ellipse cx="50" cy="95" rx="21" ry="30"/></clipPath></defs>
+            <ellipse cx="22" cy="58" rx="22" ry="13" fill="rgba(255,255,255,0.75)" stroke="rgba(200,200,200,0.4)" stroke-width="0.8" style="transform-box:fill-box;transform-origin:right center;animation:colWingL 8.5s ease-in-out infinite 1s"/>
+            <ellipse cx="78" cy="58" rx="22" ry="13" fill="rgba(255,255,255,0.75)" stroke="rgba(200,200,200,0.4)" stroke-width="0.8" style="transform-box:fill-box;transform-origin:left center;animation:colWingR 8.5s ease-in-out infinite 1.1s"/>
+            <ellipse cx="50" cy="95" rx="21" ry="30" fill="#F5C800"/>
+            <rect x="29" y="83" width="42" height="10" fill="#111" clip-path="url(#cb-g)"/>
+            <rect x="29" y="101" width="42" height="10" fill="#111" clip-path="url(#cb-g)"/>
+            <polygon points="46,124 54,124 50,130" fill="#E8A838"/>
+            <rect x="46" y="70" width="8" height="6" rx="1" fill="#555"/>
+            <polygon points="44,76 56,76 53,98 50,102 47,98" fill="#666"/>
+            <line x1="50" y1="78" x2="50" y2="100" stroke="#F5C800" stroke-width="2.5"/>
+            <circle cx="50" cy="44" r="30" fill="#F5C800"/>
+            <circle cx="36" cy="44" r="11" fill="white"/>
+            <circle cx="36" cy="44" r="5.5" fill="#111"/>
+            <circle cx="33" cy="41" r="2" fill="white"/>
+            <circle cx="64" cy="44" r="11" fill="white"/>
+            <circle cx="64" cy="44" r="5.5" fill="#111"/>
+            <circle cx="61" cy="41" r="2" fill="white"/>
+            <rect x="23" y="31" width="26" height="22" rx="4" fill="none" stroke="#111" stroke-width="3.5"/>
+            <rect x="51" y="31" width="26" height="22" rx="4" fill="none" stroke="#111" stroke-width="3.5"/>
+            <line x1="49" y1="42" x2="51" y2="42" stroke="#111" stroke-width="3.5"/>
+            <line x1="23" y1="42" x2="16" y2="44" stroke="#111" stroke-width="3"/>
+            <line x1="77" y1="42" x2="84" y2="44" stroke="#111" stroke-width="3"/>
+            <line x1="38" y1="16" x2="30" y2="4" stroke="#111" stroke-width="2.5"/>
+            <circle cx="29" cy="3" r="3.5" fill="#111"/>
+            <line x1="62" y1="16" x2="70" y2="4" stroke="#111" stroke-width="2.5"/>
+            <circle cx="71" cy="3" r="3.5" fill="#111"/>
+            <path d="M 33 56 Q 50 72 67 56 Z" fill="white" stroke="#111" stroke-width="2.5"/>
+            <line x1="42" y1="56" x2="42" y2="64" stroke="#111" stroke-width="1.5"/>
+            <line x1="50" y1="57" x2="50" y2="66" stroke="#111" stroke-width="1.5"/>
+            <line x1="58" y1="56" x2="58" y2="64" stroke="#111" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <p class="colony-name">Bea</p>
+        <p class="colony-role">Culture Ambassador</p>
+        <p class="colony-bio">Loves this hive. Has loved every hive. Will tell you about the last one unprompted. Organizes the bi-weekly pollen potluck, the team bee-building retreat, and the photo where everyone has to smile. Nobody disagrees with Bea. It is faster.</p>
+      </div>
+
+      <!-- DEB -->
+      <div class="colony-card">
+        <div class="colony-bee" style="animation:colFloat 4.6s ease-in-out infinite 1.4s">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" style="overflow:visible;display:block;width:100%;height:auto">
+            <defs><clipPath id="cb-f"><ellipse cx="50" cy="95" rx="21" ry="30"/></clipPath></defs>
+            <ellipse cx="22" cy="58" rx="22" ry="13" fill="rgba(255,255,255,0.75)" stroke="rgba(200,200,200,0.4)" stroke-width="0.8" style="transform-box:fill-box;transform-origin:right center;animation:colWingL 9.2s ease-in-out infinite 2.1s"/>
+            <ellipse cx="78" cy="58" rx="22" ry="13" fill="rgba(255,255,255,0.75)" stroke="rgba(200,200,200,0.4)" stroke-width="0.8" style="transform-box:fill-box;transform-origin:left center;animation:colWingR 9.2s ease-in-out infinite 2.2s"/>
+            <ellipse cx="50" cy="95" rx="21" ry="30" fill="#F5C800"/>
+            <rect x="29" y="83" width="42" height="10" fill="#111" clip-path="url(#cb-f)"/>
+            <rect x="29" y="101" width="42" height="10" fill="#111" clip-path="url(#cb-f)"/>
+            <polygon points="46,124 54,124 50,130" fill="#E8A838"/>
+            <rect x="46" y="70" width="8" height="6" rx="1" fill="#555"/>
+            <polygon points="44,76 56,76 53,98 50,102 47,98" fill="#666"/>
+            <line x1="50" y1="78" x2="50" y2="100" stroke="#F5C800" stroke-width="2.5"/>
+            <circle cx="50" cy="44" r="30" fill="#F5C800"/>
+            <circle cx="36" cy="44" r="11" fill="white"/>
+            <circle cx="36" cy="44" r="5.5" fill="#111"/>
+            <circle cx="33" cy="41" r="2" fill="white"/>
+            <circle cx="64" cy="44" r="11" fill="white"/>
+            <circle cx="64" cy="44" r="5.5" fill="#111"/>
+            <circle cx="61" cy="41" r="2" fill="white"/>
+            <rect x="23" y="31" width="26" height="22" rx="4" fill="none" stroke="#111" stroke-width="3.5"/>
+            <rect x="51" y="31" width="26" height="22" rx="4" fill="none" stroke="#111" stroke-width="3.5"/>
+            <line x1="49" y1="42" x2="51" y2="42" stroke="#111" stroke-width="3.5"/>
+            <line x1="23" y1="42" x2="16" y2="44" stroke="#111" stroke-width="3"/>
+            <line x1="77" y1="42" x2="84" y2="44" stroke="#111" stroke-width="3"/>
+            <line x1="38" y1="16" x2="30" y2="4" stroke="#111" stroke-width="2.5"/>
+            <circle cx="29" cy="3" r="3.5" fill="#111"/>
+            <line x1="62" y1="16" x2="70" y2="4" stroke="#111" stroke-width="2.5"/>
+            <circle cx="71" cy="3" r="3.5" fill="#111"/>
+            <path d="M 38 62 Q 50 56 62 62" stroke="#111" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="colony-name">Deb</p>
+        <p class="colony-role">Seeking Opportunities</p>
+        <p class="colony-bio">Has a resume. It is four pages. She knows it is four pages. Has applied to 200 places. Is currently on a LinkedIn deep dive that started in 2022 and has not ended. Knows exactly what she is worth. Is waiting for the market to agree.</p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ── SCORE STRIP ──────────────────────────────────────────────── -->
+<div style="background:rgba(201,168,76,0.05);border-top:1px solid rgba(201,168,76,0.12);padding:9px 24px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56" style="height:16px;width:auto;flex-shrink:0;" aria-hidden="true" fill="none"><path d="M6,20 A18,18 0 0,1 42,20 Q42,38 24,54 Q6,38 6,20 Z" fill="#C9A84C"/><polyline points="13,28 24,14 35,28" stroke="#111111" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;">droptimize</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:#8C8C8C;opacity:0.5;">·</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;"><strong style="color:#C9A84C;font-weight:500;">100/100</strong> Lighthouse</span>
+    </div>
+    <a href="https://droptimize.org" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#8C8C8C;text-decoration:none;opacity:0.75;white-space:nowrap;transition:color 150ms,opacity 150ms;" onmouseover="this.style.color='#C9A84C';this.style.opacity='1'" onmouseout="this.style.color='#8C8C8C';this.style.opacity='0.75'">Site enhanced by droptimize.org &#x2192;</a>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <span>&copy; 2026 ResumeBuzz &middot; An <a href="https://oyecreations.com" target="_blank" rel="noopener">OYE Creations</a> property</span>
+    <span><a href="/privacy">Privacy</a> &middot; <a href="/">Back to Audit</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var msgs=['here.','k.','...','noted.','still here.','fine.','read.','ok.','sure.','got it.','mmk.','cool.','yeah.','sure sure.','ok ok.'];
+  var b=document.getElementById('assoc-bubble');
+  function show(){
+    b.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+    b.classList.add('show');
+    setTimeout(function(){b.classList.remove('show');schedule();},3200);
+  }
+  function schedule(){setTimeout(show,7000+Math.random()*11000);}
+  schedule();
+})();
+</script>
+<script>
+(function(){
+  var e=document.getElementById('app-eyes');
+  function blink(){
+    e.style.transition='transform 0.07s ease-in-out';
+    e.style.transform='scaleY(0.06)';
+    setTimeout(function(){
+      e.style.transform='scaleY(1)';
+      if(Math.random()<0.25){
+        setTimeout(function(){
+          e.style.transform='scaleY(0.06)';
+          setTimeout(function(){e.style.transform='scaleY(1)';schedule();},80);
+        },160);
+      } else { schedule(); }
+    },90);
+  }
+  function schedule(){setTimeout(blink,1800+Math.random()*5000);}
+  schedule();
+})();
+</script>
+<script>window.OYEChat = { brand: 'resumebuzz', adminUrl: 'https://bink.oyecreations.com', subjects: ['AI Builder', 'Human Writer', 'CV vs Resume'], turnstileSiteKey: '0x4AAAAAADUIs5uXgonNVbPD' }</script>
+<script defer src="https://bink.oyecreations.com/assets/chat-widget.js?v=22"></script>
+</body>
+</html>

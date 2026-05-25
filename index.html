@@ -1,0 +1,2346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResumeBuzz: Free ATS Resume Audit</title>
+<meta name="description" content="Upload your resume and get a 100-point ATS audit in seconds. No email required. AI-powered resume writing for 18 job markets, in your language. Powered by 14 years of professional experience.">
+<meta property="og:title" content="ResumeBuzz: Free ATS Resume Audit">
+<meta property="og:description" content="Find out why your resume isn't getting callbacks. 100-point audit, ATS scoring, keyword gaps. Free, no email required.">
+<meta property="og:image" content="https://buzzresume.com/assets/og/og-resumebuzz.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://buzzresume.com">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://buzzresume.com/" />
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://buzzresume.com/assets/og/og-resumebuzz.png"><style>
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:optional;src:url('/assets/fonts/dm-mono-500.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair-italic.woff2') format('woff2')}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;
+  --surface:#1B1B1B;
+  --surface2:#232323;
+  --border:#2E2E2E;
+  --gold:#C9A84C;
+  --gold-dim:#8A6F2E;
+  --text:#EBEBEB;
+  --muted:#8C8C8C;
+  --warm:#F5F3EE;
+  --red:#E05A3A;
+  --amber:#E8A838;
+  --green-gold:#A8B84C;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:1rem;
+  line-height:1.6;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;line-height:1.2}
+a{color:inherit;text-decoration:none}
+
+section{display:none}
+section.active{display:block}
+#landing{display:block}
+
+/* OYE FAMILY BAR */
+.oye-bar{height:36px;background:#090806;border-bottom:1px solid rgba(201,168,76,0.12);display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;position:sticky;top:0;z-index:101}
+.oye-brand{display:flex;align-items:center;gap:0.45rem;text-decoration:none;color:rgba(255,255,255,0.82);font-family:'Playfair Display',Georgia,serif;font-size:0.75rem;font-weight:600;transition:color 150ms}
+.oye-brand em{font-style:normal;color:#C9A84C;transition:color 150ms}
+.oye-brand svg ellipse,.oye-brand svg circle,.oye-brand svg line{stroke:rgba(255,255,255,0.65);transition:stroke 150ms}
+.oye-brand:hover{color:#C9A84C}
+.oye-brand:hover em{color:rgba(255,255,255,0.82)}
+.oye-brand:hover svg ellipse,.oye-brand:hover svg circle,.oye-brand:hover svg line{stroke:#C9A84C}
+.oye-nav-links{display:flex;align-items:center;gap:1.25rem}
+.oye-nav-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.82);text-decoration:none;transition:color 0.15s;white-space:nowrap}
+.oye-nav-links a:hover{color:#C9A84C}
+@media(max-width:540px){.oye-nav-links{display:none}}
+
+nav{
+  position:sticky;
+  top:36px;
+  z-index:100;
+  background:rgba(17,17,17,0.92);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 1.5rem;
+}
+.nav-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:64px;
+}
+.wordmark{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  cursor:default;
+}
+.wordmark .w1{ color:var(--warm); transition:color 220ms; }
+.wordmark .w2{ color:var(--gold); transition:color 220ms; }
+.wordmark:hover .w1{ color:var(--gold); }
+.wordmark:hover .w2{ color:var(--warm); }
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:2rem;
+}
+.nav-links a{
+  font-size:0.9rem;
+  color:var(--muted);
+  font-weight:500;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--text)}
+.btn-gold{
+  background:var(--gold);
+  color:#111;
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:0.875rem;
+  padding:0.55rem 1.25rem;
+  border-radius:6px;
+  border:none;
+  cursor:pointer;
+  transition:background 0.2s, transform 0.15s, opacity 0.15s;
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+}
+.btn-gold:hover{background:#d9b85c;transform:translateY(-1px)}
+.btn-gold:active{transform:scale(0.97);opacity:0.92}
+.btn-outline{
+  background:transparent;
+  color:var(--gold);
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:0.875rem;
+  padding:0.55rem 1.25rem;
+  border-radius:6px;
+  border:1px solid var(--gold-dim);
+  cursor:pointer;
+  transition:border-color 0.2s, background 0.2s, transform 0.15s;
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+}
+.btn-outline:hover{border-color:var(--gold);background:rgba(201,168,76,0.06);transform:translateY(-1px)}
+.btn-outline:active{transform:scale(0.97)}
+
+.hero{
+  max-width:900px;
+  margin:0 auto;
+  padding:6rem 1.5rem 4rem;
+  text-align:center;
+}
+.eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:0.75rem;
+  letter-spacing:0.12em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:1.25rem;
+  display:inline-block;
+}
+.hero h1{
+  font-size:clamp(2.2rem,5vw,3.5rem);
+  font-weight:700;
+  color:var(--warm);
+  margin-bottom:1.25rem;
+  max-width:780px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.hero-buzz{
+  font-family:'DM Mono',monospace;
+  font-size:0.78rem;
+  color:var(--muted);
+  letter-spacing:0.04em;
+  margin:-1.5rem auto 2.5rem;
+  max-width:600px;
+}
+.hero-sub{
+  font-size:1.05rem;
+  color:var(--muted);
+  max-width:600px;
+  margin:0 auto 3rem;
+  line-height:1.7;
+}
+
+#upload{
+  margin:0 auto 1rem;
+  max-width:600px;
+}
+.dropzone{
+  border:2px dashed var(--gold-dim);
+  border-radius:12px;
+  padding:3rem 2rem;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  background:var(--surface);
+  position:relative;
+}
+.dropzone:hover,.dropzone.drag-over{
+  border-color:var(--gold);
+  box-shadow:0 0 0 4px rgba(201,168,76,0.08), 0 0 32px rgba(201,168,76,0.1);
+  background:rgba(201,168,76,0.03);
+}
+.dropzone-icon{
+  width:48px;
+  height:48px;
+  margin:0 auto 1rem;
+  color:var(--gold-dim);
+}
+.dropzone-icon svg{width:100%;height:100%}
+.dropzone-title{
+  font-size:1.05rem;
+  font-weight:500;
+  color:var(--text);
+  margin-bottom:0.4rem;
+}
+.dropzone-sub{
+  font-size:0.85rem;
+  color:var(--muted);
+  margin-bottom:1.5rem;
+}
+#fileInput{display:none}
+.privacy-note{
+  margin-top:2.5rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:3px solid var(--gold-dim);
+  border-radius:6px;
+  padding:1rem 1.25rem;
+  font-size:0.85rem;
+  color:var(--muted);
+  line-height:1.7;
+}
+.privacy-label{
+  display:block;
+  font-family:'DM Mono',monospace;
+  font-size:0.68rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:0.4rem;
+}
+.upload-note{
+  font-size:0.78rem;
+  color:var(--muted);
+  margin-top:0.875rem;
+  text-align:center;
+}
+.error-msg{
+  display:none;
+  background:rgba(224,90,58,0.1);
+  border:1px solid rgba(224,90,58,0.3);
+  color:#f0806a;
+  font-size:0.85rem;
+  padding:0.65rem 1rem;
+  border-radius:6px;
+  margin-top:0.75rem;
+  text-align:center;
+}
+.error-msg.visible{display:block}
+
+.stats-bar{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:2rem 1.5rem;
+}
+.stats-inner{
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:2.5rem;
+}
+.stat{
+  text-align:center;
+  flex:1 1 140px;
+  max-width:220px;
+}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:1.75rem;
+  font-weight:700;
+  color:var(--gold);
+  display:block;
+  line-height:1.1;
+}
+.stat-label{
+  font-family:'DM Mono',monospace;
+  font-size:0.72rem;
+  letter-spacing:0.08em;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-top:0.3rem;
+  display:block;
+}
+.stat-industries{
+  font-size:0.75rem;
+  font-family:'DM Mono',monospace;
+  color:var(--muted);
+  letter-spacing:0.04em;
+}
+
+.section-block{
+  max-width:1100px;
+  margin:0 auto;
+  padding:5rem 1.5rem;
+}
+.section-label{
+  font-family:'DM Mono',monospace;
+  font-size:0.72rem;
+  letter-spacing:0.1em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:0.75rem;
+  display:block;
+}
+.section-title{
+  font-size:clamp(1.6rem,3vw,2.25rem);
+  font-weight:700;
+  color:var(--warm);
+  margin-bottom:3rem;
+}
+
+.steps{
+  display:flex;
+  flex-wrap:wrap;
+  gap:2rem;
+}
+.step{
+  flex:1 1 240px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:2rem;
+  position:relative;
+}
+.step-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;
+  font-weight:700;
+  color:var(--gold);
+  line-height:1;
+  margin-bottom:1rem;
+  display:block;
+}
+.step h3{
+  font-size:1.15rem;
+  color:var(--warm);
+  margin-bottom:0.5rem;
+}
+.step p{
+  font-size:0.9rem;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.packages-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1.25rem;
+}
+.package-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-top:3px solid var(--gold-dim);
+  border-radius:12px;
+  padding:1.75rem;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+  transition:transform 0.2s, box-shadow 0.2s, border-top-color 0.2s;
+  position:relative;
+}
+.package-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  border-top-color:var(--gold);
+}
+.package-card.popular{border-top-color:var(--gold)}
+.popular-badge{
+  position:absolute;
+  top:-1px;
+  right:1.25rem;
+  background:var(--gold);
+  color:#111;
+  font-family:'DM Mono',monospace;
+  font-size:0.65rem;
+  font-weight:500;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:0.25rem 0.6rem;
+  border-radius:0 0 6px 6px;
+}
+.pkg-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;
+  font-weight:600;
+  color:var(--warm);
+}
+.pkg-includes{
+  font-size:0.875rem;
+  color:var(--muted);
+  flex:1;
+}
+.pkg-price{
+  font-family:'DM Mono',monospace;
+  font-size:1.5rem;
+  font-weight:500;
+  color:var(--gold);
+}
+.pkg-btn{
+  width:100%;
+  background:transparent;
+  color:var(--gold);
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:0.875rem;
+  padding:0.6rem 1rem;
+  border-radius:6px;
+  border:1px solid var(--gold-dim);
+  cursor:pointer;
+  transition:background 0.2s, border-color 0.2s, transform 0.15s;
+  text-align:center;
+  display:block;
+}
+.pkg-btn:hover{border-color:var(--gold);background:rgba(201,168,76,0.08);transform:translateY(-1px)}
+.pkg-btn:active{transform:scale(0.97)}
+
+footer{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  padding:1.75rem 1.5rem;
+  text-align:center;
+}
+.footer-inner{
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:0.5rem 1.5rem;
+}
+.footer-inner span{
+  font-size:0.8rem;
+  color:var(--muted);
+  font-family:'DM Mono',monospace;
+}
+.footer-inner a{
+  font-size:0.8rem;
+  color:var(--muted);
+  font-family:'DM Mono',monospace;
+  transition:color 0.2s;
+}
+.footer-inner a:hover{color:var(--gold)}
+
+.jd-body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:4rem 1.5rem}
+.jd-inner{max-width:680px;width:100%}
+.jd-inner h2{font-size:clamp(1.5rem,3vw,2rem);color:var(--warm);margin-bottom:0.75rem}
+.jd-sub{font-size:0.95rem;color:var(--muted);margin-bottom:1.75rem;line-height:1.7;max-width:560px}
+.jd-textarea{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;line-height:1.6;padding:1rem 1.25rem;resize:vertical;transition:border-color 0.2s,box-shadow 0.2s;margin-bottom:1.25rem}
+.jd-textarea:focus{outline:none;border-color:var(--gold-dim);box-shadow:0 0 0 3px rgba(201,168,76,0.08)}
+.jd-textarea::placeholder{color:var(--muted)}
+.jd-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.jd-required-msg{font-size:0.875rem;color:var(--gold);margin-top:0.75rem;line-height:1.6;max-width:520px}
+.limit-wrap{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;padding:2rem 1.25rem;text-align:center}
+.limit-card{max-width:420px;width:100%}
+.limit-badge{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.12em;color:var(--gold);text-transform:uppercase;margin-bottom:1.25rem;display:block}
+.limit-card h3{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--warm);margin-bottom:0.5rem;line-height:1.3}
+.limit-reset{font-size:0.875rem;color:var(--muted);margin-bottom:2rem}
+.limit-pricing{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;text-align:left}
+.limit-plan{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem}
+.limit-price{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--warm);margin-bottom:0.25rem}
+.limit-price span{font-size:1rem;font-weight:400;color:var(--muted)}
+.limit-cost-note{font-size:0.8rem;color:var(--muted);line-height:1.6;margin-bottom:1.25rem}
+.limit-btn{display:block;text-align:center;background:var(--gold);color:#111;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.9rem;padding:0.75rem 1.5rem;border-radius:7px;text-decoration:none;transition:opacity 0.2s}
+.limit-btn:hover{opacity:0.88}
+.jd-url-row{display:flex;gap:0.75rem;margin-bottom:0.75rem}
+.jd-url-input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;padding:0.65rem 1rem;transition:border-color 0.2s,box-shadow 0.2s;min-width:0}
+.jd-url-input:focus{outline:none;border-color:var(--gold-dim);box-shadow:0 0 0 3px rgba(201,168,76,0.08)}
+.jd-url-input::placeholder{color:var(--muted)}
+.jd-preview{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin-bottom:1.25rem}
+.jd-preview-header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:0.75rem}
+.jd-preview-title{font-size:0.95rem;font-weight:600;color:var(--warm);margin-bottom:0.2rem}
+.jd-preview-url{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted)}
+.jd-preview-text{font-size:0.82rem;color:var(--muted);line-height:1.6;max-height:140px;overflow:hidden;mask-image:linear-gradient(to bottom,black 60%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,black 60%,transparent 100%);white-space:pre-wrap}
+.jd-clear-btn{font-size:0.8rem;padding:0.3rem 0.75rem;flex-shrink:0}
+.jd-paste-toggle{margin-bottom:1rem}
+.jd-toggle-btn{background:none;border:none;color:var(--muted);font-size:0.85rem;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0;transition:color 0.2s}
+.jd-toggle-btn:hover{color:var(--gold)}
+.jd-paste-area{margin-bottom:1rem}
+.job-match-score-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.4rem}
+.jm-label{font-size:0.875rem;font-weight:500;color:var(--text)}
+.jm-score{font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--gold)}
+.jm-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.kw-list{list-style:none;display:flex;flex-wrap:wrap;gap:0.4rem}
+.kw-item{font-family:'DM Mono',monospace;font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:4px}
+.kw-missing{background:rgba(224,90,58,0.12);color:#f0806a;border:1px solid rgba(224,90,58,0.2)}
+.kw-present{background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.2)}
+@media(max-width:580px){.jm-cols{grid-template-columns:1fr}}
+
+#scanning{
+  position:fixed;
+  inset:0;
+  background:rgba(17,17,17,0.97);
+  z-index:200;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  padding:2rem;
+}
+#scanning.active{display:flex}
+.scan-ring{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  border:3px solid var(--border);
+  border-top:3px solid var(--gold);
+  animation:spin 1.2s linear infinite;
+  position:relative;
+  margin:0 auto 2rem;
+}
+.scan-ring::after{
+  content:'';
+  position:absolute;
+  inset:8px;
+  border-radius:50%;
+  border:2px solid transparent;
+  border-top:2px solid rgba(201,168,76,0.3);
+  animation:spin 2s linear infinite reverse;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scan-pulse{
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,0.4)}
+  50%{box-shadow:0 0 0 20px rgba(201,168,76,0)}
+}
+.scan-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;
+  color:var(--warm);
+  margin-bottom:0.5rem;
+}
+.scan-sub{
+  font-size:0.9rem;
+  color:var(--muted);
+  max-width:400px;
+  margin:0 auto 2.5rem;
+}
+.scan-checks{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:0.75rem;
+  align-items:flex-start;
+  width:280px;
+}
+.scan-check{
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  font-size:0.9rem;
+  color:var(--muted);
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity 0.4s ease, transform 0.4s ease, color 0.3s;
+}
+.scan-check.show{
+  opacity:1;
+  transform:none;
+  color:var(--text);
+}
+.check-icon{
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  border:2px solid var(--border);
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background 0.3s, border-color 0.3s;
+}
+.scan-check.show .check-icon{
+  background:var(--gold);
+  border-color:var(--gold);
+}
+.check-mark{
+  width:10px;
+  height:7px;
+  position:relative;
+  opacity:0;
+  transition:opacity 0.2s 0.2s;
+}
+.check-mark::before,.check-mark::after{
+  content:'';
+  position:absolute;
+  background:#111;
+  border-radius:2px;
+}
+.check-mark::before{width:3px;height:7px;left:6px;top:0;transform:rotate(40deg)}
+.check-mark::after{width:3px;height:4px;left:0;top:3px;transform:rotate(-50deg)}
+.scan-check.show .check-mark{opacity:1}
+
+#results{
+  padding-bottom:5rem;
+}
+.results-header{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:2rem 1.5rem;
+}
+.results-header-inner{
+  max-width:900px;
+  margin:0 auto;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+}
+.results-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.75rem;
+  color:var(--warm);
+}
+.results-meta{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:0.25rem;
+}
+.results-filename{
+  font-family:'DM Mono',monospace;
+  font-size:0.8rem;
+  color:var(--gold);
+  background:rgba(201,168,76,0.08);
+  padding:0.2rem 0.6rem;
+  border-radius:4px;
+}
+.results-date{
+  font-size:0.78rem;
+  color:var(--muted);
+  font-family:'DM Mono',monospace;
+}
+
+.results-body{
+  max-width:900px;
+  margin:0 auto;
+  padding:2.5rem 1.5rem;
+}
+
+.score-section{
+  display:flex;
+  flex-wrap:wrap;
+  gap:2.5rem;
+  align-items:flex-start;
+  margin-bottom:3rem;
+}
+.gauge-wrap{
+  flex:0 0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.75rem;
+}
+.gauge-svg{
+  width:160px;
+  height:160px;
+  transform:rotate(-90deg);
+}
+.gauge-track{
+  fill:none;
+  stroke:var(--surface2);
+  stroke-width:12;
+}
+.gauge-fill{
+  fill:none;
+  stroke:var(--gold);
+  stroke-width:12;
+  stroke-linecap:round;
+  stroke-dasharray:408;
+  stroke-dashoffset:408;
+  transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+.gauge-center{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.gauge-container{
+  position:relative;
+  width:160px;
+  height:160px;
+}
+.gauge-score{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;
+  font-weight:700;
+  color:var(--warm);
+  line-height:1;
+}
+.gauge-denom{
+  font-family:'DM Mono',monospace;
+  font-size:0.75rem;
+  color:var(--muted);
+}
+.gauge-label{
+  font-family:'DM Mono',monospace;
+  font-size:0.75rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+.label-getting-there{color:#d4a017}
+
+.subscores{
+  flex:1 1 300px;
+  display:flex;
+  flex-direction:column;
+  gap:1.25rem;
+}
+.subscore{
+  display:flex;
+  flex-direction:column;
+  gap:0.35rem;
+}
+.subscore-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+}
+.subscore-name{
+  font-size:0.875rem;
+  font-weight:500;
+  color:var(--text);
+}
+.subscore-val{
+  font-family:'DM Mono',monospace;
+  font-size:0.8rem;
+  color:var(--gold);
+}
+.bar-track{
+  height:6px;
+  background:var(--surface2);
+  border-radius:3px;
+  overflow:hidden;
+}
+.bar-fill{
+  height:100%;
+  background:var(--gold);
+  border-radius:3px;
+  width:0%;
+  transition:width 1s cubic-bezier(0.4,0,0.2,1);
+}
+
+.findings-section{
+  margin-bottom:3rem;
+}
+.findings-title{
+  font-size:1.3rem;
+  color:var(--warm);
+  margin-bottom:1.5rem;
+  font-family:'Playfair Display',serif;
+}
+.finding-group{
+  margin-bottom:1.75rem;
+}
+.finding-group-label{
+  font-family:'DM Mono',monospace;
+  font-size:0.7rem;
+  letter-spacing:0.1em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:0.75rem;
+  padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);
+}
+.finding{
+  display:flex;
+  align-items:flex-start;
+  gap:0.75rem;
+  padding:0.75rem 0;
+  border-bottom:1px solid rgba(46,46,46,0.5);
+}
+.finding:last-child{border-bottom:none}
+.sev-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  flex-shrink:0;
+  margin-top:0.45rem;
+}
+.sev-red{background:var(--red)}
+.sev-amber{background:var(--amber)}
+.sev-muted{background:var(--muted)}
+.finding-text{
+  font-size:0.875rem;
+  color:var(--muted);
+  line-height:1.6;
+}
+.finding-text strong{color:var(--text);font-weight:500}
+
+.cta-section{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-top:3px solid var(--gold);
+  border-radius:12px;
+  padding:2.5rem;
+  margin-bottom:2.5rem;
+  text-align:center;
+}
+.cta-section h2{
+  font-size:1.5rem;
+  color:var(--warm);
+  margin-bottom:0.75rem;
+}
+.cta-section p{
+  font-size:0.9rem;
+  color:var(--muted);
+  max-width:580px;
+  margin:0 auto 2rem;
+  line-height:1.7;
+}
+.cta-contact{
+  display:block;
+  margin-top:1.75rem;
+  font-size:0.875rem;
+  color:var(--gold-dim);
+  transition:color 0.2s;
+}
+.cta-contact:hover{color:var(--gold)}
+.buzz-contact-form{margin-top:2rem;text-align:left;border-top:1px solid var(--border);padding-top:2rem}
+.buzz-contact-form .bcf-title{font-size:0.78rem;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;text-align:center}
+.bcf-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.bcf-field{margin-bottom:12px}
+.bcf-field label{display:block;font-size:11px;font-family:'DM Mono',monospace;letter-spacing:0.09em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.bcf-field input,.bcf-field textarea{width:100%;background:#0D0D0D;border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;padding:10px 13px;outline:none;transition:border-color 0.15s;-webkit-appearance:none}
+.bcf-field textarea{resize:vertical;min-height:90px}
+.bcf-field input::placeholder,.bcf-field textarea::placeholder{color:#444}
+.bcf-field input:focus,.bcf-field textarea:focus{border-color:var(--gold)}
+.bcf-submit{display:block;width:100%;background:var(--gold);color:#111;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:700;border:none;border-radius:7px;padding:0.7rem;cursor:pointer;transition:opacity 0.15s}
+.bcf-submit:hover:not(:disabled){opacity:0.88}
+.bcf-submit:disabled{opacity:0.5;cursor:not-allowed}
+.bcf-feedback{display:none;margin-top:12px;padding:10px 14px;border-radius:7px;font-size:0.82rem;text-align:center;font-family:'DM Mono',monospace}
+.bcf-feedback.success{display:block;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:#10B981}
+.bcf-feedback.error{display:block;background:rgba(224,90,58,0.1);border:1px solid rgba(224,90,58,0.3);color:#E05A3A}
+@media(max-width:540px){.bcf-row{grid-template-columns:1fr}}
+.wb-section{border-top:1px solid var(--border);padding:2.75rem 1.5rem 3.25rem}
+.wb-inner{max-width:1100px;margin:0 auto}
+.wb-header{display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem 1.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.wb-heading{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase}
+.wb-all-link{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;color:var(--gold);text-decoration:none;text-transform:uppercase;white-space:nowrap;transition:color 0.2s}
+.wb-all-link:hover{color:var(--gold)}
+.wb-embed{position:relative;width:100%;padding-top:56.25%;margin-bottom:2rem;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.wb-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.wb-embed-label{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;margin-bottom:0.6rem}
+.wb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.wb-card{display:flex;flex-direction:column;gap:0.5rem;text-decoration:none}
+.wb-thumb{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:6px;background:var(--surface)}
+.wb-thumb img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block}
+.wb-thumb::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.65);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='9,7 17,12 9,17' fill='white'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:22px;transition:background-color 0.2s}
+.wb-card:hover .wb-thumb::after{background-color:rgba(201,168,76,0.75)}
+.wb-card:hover .wb-thumb img{opacity:0.85}
+.wb-thumb img{transition:opacity 0.2s}
+.wb-card-ep{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-top:0.25rem}
+.wb-card-name{font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:700;color:var(--warm);line-height:1.3}
+.wb-card-role{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.05em;color:var(--muted);text-transform:uppercase;line-height:1.45}
+@media(max-width:767px){
+  .wb-section{padding:2rem 1.25rem 2.5rem}
+  .wb-grid{grid-template-columns:repeat(2,1fr);gap:1rem}
+}
+.start-over-wrap{
+  text-align:center;
+  padding-top:1rem;
+}
+.btn-ghost{
+  background:transparent;
+  color:var(--muted);
+  font-family:'DM Sans',sans-serif;
+  font-weight:500;
+  font-size:0.875rem;
+  padding:0.55rem 1.25rem;
+  border-radius:6px;
+  border:1px solid var(--border);
+  cursor:pointer;
+  transition:border-color 0.2s, color 0.2s, transform 0.15s;
+}
+.btn-ghost:hover{border-color:var(--muted);color:var(--text);transform:translateY(-1px)}
+.btn-ghost:active{transform:scale(0.97)}
+
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;margin-right:-10px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted);transition:background 150ms}
+.hamburger:hover span{background:var(--gold)}
+@media(max-width:767px){
+  .hamburger{display:flex}
+  .nav-links{display:none;position:fixed;top:56px;left:0;right:0;background:rgba(17,17,17,0.97);backdrop-filter:blur(12px);flex-direction:column;padding:1.5rem;gap:1.25rem;border-bottom:1px solid var(--border);z-index:99}
+  .nav-links.open{display:flex}
+  .nav-links .nav-text-links{flex-direction:column;gap:1.25rem}
+  .nav-inner{justify-content:space-between;height:56px}
+  .packages-grid{grid-template-columns:1fr}
+  .score-section{flex-direction:column;align-items:center}
+  .results-meta{align-items:flex-start}
+  .steps{flex-direction:column}
+  .stats-inner{gap:1.5rem}
+  .stat{flex:1 1 120px}
+  .hero{padding:4rem 1.25rem 3rem}
+  .section-block{padding:3.5rem 1.25rem}
+  nav{padding:0 1.25rem}
+  .wordmark{font-size:1.25rem}
+}
+@media(max-width:479px){
+  .packages-grid{grid-template-columns:1fr}
+  .cta-section{padding:1.75rem 1.25rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .scan-ring{animation:none}
+  .gauge-fill{transition:none}
+  .bar-fill{transition:none}
+  .scan-check{transition:none}
+}
+
+/* ── Bee system ─────────────────────────────────────────── */
+.bee {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+  width: 56px;
+  height: auto;
+  filter: drop-shadow(0 2px 10px rgba(245,200,0,0.25));
+  will-change: transform;
+}
+.bee.flipped { transform: scaleX(-1); }
+
+@keyframes wingFlap {
+  0%,100% { transform: scaleY(1) rotate(-8deg); }
+  50%      { transform: scaleY(0.25) rotate(4deg); }
+}
+@keyframes wingFlapR {
+  0%,100% { transform: scaleY(1) rotate(8deg); }
+  50%      { transform: scaleY(0.25) rotate(-4deg); }
+}
+@keyframes beeBob {
+  0%,100% { transform: translateY(0px); }
+  50%      { transform: translateY(-5px); }
+}
+@keyframes beeBlink {
+  0%,82%,100% { transform: scaleY(1); }
+  87%,90%     { transform: scaleY(2); }
+}
+.bee-eyelid {
+  transform-box: fill-box;
+  transform-origin: top center;
+  animation: beeBlink 5.5s ease-in-out infinite;
+}
+@keyframes beePeek {
+  0%,60%  { transform: translateY(52px); }
+  20%,40% { transform: translateY(0px); }
+}
+@keyframes beeFlyPath {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(20vw, -18px); }
+  40%  { transform: translate(40vw, 8px); }
+  60%  { transform: translate(60vw, -12px); }
+  80%  { transform: translate(80vw, 6px); }
+  100% { transform: translate(110vw, 0); }
+}
+@keyframes beeFlyPathR {
+  0%   { transform: translate(0, 0) scaleX(-1); }
+  20%  { transform: translate(-20vw, -18px) scaleX(-1); }
+  40%  { transform: translate(-40vw, 8px) scaleX(-1); }
+  60%  { transform: translate(-60vw, -12px) scaleX(-1); }
+  80%  { transform: translate(-80vw, 6px) scaleX(-1); }
+  100% { transform: translate(-110vw, 0) scaleX(-1); }
+}
+
+/* ATS GUIDE */
+.ats-pipeline{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:4rem}
+.ats-pipe-step{padding:1.75rem 1.5rem;background:var(--surface);display:flex;flex-direction:column;gap:0.45rem}
+.ats-pipe-step+.ats-pipe-step{border-left:1px solid var(--border)}
+.ats-pipe-num{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;color:var(--gold);text-transform:uppercase}
+.ats-pipe-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--warm);margin-bottom:0.1rem}
+.ats-pipe-desc{font-size:0.8rem;color:var(--muted);line-height:1.55}
+.ats-truth-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.ats-truth-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.35rem;display:flex;flex-direction:column;gap:0.4rem}
+.ats-truth-card.full{grid-column:1/-1}
+.ats-verdict{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500}
+.verdict-ok{color:#4CAF7D}
+.verdict-warn{color:var(--amber)}
+.verdict-fail{color:var(--red)}
+.ats-truth-title{font-size:0.95rem;font-weight:600;color:var(--warm)}
+.ats-truth-body{font-size:0.83rem;color:var(--muted);line-height:1.6}
+.ats-kw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
+.ats-kw-item{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold-dim);border-radius:0 10px 10px 0;padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:0.35rem}
+.ats-kw-tag{font-family:'DM Mono',monospace;font-size:0.67rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold)}
+.ats-kw-body{font-size:0.82rem;color:var(--muted);line-height:1.6}
+.ats-checklist{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.ats-check-row{display:flex;align-items:flex-start;gap:1.1rem;padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface)}
+.ats-check-row:last-child{border-bottom:none}
+.ats-check-n{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:700;color:rgba(201,168,76,0.18);line-height:1;flex-shrink:0;width:2rem;text-align:center;padding-top:0.15rem}
+.ats-check-content{display:flex;flex-direction:column;gap:0.2rem}
+.ats-check-title{font-size:0.88rem;font-weight:600;color:var(--warm)}
+.ats-check-detail{font-size:0.8rem;color:var(--muted);line-height:1.6}
+.ats-levels-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.ats-level{padding:1.5rem 1.25rem;background:var(--surface);display:flex;flex-direction:column;gap:0.35rem}
+.ats-level+.ats-level{border-left:1px solid var(--border)}
+.ats-level-lbl{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold)}
+.ats-level-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--warm)}
+.ats-level-exp{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);margin-bottom:0.2rem}
+.ats-level-tip{font-size:0.79rem;color:var(--muted);line-height:1.55}
+@media(max-width:900px){.ats-pipeline{grid-template-columns:repeat(2,1fr)}.ats-pipe-step:nth-child(3){border-left:none;border-top:1px solid var(--border)}.ats-pipe-step:nth-child(4){border-top:1px solid var(--border)}}
+@media(max-width:767px){.ats-truth-grid{grid-template-columns:1fr}.ats-truth-card.full{grid-column:auto}.ats-levels-grid{grid-template-columns:repeat(2,1fr)}.ats-level:nth-child(2){border-top:1px solid var(--border)}.ats-level:nth-child(3){border-left:none;border-top:1px solid var(--border)}}
+@media(max-width:540px){.ats-pipeline{grid-template-columns:1fr}.ats-pipe-step+.ats-pipe-step{border-left:none;border-top:1px solid var(--border)}.ats-pipe-step:nth-child(3){border-left:none}}
+@media(max-width:479px){.ats-levels-grid{grid-template-columns:1fr}.ats-level+.ats-level{border-left:none;border-top:1px solid var(--border)}}
+/* FAQ */
+.faq-section{border-top:1px solid var(--border);padding:3rem 1.5rem 3.5rem}
+.faq-inner{max-width:860px;margin:0 auto}
+.faq-eyebrow{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.5rem}
+.faq-heading{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3.5vw,2rem);color:var(--warm);margin-bottom:2.5rem;line-height:1.2}
+details.faq-item{border-bottom:1px solid var(--border)}
+details.faq-item:first-of-type{border-top:1px solid var(--border)}
+details.faq-item summary{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0;cursor:pointer;list-style:none;font-size:0.95rem;font-weight:600;color:var(--text);gap:1rem;user-select:none;transition:color 0.15s}
+details.faq-item summary::-webkit-details-marker{display:none}
+details.faq-item summary::after{content:'+';font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:400;color:var(--gold);flex-shrink:0;line-height:1}
+details.faq-item[open] summary::after{content:'−'}
+details.faq-item summary:hover{color:var(--gold)}
+.faq-body{padding:0.25rem 0 2rem}
+</style>
+</head>
+<body>
+
+<div class="oye-bar">
+  <a href="https://oyecreations.com" target="_blank" rel="noopener noreferrer" class="oye-brand">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" style="height:18px;width:auto" aria-hidden="true">
+      <ellipse cx="250" cy="175" rx="205" ry="135" fill="none" stroke="#C9A84C" stroke-width="13" stroke-linecap="round"/>
+      <defs><clipPath id="oyecp"><ellipse cx="250" cy="175" rx="191" ry="121"/></clipPath></defs>
+      <g clip-path="url(#oyecp)" stroke="#C9A84C" stroke-width="13" stroke-linecap="round" fill="none">
+        <circle cx="148" cy="175" r="63"/>
+        <line x1="175" y1="80" x2="250" y2="168"/><line x1="320" y1="80" x2="250" y2="168"/>
+        <line x1="250" y1="168" x2="250" y2="265"/>
+        <line x1="318" y1="112" x2="318" y2="240"/><line x1="318" y1="112" x2="388" y2="112"/>
+        <line x1="318" y1="176" x2="383" y2="176"/><line x1="318" y1="240" x2="393" y2="240"/>
+      </g>
+    </svg>
+    <span>OYE <em>Creations</em></span>
+  </a>
+  <nav class="oye-nav-links" aria-label="OYE network">
+    <a href="https://multilingo.studio" target="_blank" rel="noopener noreferrer">Multilingo</a>
+    <a href="https://guitaranon.com" target="_blank" rel="noopener noreferrer">GuitarAnon</a>
+    <a href="https://droptimize.org" target="_blank" rel="noopener noreferrer">Droptimize</a>
+  </nav>
+</div>
+
+<main>
+<section id="landing" class="active">
+  <nav>
+    <div class="nav-inner">
+      <span class="wordmark">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 52" width="26" height="23" style="vertical-align:middle;margin-right:0.35rem;flex-shrink:0" aria-hidden="true"><polygon points="60,26 45,0 15,0 0,26 15,52 45,52" fill="#C9A84C"/><path d="M30,12 L39,27 L34.5,27 L34.5,40 L25.5,40 L25.5,27 L21,27 Z" fill="#111"/></svg>
+        <span class="w1">Resume</span><span class="w2">Buzz</span>
+      </span>
+      <button class="hamburger" aria-label="Toggle menu" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <div class="nav-text-links" style="display:flex;gap:2rem">
+          <a href="#how-it-works">How It Works</a>
+          <a href="#services">Services</a>
+          <a href="/build">Build Resume</a>
+          <a href="/about">About</a>
+          <a href="https://block.buzzresume.com">Second Chance Jobs</a>
+        </div>
+        <button class="btn-gold" onclick="document.getElementById('upload').scrollIntoView({behavior:'smooth'})">Get Started</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="hero" id="heroSection">
+    <span class="eyebrow" id="heroEyebrow">Free Resume Audit</span>
+    <h1 id="heroH1">Find out why no one is <span style="color:var(--gold)">buzzing about your resume.</span></h1>
+    <p class="hero-sub">Upload your resume and get a 100-point ATS audit in seconds. No email required, no sting. Powered by AI trained on <span class="ryz"></span> years of professional resume writing.</p>
+    <p class="hero-buzz"><span class="ryz"></span> years. 1,000+ resumes. One very busy hive.</p>
+
+    <div id="upload">
+      <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Drop your resume here, or browse files">
+        <div class="dropzone-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="4" width="32" height="40" rx="3"/>
+            <path d="M16 16h16M16 24h16M16 32h8"/>
+            <path d="M30 34l4-4 4 4M34 30v10" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <p class="dropzone-title">Drop your resume here</p>
+        <p class="dropzone-sub">PDF or DOCX, up to 5MB</p>
+        <button class="btn-gold" type="button" id="browseBtn">Browse Files</button>
+        <input type="file" id="fileInput" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-hidden="true">
+      </div>
+      <div class="error-msg" id="errorMsg" role="alert" aria-live="polite"></div>
+      <p class="upload-note">Your resume is analyzed and immediately deleted. Nothing is stored on our end.<br>We recommend uploading a copy with your name, address, phone, and email removed. The audit only needs your experience, skills, and formatting.</p>
+    </div>
+
+    <div style="max-width:600px;margin:1.5rem auto 0;display:flex;align-items:center;gap:1.25rem">
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+      <span style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase">or</span>
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+    </div>
+
+    <div style="max-width:600px;margin:1.25rem auto 0;text-align:center">
+      <a href="/build" class="btn-outline" style="display:inline-flex;align-items:center;gap:0.5rem;font-size:0.9rem;padding:0.65rem 1.75rem">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Build Resume Without Audit
+      </a>
+      <p style="font-size:0.78rem;color:var(--muted);margin-top:0.65rem">Skip the audit and go straight to building your AI-generated resume and cover letter</p>
+    </div>
+  </div>
+
+<!-- ── SCORE STRIP ──────────────────────────────────────────────── -->
+<div style="background:rgba(201,168,76,0.05);border-bottom:1px solid rgba(201,168,76,0.12);padding:9px 24px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56" style="height:16px;width:auto;flex-shrink:0;" aria-hidden="true" fill="none"><path d="M6,20 A18,18 0 0,1 42,20 Q42,38 24,54 Q6,38 6,20 Z" fill="#C9A84C"/><polyline points="13,28 24,14 35,28" stroke="#111111" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted,#8C8C8C);"><strong style="color:#C9A84C;font-weight:500;">100</strong> Performance</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted,#8C8C8C);"><strong style="color:#C9A84C;font-weight:500;">100</strong> Accessibility</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted,#8C8C8C);"><strong style="color:#C9A84C;font-weight:500;">100</strong> SEO</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted,#8C8C8C);"><strong style="color:#C9A84C;font-weight:500;">100</strong> Best Practices</span>
+    </div>
+    <a href="https://droptimize.org" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted,#8C8C8C);text-decoration:none;opacity:0.75;white-space:nowrap;transition:color 150ms,opacity 150ms;" onmouseover="this.style.color='#C9A84C';this.style.opacity='1'" onmouseout="this.style.color='var(--muted,#8C8C8C)';this.style.opacity='0.75'">Site enhanced by droptimize.org &#x2192;</a>
+  </div>
+</div>
+
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat">
+        <span class="stat-num ryz"></span>
+        <span class="stat-label">Years Experience</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1,000+</span>
+        <span class="stat-label">Resumes Written</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">6</span>
+        <span class="stat-label">Continents</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="services" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="section-block">
+      <span class="section-label">Services</span>
+      <h2 class="section-title">Professional rewrite <span style="color:var(--gold)">packages</span></h2>
+      <div class="packages-grid">
+        <div class="package-card">
+          <div class="pkg-name">AI Single Draft</div>
+          <div class="pkg-includes">Resume + cover letter, AI-generated instantly</div>
+          <div class="pkg-price">$19</div>
+          <a href="/build?plan=single" class="pkg-btn">Build Now &rarr;</a>
+        </div>
+        <div class="package-card popular">
+          <div class="popular-badge">Most Popular</div>
+          <div class="pkg-name">AI Draft + Human Polish</div>
+          <div class="pkg-includes">AI draft reviewed and refined by a professional writer</div>
+          <div class="pkg-price">$79</div>
+          <a href="/build?plan=polish" class="pkg-btn">Build Now &rarr;</a>
+        </div>
+        <div class="package-card">
+          <div class="pkg-name">Human Written Resume</div>
+          <div class="pkg-includes">Resume + cover letter, written by a professional. Market-specific for your country and language.</div>
+          <div class="pkg-price">$149</div>
+          <a href="/order?plan=human" class="pkg-btn">Buzz Me In &rarr;</a>
+        </div>
+        <div class="package-card">
+          <div class="pkg-name">CV Package</div>
+          <div class="pkg-includes">International / academic CV + cover letter</div>
+          <div class="pkg-price">$199</div>
+          <a href="/order?plan=cv" class="pkg-btn">Buzz Me In &rarr;</a>
+        </div>
+      <div class="privacy-note" style="margin-top:2rem">
+        <span class="privacy-label">What we actually need</span>
+        For purchase, an email address for your order confirmation. That's all. If you choose the Human Written path with interview prep, we'll ask for a phone number or Zoom link to schedule your session. Nothing else, nothing stored beyond what's needed to deliver your order.
+      </div>
+      <a href="https://block.buzzresume.com" style="display:block;margin-top:2rem;padding:1.25rem 1.5rem;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.18);border-radius:10px;text-decoration:none;transition:background 0.18s" onmouseover="this.style.background='rgba(201,168,76,0.09)'" onmouseout="this.style.background='rgba(201,168,76,0.05)'">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem">
+          <div>
+            <p style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;">Second Chance Initiative</p>
+            <p style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--warm);margin-bottom:4px;">Have a record? We built a job board for you.</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.6;">Live fair-chance job listings, 1,400+ employers who hire people with records, staffing agencies, reentry resources, and legal rights, all in one place. The hive looks out for everyone.</p>
+            <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:6px">Functionality with a purpose.</p>
+          </div>
+          <span style="font-size:0.85rem;font-weight:600;color:var(--gold);white-space:nowrap;flex-shrink:0">Second Chance Board &rarr;</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="section-block">
+      <span class="section-label">Membership</span>
+      <h2 class="section-title">Build more. Pay <span style="color:var(--gold)">once a month.</span></h2>
+      <div style="max-width:560px;margin:0 auto;background:var(--surface);border:1.5px solid rgba(201,168,76,0.35);border-radius:14px;padding:2rem 2rem 1.75rem;text-align:center">
+        <div style="display:inline-block;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:3px 14px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem">Pro Membership</div>
+        <div style="font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:700;color:var(--warm);line-height:1">$49<span style="font-size:1rem;font-weight:400;color:var(--muted)">&nbsp;/ month</span></div>
+        <div style="font-size:13px;color:var(--muted);margin:0.4rem 0 1.5rem">Cancel any time. No contracts.</div>
+        <ul style="list-style:none;padding:0;margin:0 0 1.75rem;text-align:left;display:inline-block">
+          <li style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.7rem;font-size:14px;color:var(--text)"><span style="color:var(--gold);font-size:1rem">&#10003;</span> 10 AI resume builds per week</li>
+          <li style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.7rem;font-size:14px;color:var(--text)"><span style="color:var(--gold);font-size:1rem">&#10003;</span> Unlimited ATS audits</li>
+          <li style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.7rem;font-size:14px;color:var(--text)"><span style="color:var(--gold);font-size:1rem">&#10003;</span> Cover letter with every build</li>
+          <li style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.7rem;font-size:14px;color:var(--text)"><span style="color:var(--gold);font-size:1rem">&#10003;</span> Job description matching</li>
+          <li style="display:flex;align-items:center;gap:0.6rem;font-size:14px;color:var(--text)"><span style="color:var(--gold);font-size:1rem">&#10003;</span> 18 job markets, native-language resumes available</li>
+        </ul>
+        <a href="/build" style="display:block;background:var(--gold);color:#111;font-weight:700;font-size:15px;padding:13px 24px;border-radius:8px;text-decoration:none;transition:opacity 0.15s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Get Pro &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wb-section">
+    <div class="wb-inner">
+      <div class="wb-header">
+        <span class="wb-heading">Worker Bees Podcast &nbsp;&middot;&nbsp; conversations from the hive</span>
+        <a href="https://oyecreations.com/worker-bees" target="_blank" rel="noopener" class="wb-all-link">Full episodes + stories &rarr;</a>
+      </div>
+      <p class="wb-embed-label">Theme Song &middot; Chris Demakes of Less Than Jake</p>
+      <div class="wb-embed">
+        <iframe
+          src="https://www.youtube.com/embed/7Wfe62BIFt8"
+          title="Worker Bees Podcast Theme Song — Chris Demakes of Less Than Jake"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <div class="wb-grid">
+        <a class="wb-card" href="https://oyecreations.com/worker-bees" target="_blank" rel="noopener">
+          <div class="wb-thumb">
+            <img src="https://i.ytimg.com/vi/gUbsCW2Ab7w/hqdefault.jpg" alt="Vinnie Fiorello — Worker Bees Podcast" loading="lazy">
+          </div>
+          <div class="wb-card-ep">Episode 01</div>
+          <div class="wb-card-name">Vinnie Fiorello</div>
+          <div class="wb-card-role">Less Than Jake &middot; Maui Downhill</div>
+        </a>
+        <a class="wb-card" href="https://oyecreations.com/worker-bees" target="_blank" rel="noopener">
+          <div class="wb-thumb">
+            <img src="https://i.ytimg.com/vi/c9BqpJ2i1u4/hqdefault.jpg" alt="Billy Campbell &amp; Nikki Sheibe — Worker Bees Podcast" loading="lazy">
+          </div>
+          <div class="wb-card-ep">Episode 02</div>
+          <div class="wb-card-name">Billy Campbell &amp; Nikki Sheibe</div>
+          <div class="wb-card-role">Maui Downhill</div>
+        </a>
+        <a class="wb-card" href="https://oyecreations.com/worker-bees" target="_blank" rel="noopener">
+          <div class="wb-thumb">
+            <img src="https://i.ytimg.com/vi/KkJgS2oHxTY/hqdefault.jpg" alt="Kirk O'Hara — Worker Bees Podcast" loading="lazy">
+          </div>
+          <div class="wb-card-ep">Episode 03</div>
+          <div class="wb-card-name">Kirk O'Hara</div>
+          <div class="wb-card-role">Artist &amp; Painter &middot; Paintmouth</div>
+        </a>
+        <a class="wb-card" href="https://oyecreations.com/worker-bees" target="_blank" rel="noopener">
+          <div class="wb-thumb">
+            <img src="https://i.ytimg.com/vi/mNG4m7Y5d20/hqdefault.jpg" alt="Shawn Mokuahi Garnett — Worker Bees Podcast" loading="lazy">
+          </div>
+          <div class="wb-card-ep">Episode 04</div>
+          <div class="wb-card-name">Shawn Mokuahi Garnett</div>
+          <div class="wb-card-role">Musician &amp; Actor &middot; Honolulu, HI</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-section" role="region" aria-label="Frequently asked questions">
+    <div class="faq-inner">
+      <span class="faq-eyebrow">FAQ</span>
+      <h2 class="faq-heading">Questions about <span style="color:var(--gold)">resumes &amp; ATS</span></h2>
+
+      <details class="faq-item">
+        <summary>How does the audit work?</summary>
+        <div class="faq-body">
+          <div class="steps">
+            <div class="step">
+              <span class="step-num">01</span>
+              <h3>Upload</h3>
+              <p>Drop your PDF or DOCX. No account, no email, no strings. The worker bees start combing through it the moment it lands.</p>
+            </div>
+            <div class="step">
+              <span class="step-num">02</span>
+              <h3>Audit</h3>
+              <p>AI scans for ATS issues, keyword gaps, and impact language across 100 points. No stone unturned, no cell left unchecked.</p>
+            </div>
+            <div class="step">
+              <span class="step-num">03</span>
+              <h3>Decide</h3>
+              <p>See your score and choose a package if you want a professional rewrite. Every resume that comes through gets the full colony treatment.</p>
+            </div>
+          </div>
+          <div class="privacy-note" style="margin-top:2rem">
+            <span class="privacy-label">Your privacy</span>
+            We never store, share, or sell your resume. The audit processes your file and discards it the moment your results are ready. For the free audit you don't need to tell us who you are. Submit with personal details stripped and the score will be just as accurate. What happens in the hive, stays in the hive.
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>How does ATS actually work?</summary>
+        <div class="faq-body">
+          <p style="font-size:0.88rem;color:var(--muted);max-width:640px;margin:0 0 1.75rem;line-height:1.7">Before any human reads your resume, an Applicant Tracking System parses, indexes, and ranks it against every other applicant. Most job seekers write for the human reader and get filtered out before any human sees them.</p>
+          <div class="ats-pipeline">
+            <div class="ats-pipe-step">
+              <div class="ats-pipe-num">01</div>
+              <div class="ats-pipe-name">Parse</div>
+              <div class="ats-pipe-desc">ATS extracts all text from your uploaded file and converts it into machine-readable data.</div>
+            </div>
+            <div class="ats-pipe-step">
+              <div class="ats-pipe-num">02</div>
+              <div class="ats-pipe-name">Index</div>
+              <div class="ats-pipe-desc">That text is stored and catalogued inside a searchable candidate database.</div>
+            </div>
+            <div class="ats-pipe-step">
+              <div class="ats-pipe-num">03</div>
+              <div class="ats-pipe-name">Search</div>
+              <div class="ats-pipe-desc">A human recruiter programs keyword searches. ATS runs them across all indexed candidates simultaneously.</div>
+            </div>
+            <div class="ats-pipe-step">
+              <div class="ats-pipe-num">04</div>
+              <div class="ats-pipe-name">Rank</div>
+              <div class="ats-pipe-desc">Candidates are ranked by keyword match and suitability. Top results reach human eyes. Everyone else does not.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>What formatting is ATS-safe?</summary>
+        <div class="faq-body">
+          <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.65;max-width:620px">Most advice about ATS formatting is either wrong or oversimplified. Here is what the data actually shows, and where the real danger is.</p>
+          <div class="ats-truth-grid">
+            <div class="ats-truth-card">
+              <span class="ats-verdict verdict-ok">&#10003; Perfectly Safe</span>
+              <div class="ats-truth-title">Color &amp; Styled Text</div>
+              <div class="ats-truth-body">Most ATS parse color text without issue. Variation in font weight, color, and style is fine. Stripping your resume to plain black text is unnecessary and makes the human read worse, not better.</div>
+            </div>
+            <div class="ats-truth-card">
+              <span class="ats-verdict verdict-warn">&#9888; Use with Caution</span>
+              <div class="ats-truth-title">Tables &amp; Text Boxes</div>
+              <div class="ats-truth-body">Some ATS merge or mangle text inside tables, but the text is still indexable. The risk is reading order. Keep critical content (job titles, dates, skills) outside of table cells.</div>
+            </div>
+            <div class="ats-truth-card">
+              <span class="ats-verdict verdict-warn">&#9888; Never as Sole Source</span>
+              <div class="ats-truth-title">Charts &amp; Visual Data</div>
+              <div class="ats-truth-body">Charts stand out to humans but ATS cannot read them. Any information shown only as a graph (skill bars, a proficiency dial, a timeline) is completely invisible to the system. Always duplicate in text.</div>
+            </div>
+            <div class="ats-truth-card">
+              <span class="ats-verdict verdict-ok">&#10003; Safe to Use</span>
+              <div class="ats-truth-title">Icons &amp; Symbols</div>
+              <div class="ats-truth-body">ATS strips decorative icons and symbols, but the surrounding text content survives intact. Icons draw human attention to key information. Use them, just never as the only carrier of critical data.</div>
+            </div>
+            <div class="ats-truth-card full">
+              <span class="ats-verdict verdict-fail">&#10007; The Single Biggest Killer</span>
+              <div class="ats-truth-title">Multi-Column Layouts</div>
+              <div class="ats-truth-body">This is where the most resumes die. ATS reads across the full page width from left to right, not column by column. A two-column resume becomes a garbled mix of both columns interleaved. Skills listed in your right column may never be indexed at all. Our audit checks for this specifically because it is the most common reason qualified candidates are filtered out before a human ever sees them.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>What keywords does ATS actually search for?</summary>
+        <div class="faq-body">
+          <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.65;max-width:620px">Keywords are configured by human recruiters based on the job posting. Your job is to predict them and mirror their exact phrasing back.</p>
+          <div class="ats-kw-grid">
+            <div class="ats-kw-item">
+              <div class="ats-kw-tag">Phrases, not just single words</div>
+              <div class="ats-kw-body">"Project Management" and "B2B Sales" outrank "projects" and "sales." ATS searches for exact multi-word phrases. Include them exactly as written in the posting, not a paraphrase of them.</div>
+            </div>
+            <div class="ats-kw-item">
+              <div class="ats-kw-tag">Industry-specific terms</div>
+              <div class="ats-kw-body">ATS is configured for the specific role, not the category. Generic terms rank lower than the exact terminology used in that industry. Match the employer's language precisely, not the closest synonym.</div>
+            </div>
+            <div class="ats-kw-item">
+              <div class="ats-kw-tag">Job titles &amp; qualifications</div>
+              <div class="ats-kw-body">Previous titles, certifications, and degrees carry the highest keyword weight. Include your exact official title as held, and certifications in both full and abbreviated form: "Project Management Professional (PMP)."</div>
+            </div>
+            <div class="ats-kw-item">
+              <div class="ats-kw-tag">Action verbs that signal level</div>
+              <div class="ats-kw-body">ATS determines competency characteristics from verbs. "Led," "built," "managed," and "delivered" signal seniority. "Assisted" and "supported" signal junior. Match the seniority language to the role you are targeting.</div>
+            </div>
+            <div class="ats-kw-item" style="border-left-color:var(--amber)">
+              <div class="ats-kw-tag" style="color:var(--amber)">Spelling must match exactly</div>
+              <div class="ats-kw-body">If the job ad says "B2B," write "B2B," not "b2b" or "business-to-business." If it says "Agile," write "Agile." ATS is not smart enough to know these are the same thing. Exact spelling, every time.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do I maximize my ATS score?</summary>
+        <div class="faq-body">
+          <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.65;max-width:620px"><span class="ryz"></span> years of submissions show exactly what separates candidates who get through from candidates who disappear into the stack.</p>
+          <div class="ats-checklist">
+            <div class="ats-check-row">
+              <div class="ats-check-n">1</div>
+              <div class="ats-check-content">
+                <div class="ats-check-title">Read the job ad three times, then read it again</div>
+                <div class="ats-check-detail">The recruiter configured the ATS based on this exact posting. Every repeated term is a keyword signal. Every listed qualification is something the system is programmed to find.</div>
+              </div>
+            </div>
+            <div class="ats-check-row">
+              <div class="ats-check-n">2</div>
+              <div class="ats-check-content">
+                <div class="ats-check-title">Mirror exact phrasing, never paraphrase what you can quote</div>
+                <div class="ats-check-detail">"Client Relationship Management" and "CRM" are two different search terms. If the posting uses both, use both. The ATS was configured with the employer's language. Give it back verbatim.</div>
+              </div>
+            </div>
+            <div class="ats-check-row">
+              <div class="ats-check-n">3</div>
+              <div class="ats-check-content">
+                <div class="ats-check-title">Include target keywords more than once, in context</div>
+                <div class="ats-check-detail">Keyword frequency affects ranking. Place your most important keywords in your summary, in your experience bullets, and in your skills section. Natural repetition in context, not keyword stuffing.</div>
+              </div>
+            </div>
+            <div class="ats-check-row">
+              <div class="ats-check-n">4</div>
+              <div class="ats-check-content">
+                <div class="ats-check-title">Submit in .docx format when possible</div>
+                <div class="ats-check-detail">PDF is widely supported but .docx is the native format most ATS systems parse most accurately. When the posting does not specify a format, .docx is the safer default. Always follow explicit employer instructions first.</div>
+              </div>
+            </div>
+            <div class="ats-check-row">
+              <div class="ats-check-n">5</div>
+              <div class="ats-check-content">
+                <div class="ats-check-title">Balance ATS optimization with human readability</div>
+                <div class="ats-check-detail">A human recruiter programs the ATS keywords. A human recruiter reads your resume after it passes. A resume that wins the machine stage but reads like a keyword list loses at the human stage. Both matter equally.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Does ATS make hiring decisions?</summary>
+        <div class="faq-body">
+          <div style="background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.18);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:1.5rem 1.75rem">
+            <p style="font-size:0.95rem;color:var(--warm);font-weight:600;margin-bottom:0.5rem;line-height:1.3">The ATS does not make hiring decisions. Humans do, at both ends.</p>
+            <p style="font-size:0.87rem;color:var(--muted);line-height:1.7;max-width:700px">A human recruiter decides which keywords the ATS searches for. A human recruiter reads your resume once it passes. Anyone claiming it is easy to game a wide array of ATS systems should be listened to with extreme caution. Genuine keyword alignment with the job posting, written in readable and well-structured prose, is the only strategy that survives both stages.</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Which resume level applies to me?</summary>
+        <div class="faq-body">
+          <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.65;max-width:620px">Your career stage determines which keywords carry the most weight and how your experience should be framed. Getting this wrong signals misalignment before a human ever reads your name.</p>
+          <div class="ats-levels-grid">
+            <div class="ats-level">
+              <div class="ats-level-lbl">Entry Level</div>
+              <div class="ats-level-name">Graduate</div>
+              <div class="ats-level-exp">Up to 1 year total experience</div>
+              <div class="ats-level-tip">Emphasize education, internships, relevant coursework, and transferable skills. Keywords should mirror the entry-level requirements in the posting. Avoid senior-level language as it reads as misalignment.</div>
+            </div>
+            <div class="ats-level">
+              <div class="ats-level-lbl">Early Career</div>
+              <div class="ats-level-name">Junior</div>
+              <div class="ats-level-exp">Up to 5 years total experience</div>
+              <div class="ats-level-tip">Focus on recent roles and measurable growth. Keywords signal individual contribution and learning velocity. Start quantifying results. Numbers outperform adjectives at every ATS level.</div>
+            </div>
+            <div class="ats-level">
+              <div class="ats-level-lbl">Mid Career</div>
+              <div class="ats-level-name">Intermediate</div>
+              <div class="ats-level-exp">Over 5 years total experience</div>
+              <div class="ats-level-tip">Accomplishments over responsibilities. Keywords signal leadership, ownership, and cross-functional influence. ATS weight shifts from what you did to what you actually delivered.</div>
+            </div>
+            <div class="ats-level">
+              <div class="ats-level-lbl">Senior</div>
+              <div class="ats-level-name">Senior / Executive</div>
+              <div class="ats-level-exp">All work experience relevant</div>
+              <div class="ats-level-tip">Strategy, scope, and business impact. Keywords shift to P&amp;L ownership, team size, executive stakeholders, and organizational transformation. The ATS is looking for scale. Give it scale.</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+<!-- ── SCORE STRIP ──────────────────────────────────────────────── -->
+<div style="background:rgba(201,168,76,0.05);border-top:1px solid rgba(201,168,76,0.12);padding:9px 24px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56" style="height:16px;width:auto;flex-shrink:0;" aria-hidden="true" fill="none"><path d="M6,20 A18,18 0 0,1 42,20 Q42,38 24,54 Q6,38 6,20 Z" fill="#C9A84C"/><polyline points="13,28 24,14 35,28" stroke="#111111" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted,#8C8C8C);"><strong style="color:#C9A84C;font-weight:500;">100</strong> Performance</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted,#8C8C8C);"><strong style="color:#C9A84C;font-weight:500;">100</strong> Accessibility</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted,#8C8C8C);"><strong style="color:#C9A84C;font-weight:500;">100</strong> SEO</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted,#8C8C8C);"><strong style="color:#C9A84C;font-weight:500;">100</strong> Best Practices</span>
+    </div>
+    <a href="https://droptimize.org" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted,#8C8C8C);text-decoration:none;opacity:0.75;white-space:nowrap;transition:color 150ms,opacity 150ms;" onmouseover="this.style.color='#C9A84C';this.style.opacity='1'" onmouseout="this.style.color='var(--muted,#8C8C8C)';this.style.opacity='0.75'">Site enhanced by droptimize.org &#x2192;</a>
+  </div>
+</div>
+  <footer>
+    <div class="footer-inner">
+      <span>ResumeBuzz is a DBA of OYE Creations LLC</span>
+      <a href="https://oyecreations.com" target="_blank" rel="noopener">oyecreations.com</a>
+      <span>The hive is rooting for you.</span>
+      <span>&copy; 2026 OYE Creations LLC. All rights reserved.</span>
+    </div>
+  </footer>
+</section>
+
+<section id="job-desc">
+  <nav>
+    <div class="nav-inner">
+      <span class="wordmark">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 52" width="26" height="23" style="vertical-align:middle;margin-right:0.35rem;flex-shrink:0" aria-hidden="true"><polygon points="60,26 45,0 15,0 0,26 15,52 45,52" fill="#C9A84C"/><path d="M30,12 L39,27 L34.5,27 L34.5,40 L25.5,40 L25.5,27 L21,27 Z" fill="#111"/></svg>
+        <span class="w1">Resume</span><span class="w2">Buzz</span>
+      </span>
+      <button class="hamburger" aria-label="Toggle menu" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <div class="nav-text-links" style="display:flex;gap:2rem">
+          <a href="#how-it-works">How It Works</a>
+          <a href="#services">Services</a>
+          <a href="/build">Build Resume</a>
+          <a href="/about">About</a>
+          <a href="https://block.buzzresume.com">Second Chance Jobs</a>
+        </div>
+        <button class="btn-gold" onclick="document.getElementById('upload').scrollIntoView({behavior:'smooth'})">Get Started</button>
+      </div>
+    </div>
+  </nav>
+  <div class="jd-body">
+    <div class="jd-inner">
+      <span class="eyebrow">Step 2 of 2</span>
+      <h2>Add the job posting</h2>
+      <p class="jd-sub">Paste the URL from LinkedIn, Indeed, Monster, Glassdoor, or any job board. We'll pull the job description and score how well your resume matches it. The more context the hive has, the sharper your results.</p>
+
+      <div class="jd-url-row" id="jdUrlRow">
+        <input type="url" id="jobUrlInput" class="jd-url-input" aria-label="Job posting URL" placeholder="https://www.linkedin.com/jobs/view/..." autocomplete="off" spellcheck="false">
+        <button class="btn-gold" id="fetchJdBtn" type="button">Fetch Job</button>
+      </div>
+      <div class="error-msg" id="jdErrorMsg" role="alert" aria-live="polite"></div>
+
+      <div class="jd-preview" id="jdPreview" style="display:none">
+        <div class="jd-preview-header">
+          <div>
+            <div class="jd-preview-title" id="jdPreviewTitle"></div>
+            <div class="jd-preview-url" id="jdPreviewUrl"></div>
+          </div>
+          <button class="btn-ghost jd-clear-btn" id="jdClearBtn" type="button">Clear</button>
+        </div>
+        <div class="jd-preview-text" id="jdPreviewText"></div>
+      </div>
+
+      <div class="jd-paste-toggle" id="jdPasteToggle">
+        <button class="jd-toggle-btn" id="togglePasteBtn" type="button">Paste description instead</button>
+      </div>
+
+      <div class="jd-paste-area" id="jdPasteArea" style="display:none">
+        <textarea id="jobDescTextarea" class="jd-textarea" aria-label="Job description" placeholder="Paste job description here..." rows="10"></textarea>
+      </div>
+
+      <div class="jd-actions">
+        <button class="btn-gold" id="runAuditBtn" type="button">Run Audit &rarr;</button>
+      </div>
+      <p class="jd-required-msg" id="jdRequiredMsg" style="display:none">For best results, add a job link or paste the description above. It unlocks keyword matching and tells you exactly what's missing from your resume.</p>
+      <p class="upload-note" id="jd-resume-name"></p>
+    </div>
+  </div>
+</section>
+
+<section id="scanning">
+  <div id="scanMain">
+    <div class="scan-ring scan-pulse" aria-hidden="true"></div>
+    <h2 class="scan-title" id="scanFilename">Scanning your resume...</h2>
+    <p class="scan-sub">The hive is on it. Combing through every line: ATS compatibility, keywords, impact language, and structure.</p>
+    <ul class="scan-checks" role="list">
+      <li class="scan-check" id="chk1">
+        <span class="check-icon" aria-hidden="true"><span class="check-mark"></span></span>
+        ATS Compatibility
+      </li>
+      <li class="scan-check" id="chk2">
+        <span class="check-icon" aria-hidden="true"><span class="check-mark"></span></span>
+        Keyword Density
+      </li>
+      <li class="scan-check" id="chk3">
+        <span class="check-icon" aria-hidden="true"><span class="check-mark"></span></span>
+        Impact Language
+      </li>
+      <li class="scan-check" id="chk4">
+        <span class="check-icon" aria-hidden="true"><span class="check-mark"></span></span>
+        Structure &amp; Completeness
+      </li>
+    </ul>
+  </div>
+  <div class="limit-wrap" id="limitWrap">
+    <div class="limit-card">
+      <span class="limit-badge">Free tier limit reached</span>
+      <h3>You've used your 3 free audits this week.</h3>
+      <p class="limit-reset">Free audits reset every Monday.</p>
+      <div class="limit-pricing">
+        <div class="limit-plan">Unlimited Audits</div>
+        <div class="limit-price">$49 <span>/ month</span></div>
+        <p class="limit-cost-note">Each audit costs us about 2 cents in AI processing. At 50 audits a month that's a dollar in real costs. $9.99 covers our overhead and keeps the hive running.</p>
+        <a href="/cdn-cgi/l/email-protection#fc9499909093bc9385999f8e999d889593928fd29f9391c38f899e96999f88c1ae998f899199be898686d9cecca99290959195889998d9ceccbd9f9f998f8f" class="limit-btn">Get Unlimited Access &rarr;</a>
+      </div>
+      <button class="btn-ghost" id="limitStartOver">Start Over</button>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="results-header">
+    <div class="results-header-inner">
+      <h1 class="results-title">Your Resume Audit</h1>
+      <div class="results-meta">
+        <span class="results-filename" id="resultsFilename">resume.pdf</span>
+        <span class="results-date" id="resultsDate">Scored May 16, 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-body">
+    <div class="score-section">
+      <div class="gauge-wrap">
+        <div class="gauge-container">
+          <svg class="gauge-svg" viewBox="0 0 160 160" aria-label="Overall score: 61 out of 100" role="img">
+            <circle class="gauge-track" cx="80" cy="80" r="65"/>
+            <circle class="gauge-fill" id="gaugeFill" cx="80" cy="80" r="65"/>
+          </svg>
+          <div class="gauge-center">
+            <span class="gauge-score">61</span>
+            <span class="gauge-denom">/ 100</span>
+          </div>
+        </div>
+        <span class="gauge-label label-getting-there">Getting There</span>
+      </div>
+
+      <div class="subscores">
+        <div class="subscore">
+          <div class="subscore-row">
+            <span class="subscore-name">ATS Compatibility</span>
+            <span class="subscore-val">14 / 25</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-pct="56" id="bar1"></div></div>
+        </div>
+        <div class="subscore">
+          <div class="subscore-row">
+            <span class="subscore-name">Keyword Density</span>
+            <span class="subscore-val">16 / 25</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-pct="64" id="bar2"></div></div>
+        </div>
+        <div class="subscore">
+          <div class="subscore-row">
+            <span class="subscore-name">Impact Language</span>
+            <span class="subscore-val">18 / 25</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-pct="72" id="bar3"></div></div>
+        </div>
+        <div class="subscore">
+          <div class="subscore-row">
+            <span class="subscore-name">Structure &amp; Completeness</span>
+            <span class="subscore-val">13 / 25</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-pct="52" id="bar4"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="findings-section">
+      <h2 class="findings-title">What We Found</h2>
+
+      <div class="finding-group">
+        <div class="finding-group-label">ATS Compatibility</div>
+        <div class="finding">
+          <span class="sev-dot sev-red" aria-label="Critical"></span>
+          <p class="finding-text"><strong>Column layout detected.</strong> Most ATS parsers read left to right and will skip your right column.</p>
+        </div>
+        <div class="finding">
+          <span class="sev-dot sev-amber" aria-label="Warning"></span>
+          <p class="finding-text"><strong>Contact info missing from page 2 header.</strong> Some parsers lose it on multi-page splits.</p>
+        </div>
+      </div>
+
+      <div class="finding-group">
+        <div class="finding-group-label">Keyword Density</div>
+        <div class="finding">
+          <span class="sev-dot sev-red" aria-label="Critical"></span>
+          <p class="finding-text"><strong>Missing high-value terms for your industry:</strong> "project management," "cross-functional," "stakeholder alignment"</p>
+        </div>
+        <div class="finding">
+          <span class="sev-dot sev-amber" aria-label="Warning"></span>
+          <p class="finding-text"><strong>Skills section uses broad terms.</strong> Be specific: "Python 3.11" not "Python," "AWS EC2/S3" not "cloud"</p>
+        </div>
+      </div>
+
+      <div class="finding-group">
+        <div class="finding-group-label">Impact Language</div>
+        <div class="finding">
+          <span class="sev-dot sev-amber" aria-label="Warning"></span>
+          <p class="finding-text"><strong>7 bullet points start with a weak verb</strong> (worked, helped, assisted). Replace with led, drove, reduced, grew.</p>
+        </div>
+        <div class="finding">
+          <span class="sev-dot sev-amber" aria-label="Warning"></span>
+          <p class="finding-text"><strong>Only 2 of 18 bullets include a quantified result.</strong> Add metrics: revenue, time saved, team size, percentage.</p>
+        </div>
+      </div>
+
+      <div class="finding-group">
+        <div class="finding-group-label">Structure &amp; Completeness</div>
+        <div class="finding">
+          <span class="sev-dot sev-red" aria-label="Critical"></span>
+          <p class="finding-text"><strong>No professional summary or executive profile.</strong> Recruiters spend an average of 6 seconds on first scan.</p>
+        </div>
+        <div class="finding">
+          <span class="sev-dot sev-amber" aria-label="Warning"></span>
+          <p class="finding-text"><strong>Education appears before experience.</strong> Standard for professionals with 5+ years is experience first.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="job-match-section" id="jobMatchSection" style="display:none;margin-bottom:2.5rem;">
+      <h2 class="findings-title">Job Match Analysis</h2>
+      <div class="job-match-score-row">
+        <span class="jm-label">Match Score</span>
+        <span class="jm-score" id="jmScore">&mdash;</span>
+      </div>
+      <div class="bar-track" style="margin-bottom:1.75rem"><div class="bar-fill" id="jmBar" data-pct="0"></div></div>
+      <div class="jm-cols">
+        <div class="jm-col">
+          <div class="finding-group-label">Missing Keywords</div>
+          <ul class="kw-list" id="missingKeywords"></ul>
+        </div>
+        <div class="jm-col">
+          <div class="finding-group-label">Present Keywords</div>
+          <ul class="kw-list" id="presentKeywords"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2>Ready for a professional rewrite?</h2>
+      <p>A professional rewrite fixes every issue above. ATS-optimized, keyword-rich, and written to get you to the interview stage. Every cell addressed, every gap closed.</p>
+      <div class="packages-grid">
+        <div class="package-card">
+          <div class="pkg-name">AI Single Draft</div>
+          <div class="pkg-includes">Resume + cover letter, AI-generated instantly</div>
+          <div class="pkg-price">$19</div>
+          <a href="/build?plan=single" class="pkg-btn">Build Now &rarr;</a>
+        </div>
+        <div class="package-card popular">
+          <div class="popular-badge">Most Popular</div>
+          <div class="pkg-name">AI Draft + Human Polish</div>
+          <div class="pkg-includes">AI draft reviewed and refined by a professional writer</div>
+          <div class="pkg-price">$79</div>
+          <a href="/build?plan=polish" class="pkg-btn">Build Now &rarr;</a>
+        </div>
+        <div class="package-card">
+          <div class="pkg-name">Human Written Resume</div>
+          <div class="pkg-includes">Resume + cover letter, written by a professional. Market-specific for your country and language.</div>
+          <div class="pkg-price">$149</div>
+          <a href="/order?plan=human" class="pkg-btn">Buzz Me In &rarr;</a>
+        </div>
+        <div class="package-card">
+          <div class="pkg-name">CV Package</div>
+          <div class="pkg-includes">International / academic CV + cover letter</div>
+          <div class="pkg-price">$199</div>
+          <a href="/order?plan=cv" class="pkg-btn">Buzz Me In &rarr;</a>
+        </div>
+      </div>
+      <div class="buzz-contact-form">
+        <div class="bcf-title">Have a question? Get in touch.</div>
+        <form id="buzz-contact" novalidate>
+          <div class="bcf-row">
+            <div class="bcf-field">
+              <label for="bcf-name">Your name</label>
+              <input type="text" id="bcf-name" name="name" placeholder="Jane Smith" autocomplete="name" required>
+            </div>
+            <div class="bcf-field">
+              <label for="bcf-email">Email address</label>
+              <input type="email" id="bcf-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="bcf-field">
+            <label for="bcf-message">Message</label>
+            <textarea id="bcf-message" name="message" placeholder="What can we help you with?" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="bcf-submit" id="bcf-submit">Send Message &rarr;</button>
+          <div class="bcf-feedback" id="bcf-feedback"></div>
+        </form>
+      </div>
+
+      <a href="https://block.buzzresume.com" style="display:block;margin-top:2rem;padding:1.25rem 1.5rem;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.18);border-radius:10px;text-decoration:none;transition:background 0.18s" onmouseover="this.style.background='rgba(201,168,76,0.09)'" onmouseout="this.style.background='rgba(201,168,76,0.05)'">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem">
+          <div>
+            <p style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;">Second Chance Initiative</p>
+            <p style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--warm);margin-bottom:4px;">Have a record? We built a job board for you.</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.6;">Live fair-chance job listings, 1,400+ employers who hire people with records, staffing agencies, reentry resources, and legal rights, all in one place. The hive looks out for everyone.</p>
+            <p style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:6px">Functionality with a purpose.</p>
+          </div>
+          <span style="font-size:0.85rem;font-weight:600;color:var(--gold);white-space:nowrap;flex-shrink:0">Second Chance Board &rarr;</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="start-over-wrap">
+      <button class="btn-ghost" id="startOverBtn">Start Over</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function(){
+  var landing = document.getElementById('landing');
+  var jobDesc = document.getElementById('job-desc');
+  var scanning = document.getElementById('scanning');
+  var results = document.getElementById('results');
+  var dropzone = document.getElementById('dropzone');
+  var fileInput = document.getElementById('fileInput');
+  var browseBtn = document.getElementById('browseBtn');
+  var errorMsg = document.getElementById('errorMsg');
+  var scanFilename = document.getElementById('scanFilename');
+  var resultsFilename = document.getElementById('resultsFilename');
+  var resultsDate = document.getElementById('resultsDate');
+  var startOverBtn = document.getElementById('startOverBtn');
+  var runAuditBtn = document.getElementById('runAuditBtn');
+  var skipJdBtn = document.getElementById('skipJdBtn');
+  var jobDescTextarea = document.getElementById('jobDescTextarea');
+  var jdResumeName = document.getElementById('jd-resume-name');
+  var jobUrlInput = document.getElementById('jobUrlInput');
+  var fetchJdBtn = document.getElementById('fetchJdBtn');
+  var jdErrorMsg = document.getElementById('jdErrorMsg');
+  var jdPreview = document.getElementById('jdPreview');
+  var jdPreviewTitle = document.getElementById('jdPreviewTitle');
+  var jdPreviewUrl = document.getElementById('jdPreviewUrl');
+  var jdPreviewText = document.getElementById('jdPreviewText');
+  var jdClearBtn = document.getElementById('jdClearBtn');
+  var togglePasteBtn = document.getElementById('togglePasteBtn');
+  var jdPasteArea = document.getElementById('jdPasteArea');
+  var jdPasteToggle = document.getElementById('jdPasteToggle');
+  var jobMatchSection = document.getElementById('jobMatchSection');
+  var jmScore = document.getElementById('jmScore');
+  var jmBar = document.getElementById('jmBar');
+  var missingKeywords = document.getElementById('missingKeywords');
+  var presentKeywords = document.getElementById('presentKeywords');
+
+  var currentFile = null;
+  var currentJD = '';
+  var fetchedJdTitle = '';
+  var fetchedJdUrl = '';
+  var pasteMode = false;
+
+  var ALLOWED_TYPES = [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  ];
+  var ALLOWED_EXT = ['.pdf','.doc','.docx'];
+  var MAX_SIZE = 5 * 1024 * 1024;
+
+  function showSection(sec){
+    [landing, jobDesc, scanning, results].forEach(function(s){
+      s.classList.remove('active');
+      s.style.display = 'none';
+    });
+    if(sec === scanning){
+      sec.style.display = 'flex';
+    } else {
+      sec.style.display = 'block';
+    }
+    sec.classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function showError(msg){
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+  }
+
+  function clearError(){
+    errorMsg.textContent = '';
+    errorMsg.classList.remove('visible');
+  }
+
+  function validateFile(file){
+    if(!file) return 'No file selected.';
+    var name = file.name.toLowerCase();
+    var extOk = ALLOWED_EXT.some(function(e){return name.endsWith(e)});
+    var typeOk = ALLOWED_TYPES.indexOf(file.type) !== -1 || file.type === '';
+    if(!extOk && !typeOk) return 'Please upload a PDF or DOCX file.';
+    if(!extOk) return 'Please upload a PDF or DOCX file.';
+    if(file.size > MAX_SIZE) return 'File exceeds 5MB. Please upload a smaller file.';
+    return null;
+  }
+
+  function formatDate(d){
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+
+  function handleFile(file){
+    var err = validateFile(file);
+    if(err){showError(err);return}
+    clearError();
+    currentFile = file;
+    jdResumeName.textContent = 'Resume: ' + file.name;
+    showSection(jobDesc);
+    // Stash file so build page can auto-fill without re-uploading
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      try {
+        sessionStorage.setItem('rb_resume', JSON.stringify({
+          name: file.name, type: file.type, dataUrl: ev.target.result
+        }));
+      } catch(e){}
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function callAuditApi(){
+    var fd = new FormData();
+    fd.append('resume', currentFile);
+    if(fetchedJdUrl && !pasteMode){
+      fd.append('jobUrl', fetchedJdUrl);
+    } else if(currentJD){
+      fd.append('jobDescription', currentJD);
+    }
+    var res = await fetch('/api/audit', {method:'POST', body:fd});
+    var data = await res.json();
+    if(data.error) throw new Error(data.error);
+    return data;
+  }
+
+  function renderResults(data, filename){
+    // Stash scores so build page can show before/after comparison
+    try {
+      sessionStorage.setItem('rb_pre_audit', JSON.stringify({
+        overall:  data.overall_score,
+        ats:      (data.ats_compatibility  || {}).score || 0,
+        keywords: (data.keyword_density    || {}).score || 0,
+        impact:   (data.impact_language    || {}).score || 0,
+        structure:(data.structure          || {}).score || 0
+      }));
+    } catch(e) {}
+
+    var gaugeScore = document.querySelector('.gauge-score');
+    var gaugeLabel = document.querySelector('.gauge-label');
+    var score = data.overall_score;
+    gaugeScore.textContent = score;
+    if(score <= 60){
+      gaugeLabel.textContent = 'Needs Work';
+      gaugeLabel.style.color = 'var(--red)';
+    } else if(score <= 79){
+      gaugeLabel.textContent = 'Getting There';
+      gaugeLabel.style.color = '#d4a017';
+    } else {
+      gaugeLabel.textContent = 'Strong';
+      gaugeLabel.style.color = 'var(--gold)';
+    }
+
+    var subMap = [
+      {key:'ats_compatibility', barId:'bar1', valSel:'.subscores .subscore:nth-child(1) .subscore-val'},
+      {key:'keyword_density',   barId:'bar2', valSel:'.subscores .subscore:nth-child(2) .subscore-val'},
+      {key:'impact_language',   barId:'bar3', valSel:'.subscores .subscore:nth-child(3) .subscore-val'},
+      {key:'structure',         barId:'bar4', valSel:'.subscores .subscore:nth-child(4) .subscore-val'}
+    ];
+    subMap.forEach(function(m){
+      var cat = data[m.key];
+      if(!cat) return;
+      var s = cat.score;
+      var pct = (s / 25) * 100;
+      var barEl = document.getElementById(m.barId);
+      if(barEl) barEl.setAttribute('data-pct', pct);
+      var valEl = document.querySelector(m.valSel);
+      if(valEl) valEl.textContent = s + ' / 25';
+    });
+
+    var sevMap = {critical:'sev-red', warning:'sev-amber', info:'sev-muted'};
+    var catKeys = ['ats_compatibility','keyword_density','impact_language','structure'];
+    var findingGroups = document.querySelectorAll('.finding-group');
+    findingGroups.forEach(function(group, idx){
+      var key = catKeys[idx];
+      var cat = data[key];
+      if(!cat || !cat.findings) return;
+      var label = group.querySelector('.finding-group-label');
+      while(group.children.length > 1){
+        group.removeChild(group.lastChild);
+      }
+      cat.findings.forEach(function(f){
+        var severity = f.severity || 'info';
+        var cls = sevMap[severity] || 'sev-muted';
+        var div = document.createElement('div');
+        div.className = 'finding';
+        div.innerHTML = '<span class="sev-dot ' + cls + '" aria-label="' + severity + '"></span><p class="finding-text">' + f.text + '</p>';
+        group.appendChild(div);
+      });
+    });
+
+    if(data.job_match){
+      jobMatchSection.style.display = 'block';
+      jmScore.textContent = data.job_match.match_score + '%';
+      jmBar.setAttribute('data-pct', data.job_match.match_score);
+      missingKeywords.innerHTML = '';
+      presentKeywords.innerHTML = '';
+      (data.job_match.missing_keywords || []).forEach(function(kw){
+        var li = document.createElement('li');
+        li.className = 'kw-item kw-missing';
+        li.textContent = kw;
+        missingKeywords.appendChild(li);
+      });
+      (data.job_match.present_keywords || []).forEach(function(kw){
+        var li = document.createElement('li');
+        li.className = 'kw-item kw-present';
+        li.textContent = kw;
+        presentKeywords.appendChild(li);
+      });
+    } else {
+      jobMatchSection.style.display = 'none';
+    }
+
+    resultsFilename.textContent = filename;
+    resultsDate.textContent = 'Scored ' + formatDate(new Date());
+  }
+
+  function runAudit(){
+    scanFilename.textContent = 'Scanning ' + currentFile.name + '...';
+    showSection(scanning);
+
+    var checks = ['chk1','chk2','chk3','chk4'];
+    checks.forEach(function(id){
+      document.getElementById(id).classList.remove('show');
+    });
+
+    var gaugeEl = document.getElementById('gaugeFill');
+    gaugeEl.style.strokeDashoffset = '408';
+    ['bar1','bar2','bar3','bar4'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.style.width = '0%';
+    });
+    if(jmBar) jmBar.style.width = '0%';
+
+    var delays = [600,1400,2200,3000];
+    checks.forEach(function(id, i){
+      setTimeout(function(){
+        document.getElementById(id).classList.add('show');
+      }, delays[i]);
+    });
+
+    var delayPromise = new Promise(function(r){setTimeout(r, 3900)});
+    var apiPromise = callAuditApi();
+
+    var scanMain = document.getElementById('scanMain');
+    var limitWrap = document.getElementById('limitWrap');
+    var limitStartOver = document.getElementById('limitStartOver');
+    if (limitStartOver) {
+      limitStartOver.addEventListener('click', function() {
+        if (limitWrap) { limitWrap.style.display = 'none'; limitWrap.style.flexDirection = ''; }
+        if (scanMain) scanMain.style.display = '';
+        showSection(landing);
+      });
+    }
+
+    Promise.all([apiPromise, delayPromise]).then(function(vals){
+      var apiData = vals[0];
+      if (apiData.error === 'limit_reached') {
+        if (scanMain) scanMain.style.display = 'none';
+        if (limitWrap) { limitWrap.style.display = 'flex'; }
+        return;
+      }
+      renderResults(apiData, currentFile.name);
+      showSection(results);
+      setTimeout(function(){
+        if (window.ResumeBuzzBees) window.ResumeBuzzBees.gather();
+      }, 1400);
+      setTimeout(function(){
+        var score = apiData.overall_score;
+        gaugeEl.style.strokeDashoffset = (408 - (408 * score / 100)).toString();
+        ['bar1','bar2','bar3','bar4'].forEach(function(id){
+          var el = document.getElementById(id);
+          if(el){
+            var pct = el.getAttribute('data-pct');
+            el.style.width = pct + '%';
+          }
+        });
+        if(apiData.job_match && jmBar){
+          jmBar.style.width = apiData.job_match.match_score + '%';
+        }
+      }, 80);
+    }).catch(function(){
+      delayPromise.then(function(){
+        var errDiv = document.createElement('p');
+        errDiv.style.cssText = 'color:var(--red);font-size:0.9rem;margin-top:1.5rem';
+        errDiv.textContent = 'Something went wrong. Please try again.';
+        var tryAgainBtn = document.createElement('button');
+        tryAgainBtn.className = 'btn-ghost';
+        tryAgainBtn.style.marginTop = '1rem';
+        tryAgainBtn.textContent = 'Try Again';
+        tryAgainBtn.addEventListener('click', function(){
+          errDiv.remove();
+          tryAgainBtn.remove();
+          showSection(landing);
+        });
+        scanning.appendChild(errDiv);
+        scanning.appendChild(tryAgainBtn);
+      });
+    });
+  }
+
+  function showJdError(msg){
+    jdErrorMsg.textContent = msg;
+    jdErrorMsg.classList.add('visible');
+  }
+
+  function clearJdError(){
+    jdErrorMsg.textContent = '';
+    jdErrorMsg.classList.remove('visible');
+  }
+
+  fetchJdBtn.addEventListener('click', async function(){
+    var url = jobUrlInput.value.trim();
+    if(!url || !url.startsWith('http')){
+      showJdError('Please enter a valid job posting URL.');
+      return;
+    }
+    clearJdError();
+    fetchJdBtn.disabled = true;
+    fetchJdBtn.textContent = 'Fetching...';
+    try{
+      var res = await fetch('/api/fetch-jd', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({url:url})
+      });
+      var data = await res.json();
+      if(data.error){
+        showJdError(data.error + ' You can paste the description below instead.');
+        jdPasteArea.style.display = 'block';
+        jdPasteToggle.style.display = 'none';
+      } else {
+        currentJD = data.text;
+        if(jdRequiredMsg) jdRequiredMsg.style.display = 'none';
+        fetchedJdTitle = data.title || url;
+        fetchedJdUrl = url;
+        jdPreviewTitle.textContent = data.title || 'Job Posting';
+        jdPreviewUrl.textContent = url;
+        jdPreviewText.textContent = data.text;
+        jdPreview.style.display = 'block';
+      }
+    } catch(e){
+      showJdError('Could not reach the job board. Try pasting the description below.');
+      jdPasteArea.style.display = 'block';
+      jdPasteToggle.style.display = 'none';
+    } finally {
+      fetchJdBtn.disabled = false;
+      fetchJdBtn.textContent = 'Fetch Job';
+    }
+  });
+
+  jdClearBtn.addEventListener('click', function(){
+    currentJD = '';
+    fetchedJdTitle = '';
+    fetchedJdUrl = '';
+    jobUrlInput.value = '';
+    jdPreview.style.display = 'none';
+    clearJdError();
+  });
+
+  togglePasteBtn.addEventListener('click', function(){
+    pasteMode = !pasteMode;
+    jdPasteArea.style.display = pasteMode ? 'block' : 'none';
+    togglePasteBtn.textContent = pasteMode ? 'Use URL instead' : 'Paste description instead';
+    if(!pasteMode){
+      var ta = document.getElementById('jobDescTextarea');
+      if(ta){currentJD = ''; ta.value = '';}
+    }
+  });
+
+  var jdRequiredMsg = document.getElementById('jdRequiredMsg');
+
+  runAuditBtn.addEventListener('click', function(){
+    if(pasteMode){
+      var ta = document.getElementById('jobDescTextarea');
+      currentJD = ta ? ta.value.trim() : '';
+    }
+    if(!currentJD){
+      if(jdRequiredMsg) jdRequiredMsg.style.display = 'block';
+      return;
+    }
+    if(jdRequiredMsg) jdRequiredMsg.style.display = 'none';
+    runAudit();
+  });
+
+  browseBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    fileInput.click();
+  });
+
+  dropzone.addEventListener('click', function(e){
+    if(e.target !== browseBtn) fileInput.click();
+  });
+
+  dropzone.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+
+  fileInput.addEventListener('change', function(){
+    if(fileInput.files && fileInput.files[0]) handleFile(fileInput.files[0]);
+    fileInput.value = '';
+  });
+
+  dropzone.addEventListener('dragover', function(e){
+    e.preventDefault();
+    dropzone.classList.add('drag-over');
+  });
+
+  dropzone.addEventListener('dragleave', function(e){
+    if(!dropzone.contains(e.relatedTarget)) dropzone.classList.remove('drag-over');
+  });
+
+  dropzone.addEventListener('drop', function(e){
+    e.preventDefault();
+    dropzone.classList.remove('drag-over');
+    var files = e.dataTransfer.files;
+    if(files && files[0]) handleFile(files[0]);
+  });
+
+  startOverBtn.addEventListener('click', function(){
+    currentFile = null;
+    currentJD = '';
+    fetchedJdTitle = '';
+    fetchedJdUrl = '';
+    pasteMode = false;
+    if(jobUrlInput) jobUrlInput.value = '';
+    if(jdPreview) jdPreview.style.display = 'none';
+    if(jdPasteArea) jdPasteArea.style.display = 'none';
+    if(jdPasteToggle) jdPasteToggle.style.display = 'block';
+    if(togglePasteBtn) togglePasteBtn.textContent = 'Paste description instead';
+    showSection(landing);
+    var gaugeEl = document.getElementById('gaugeFill');
+    if(gaugeEl) gaugeEl.style.strokeDashoffset = '408';
+    ['bar1','bar2','bar3','bar4'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.style.width = '0%';
+    });
+    ['chk1','chk2','chk3','chk4'].forEach(function(id){
+      document.getElementById(id).classList.remove('show');
+    });
+    clearError();
+    fileInput.value = '';
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+    anchor.addEventListener('click', function(e){
+      var target = document.querySelector(this.getAttribute('href'));
+      if(target && landing.classList.contains('active')){
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth'});
+      }
+    });
+  });
+})();
+</script>
+<script defer src="/assets/bees.js?v=20"></script>
+<script>
+(function(){
+  var form = document.getElementById('buzz-contact');
+  if (!form) return;
+  var btn = document.getElementById('bcf-submit');
+  var fb  = document.getElementById('bcf-feedback');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name    = document.getElementById('bcf-name').value.trim();
+    var email   = document.getElementById('bcf-email').value.trim();
+    var message = document.getElementById('bcf-message').value.trim();
+    if (!name || !email || !message) {
+      fb.className = 'bcf-feedback error';
+      fb.textContent = 'Please fill in all fields.';
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    fb.className = 'bcf-feedback';
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({name:name, email:email, message:message})
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d.ok) {
+        fb.className = 'bcf-feedback success';
+        fb.textContent = "Message received - we'll be in touch within 24 hours.";
+        form.reset();
+        btn.style.display = 'none';
+      } else {
+        fb.className = 'bcf-feedback error';
+        fb.textContent = d.error || 'Something went wrong. Please try again.';
+        btn.disabled = false;
+        btn.textContent = 'Send Message →';
+      }
+    })
+    .catch(function(){
+      fb.className = 'bcf-feedback error';
+      fb.textContent = 'Network error - please try again.';
+      btn.disabled = false;
+      btn.textContent = 'Send Message →';
+    });
+  });
+})();
+</script>
+<style>
+  @keyframes cbGlow { 0%,100%{fill:#1565C0} 50%{fill:#1E88E5} }
+  @keyframes cbToastAnim { 0%{opacity:0;transform:translateY(0)} 12%{opacity:1;transform:translateY(-6px)} 70%{opacity:1;transform:translateY(-12px)} 100%{opacity:0;transform:translateY(-24px)} }
+</style>
+<script>window.OYEChat = { brand: 'resumebuzz', adminUrl: 'https://bink.oyecreations.com', subjects: ['AI Builder', 'Human Writer', 'CV vs Resume'], turnstileSiteKey: '0x4AAAAAADUIs5uXgonNVbPD' };</script>
+<script defer src="https://bink.oyecreations.com/assets/chat-widget.js?v=22"></script>
+<script>
+(function(){
+  var S={
+    es:{ey:'Auditoria de CV Gratis',h1:'Descubre por que nadie esta <span style="color:var(--gold)">emocionado con tu curriculum.</span>'},
+    fr:{ey:'Audit de CV Gratuit',h1:'Decouvrez pourquoi personne ne parle <span style="color:var(--gold)">de votre CV.</span>'},
+    pt:{ey:'Auditoria de Curriculo Gratis',h1:'Descubra por que ninguem esta <span style="color:var(--gold)">animado com seu curriculo.</span>'},
+    de:{ey:'Kostenloser Lebenslauf-Check',h1:'Finde heraus, warum niemand von <span style="color:var(--gold)">deinem Lebenslauf begeistert ist.</span>'},
+    ar:{ey:'تدقيق السيرة الذاتية مجاناً',h1:'اكتشف لماذا لا احد <span style="color:var(--gold)">يتحدث عن سيرتك الذاتية.</span>',rtl:true},
+    ja:{ey:'無料の履歴書診断',h1:'なぜ誰もあなたの<span style="color:var(--gold)">履歴書に注目しないのか。</span>'}
+  };
+  fetch('https://bink.oyecreations.com/api/region').then(function(r){return r.json()}).then(function(d){
+    var s=S[(d.languageCode||'').split('-')[0]];if(!s)return;
+    var h1=document.getElementById('heroH1');if(h1)h1.innerHTML=s.h1;
+    var ey=document.getElementById('heroEyebrow');if(ey)ey.textContent=s.ey;
+    if(s.rtl){var sec=document.getElementById('heroSection');if(sec)sec.dir='rtl';}
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResumeBuzz | Download Ready</title><style>
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:optional;src:url('/assets/fonts/dm-mono-500.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair-italic.woff2') format('woff2')}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0F0D08;
+  --surface:#1C1810;
+  --border:#3A3018;
+  --gold:#E8B84B;
+  --gold-dim:#9A7B2E;
+  --text:#F5F0E8;
+  --muted:#9A8A6A;
+  --red:#E05A3A;
+  --green:#7BAE6A;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center}
+
+.logo{margin-bottom:2rem}
+.logo svg{display:block;margin:0 auto}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:2.5rem 2rem;
+  max-width:480px;
+  width:100%;
+}
+
+.state{display:none}
+.state.active{display:block}
+
+/* Loading */
+.spinner{
+  width:48px;height:48px;
+  border:3px solid var(--border);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  margin:0 auto 1.5rem;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Success */
+.checkmark{
+  width:56px;height:56px;
+  background:rgba(123,174,106,0.15);
+  border:2px solid var(--green);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.5rem;
+  font-size:1.5rem;
+}
+
+/* Error */
+.error-icon{
+  width:56px;height:56px;
+  background:rgba(224,90,58,0.12);
+  border:2px solid var(--red);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.5rem;
+  font-size:1.5rem;
+}
+
+h1{font-family:'Playfair Display',Georgia,serif;font-size:1.5rem;font-weight:700;margin-bottom:0.75rem;color:var(--text)}
+p{font-size:0.9rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+p.note{
+  font-family:'DM Mono',monospace;
+  font-size:0.8rem;
+  background:rgba(232,184,75,0.06);
+  border:1px solid rgba(232,184,75,0.2);
+  border-radius:6px;
+  padding:0.75rem 1rem;
+  color:var(--gold);
+  text-align:left;
+  line-height:1.5;
+}
+.btn{
+  display:inline-block;
+  margin-top:1.25rem;
+  padding:0.65rem 1.5rem;
+  background:var(--gold);
+  color:#0F0D08;
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:0.875rem;
+  border-radius:6px;
+  text-decoration:none;
+  transition:background 150ms;
+}
+.btn:hover{background:var(--gold-dim,#9A7B2E)}
+.btn-ghost{
+  display:inline-block;
+  margin-top:1rem;
+  padding:0.6rem 1.25rem;
+  border:1px solid var(--border);
+  color:var(--muted);
+  font-size:0.875rem;
+  border-radius:6px;
+  text-decoration:none;
+  transition:border-color 150ms,color 150ms;
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+</style>
+</head>
+<body>
+
+<div class="logo" aria-label="ResumeBuzz logo">
+  <svg width="60" height="52" viewBox="0 0 60 52" role="img" aria-label="ResumeBuzz hexagon logo">
+    <polygon points="60,26 45,0 15,0 0,26 15,52 45,52" fill="#C9A84C"/>
+    <path d="M30,12 L39,27 L34.5,27 L34.5,40 L25.5,40 L25.5,27 L21,27 Z" fill="#111"/>
+  </svg>
+</div>
+
+<div class="card">
+
+  <!-- Loading state -->
+  <div id="state-loading" class="state active" aria-live="polite">
+    <div class="spinner" role="status" aria-label="Verifying payment"></div>
+    <h1>Verifying payment...</h1>
+    <p>Please wait while we confirm your order and prepare your resume.</p>
+  </div>
+
+  <!-- Success state -->
+  <div id="state-success" class="state" aria-live="polite">
+    <div class="checkmark" aria-hidden="true">&#10003;</div>
+    <h1>Your resume is ready</h1>
+    <p>Your download should start automatically. If it doesn't, use the button below.</p>
+    <p class="note">If you selected AI + Human Polish, our writer will review and email your polished version within 2 business days.</p>
+    <a id="download-btn" href="#" class="btn" download>Download Resume</a>
+    <br>
+    <a href="/build" class="btn-ghost">Build another resume</a>
+  </div>
+
+  <!-- Error state -->
+  <div id="state-error" class="state" aria-live="assertive">
+    <div class="error-icon" aria-hidden="true">&#10007;</div>
+    <h1>Something went wrong</h1>
+    <p id="error-message">We could not verify your payment or prepare your file. Please try again or contact support.</p>
+    <a href="/build" class="btn-ghost">Back to builder</a>
+  </div>
+
+</div>
+
+<script defer>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("token");
+  const sessionId = params.get("session_id");
+
+  function showState(id) {
+    ["state-loading", "state-success", "state-error"].forEach(function (s) {
+      var el = document.getElementById(s);
+      if (el) el.classList.toggle("active", s === id);
+    });
+  }
+
+  function showError(msg) {
+    var el = document.getElementById("error-message");
+    if (el && msg) el.textContent = msg;
+    showState("state-error");
+  }
+
+  if (!token || !sessionId) {
+    showError("Missing token or session ID. Please return to the builder and try again.");
+    return;
+  }
+
+  fetch("/api/download", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token: token, sessionId: sessionId, filename: "Resume" }),
+  })
+    .then(function (res) {
+      if (!res.ok) {
+        return res.json().then(function (j) {
+          var msgs = {
+            not_found: "Your session has expired. Please contact support.",
+            already_used: "This download link has already been used.",
+            payment_required: "Payment was not completed. Please try again.",
+            token_mismatch: "Invalid session. Please contact support.",
+          };
+          throw new Error(msgs[j.error] || ("Error: " + (j.error || res.status)));
+        });
+      }
+      return res.blob();
+    })
+    .then(function (blob) {
+      var url = URL.createObjectURL(blob);
+
+      // Auto-trigger download
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "Resume.docx";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // Also wire up the manual button
+      var btn = document.getElementById("download-btn");
+      if (btn) {
+        btn.href = url;
+        btn.download = "Resume.docx";
+      }
+
+      showState("state-success");
+
+      // Revoke after 60 seconds to free memory
+      setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+    })
+    .catch(function (err) {
+      showError(err.message);
+    });
+})();
+</script>
+
+</body>
+</html>

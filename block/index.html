@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Chance Job Board | Fair-Chance Hiring | ResumeBuzz</title>
+<meta name="description" content="Live fair-chance job board for people with records. Search federal jobs, employer lists, staffing agencies, and reentry resources. Skills-first. Updated weekly.">
+<meta property="og:title" content="Second Chance Job Board | ResumeBuzz">
+<meta property="og:description" content="Fair-chance jobs updated weekly. Federal listings, 1,400+ employers who hire people with records, skill-based search, and reentry resources.">
+<meta property="og:image" content="https://buzzresume.com/assets/og/og-resumebuzz.png">
+<meta property="og:url" content="https://buzzresume.com/block">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://buzzresume.com/block" />
+<meta name="twitter:card" content="summary_large_image"><style>
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:optional;src:url('/assets/fonts/dm-mono-500.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair-italic.woff2') format('woff2')}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;
+  --surface:#1B1B1B;
+  --surface2:#232323;
+  --border:#2E2E2E;
+  --gold:#C9A84C;
+  --gold-dim:#8A6F2E;
+  --text:#EBEBEB;
+  --muted:#8C8C8C;
+  --warm:#F5F3EE;
+  --red:#E05A3A;
+  --amber:#E8A838;
+  --green:#4CAF7D;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:1rem;line-height:1.6;min-height:100vh}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;line-height:1.2}
+a{color:inherit;text-decoration:none;transition:color 150ms,text-shadow 150ms}
+a:hover{text-shadow:0 0 8px rgba(201,168,76,0.55),0 0 20px rgba(201,168,76,0.25)}
+
+/* OYE BAR */
+.oye-bar{height:36px;background:#090806;border-bottom:1px solid rgba(201,168,76,0.12);display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;position:sticky;top:0;z-index:101}
+.oye-brand{display:flex;align-items:center;gap:0.45rem;text-decoration:none;color:rgba(255,255,255,0.82);font-family:'Playfair Display',Georgia,serif;font-size:0.75rem;font-weight:600;transition:color 150ms}
+.oye-brand em{font-style:normal;color:#C9A84C;transition:color 150ms}
+.oye-brand:hover{color:#C9A84C}
+.oye-brand:hover em{color:rgba(255,255,255,0.82)}
+.oye-brand:hover svg ellipse,.oye-brand:hover svg circle,.oye-brand:hover svg line{stroke:#C9A84C}
+.oye-nav-links{display:flex;align-items:center;gap:1.25rem}
+.oye-nav-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.82);text-decoration:none;transition:color 0.15s;white-space:nowrap}
+.oye-nav-links a:hover{color:#C9A84C}
+@media(max-width:540px){.oye-nav-links{display:none}}
+
+/* NAV */
+nav.main-nav{position:sticky;top:36px;z-index:100;background:rgba(17,17,17,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 1.5rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.wordmark{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:-0.01em;text-decoration:none;display:flex;align-items:center;gap:0.3rem}
+.wordmark .w1{color:var(--warm)}
+.wordmark .w2{color:var(--gold)}
+.nav-links-right{display:flex;align-items:center;gap:1.75rem}
+.nav-links-right a{font-size:0.9rem;color:var(--muted);font-weight:500;transition:color 0.2s}
+.nav-links-right a:hover,.nav-links-right a.active{color:var(--text)}
+.nav-links-right a.active{color:var(--gold)}
+.btn-gold{background:var(--gold);color:#111;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.875rem;padding:0.55rem 1.25rem;border-radius:6px;border:none;cursor:pointer;transition:background 0.2s,transform 0.15s;display:inline-flex;align-items:center;gap:0.4rem;text-decoration:none}
+.btn-gold:hover{background:#d9b85c;transform:translateY(-1px)}
+@media(max-width:768px){.nav-links-right{display:none}}
+
+/* HERO */
+.hero{max-width:900px;margin:0 auto;padding:5rem 1.5rem 3rem;text-align:center}
+.eyebrow{font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.12em;color:var(--gold);text-transform:uppercase;margin-bottom:1.25rem;display:inline-block}
+.hero h1{font-size:clamp(2rem,5vw,3.25rem);font-weight:700;color:var(--warm);margin-bottom:1.25rem}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:600px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;margin-bottom:3rem}
+.hero-stat{text-align:center}
+.hero-stat-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--gold);display:block}
+.hero-stat-label{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);display:block}
+
+/* SEARCH BAR */
+.search-wrap{max-width:760px;margin:0 auto 2rem;padding:0 1.5rem}
+.search-row{display:flex;gap:0.75rem;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:0.75rem;align-items:center}
+.search-row input{flex:1 1 180px;background:transparent;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.95rem;padding:0.35rem 0.5rem;height:36px;line-height:normal}
+.search-row input::placeholder{color:var(--muted)}
+.search-divider{width:1px;height:28px;background:var(--border);flex-shrink:0}
+.btn-search{background:var(--gold);color:#111;font-weight:600;font-size:0.875rem;padding:0.55rem 1.4rem;border-radius:6px;border:none;cursor:pointer;transition:background 0.2s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.btn-search:hover{background:#d9b85c}
+
+/* SKILL CHIPS */
+.chips-wrap{max-width:900px;margin:0 auto 3rem;padding:0 1.5rem}
+.chips-label{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:0.5rem}
+.chip{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;padding:0.4rem 0.85rem;border-radius:20px;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all 0.18s;background:transparent;white-space:nowrap}
+.chip:hover{border-color:var(--gold-dim);color:var(--text)}
+.chip.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.08)}
+
+/* SECTION LAYOUT */
+.section{padding:4rem 1.5rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;display:block}
+.section-title{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;color:var(--warm);margin-bottom:0.75rem}
+.section-sub{font-size:0.95rem;color:var(--muted);max-width:560px;margin-bottom:2.5rem;line-height:1.65}
+
+/* JOB LIST */
+.jobs-list{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.job-row{display:flex;align-items:center;gap:1rem;padding:0.7rem 1.1rem;border-bottom:1px solid var(--border);transition:background 0.15s}
+.job-row:last-child{border-bottom:none}
+.job-row:hover{background:rgba(255,255,255,0.025)}
+.job-row-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:0.15rem}
+.job-row-title{font-size:0.92rem;font-weight:600;color:var(--warm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.job-row-meta{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
+.job-row-agency{font-size:0.78rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+.job-row-loc{font-size:0.75rem;color:var(--muted)}
+.job-row-salary{font-family:'DM Mono',monospace;font-size:0.72rem;color:#4CAF7D}
+.job-row-right{display:flex;align-items:center;gap:0.85rem;flex-shrink:0}
+.job-row-date{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);white-space:nowrap}
+.job-row-source{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.18rem 0.5rem;border-radius:3px;white-space:nowrap}
+.src-usajobs{background:rgba(76,175,125,0.14);color:#4CAF7D}
+.src-indeed{background:rgba(32,136,222,0.14);color:#2088DE}
+.src-other{background:rgba(201,168,76,0.1);color:var(--gold)}
+.btn-apply{display:inline-flex;align-items:center;gap:0.3rem;font-size:0.8rem;font-weight:600;color:var(--gold);white-space:nowrap;transition:color 0.15s}
+.btn-apply:hover{color:var(--warm)}
+@media(max-width:600px){.job-row-date,.job-row-source{display:none}.job-row-agency{max-width:140px}}
+
+/* LOADING / EMPTY STATES */
+.jobs-status{text-align:center;padding:3rem 1.5rem;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.85rem;letter-spacing:0.04em}
+.jobs-status.error{color:var(--red)}
+.spinner{display:inline-block;width:28px;height:28px;border:3px solid rgba(201,168,76,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:0.75rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* DIVIDER */
+.section-divider{height:1px;background:var(--border);max-width:1100px;margin:0 auto}
+
+/* BOARD CARDS */
+.board-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.board-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.35rem;display:flex;flex-direction:column;gap:0.5rem;transition:border-color 0.18s;color:inherit}
+.board-card:hover{border-color:var(--gold-dim);text-shadow:none}
+.board-tier{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.25rem}
+.board-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--warm)}
+.board-domain{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted)}
+.board-desc{font-size:0.85rem;color:var(--muted);line-height:1.55;flex:1}
+.board-links{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;padding-top:0.75rem;border-top:1px solid var(--border)}
+.board-link{font-size:0.8rem;font-weight:600;color:var(--gold);display:inline-flex;align-items:center;gap:0.25rem;transition:color 0.15s}
+.board-link:hover{color:var(--warm)}
+.board-link-secondary{color:var(--muted)}
+.board-link-secondary:hover{color:var(--text)}
+
+/* EMPLOYER ACCORDION */
+.accordion{display:flex;flex-direction:column;gap:0.75rem}
+.acc-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.acc-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.35rem;background:transparent;border:none;cursor:pointer;color:var(--text);text-align:left;transition:background 0.15s}
+.acc-trigger:hover{background:rgba(255,255,255,0.03)}
+.acc-trigger-left{display:flex;flex-direction:column;gap:0.2rem}
+.acc-industry{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--warm)}
+.acc-count{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.06em;color:var(--muted)}
+.acc-chevron{width:20px;height:20px;flex-shrink:0;color:var(--muted);transition:transform 0.25s}
+.acc-item.open .acc-chevron{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 1.35rem 1.35rem}
+.acc-item.open .acc-body{display:block}
+.employer-list{display:flex;flex-wrap:wrap;gap:0.5rem}
+.employer-tag{font-size:0.83rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:5px;padding:0.3rem 0.75rem;color:var(--muted);transition:all 0.15s;cursor:default}
+.employer-tag:hover{border-color:var(--gold-dim);color:var(--text)}
+.acc-note{font-size:0.8rem;color:var(--muted);margin-bottom:0.85rem;line-height:1.55;font-style:italic}
+
+/* RESOURCE CARDS */
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.resource-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.35rem;display:flex;flex-direction:column;gap:0.4rem}
+.resource-name{font-family:'Playfair Display',serif;font-size:0.98rem;font-weight:700;color:var(--warm)}
+.resource-url{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--gold)}
+.resource-desc{font-size:0.82rem;color:var(--muted);line-height:1.55;flex:1}
+.resource-type{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;margin-top:0.35rem}
+.type-federal{color:#4CAF7D}
+.type-nonprofit{color:#2088DE}
+.type-program{color:var(--amber)}
+
+/* TIPS */
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.tip-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
+.tip-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:0.5rem}
+.tip-title{font-size:0.95rem;font-weight:600;color:var(--warm);margin-bottom:0.35rem}
+.tip-body{font-size:0.83rem;color:var(--muted);line-height:1.6}
+
+/* LEGAL */
+.legal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
+
+/* COMPACT CATEGORIES */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.cat-item{background:var(--surface);padding:10px 14px}
+.cat-salary{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);font-weight:500}
+.cat-title{font-size:13px;font-weight:600;color:var(--warm);margin-top:3px}
+
+/* COMPACT TACTICS */
+.tac-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:0.75rem}
+.tac-item{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:0.3rem}
+.tac-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:0.06em}
+.tac-title{font-size:12px;font-weight:600;color:var(--warm);line-height:1.35}
+.tac-body{font-size:11px;color:var(--muted);line-height:1.5}
+.legal-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:1.25rem 1.35rem;display:block;color:inherit;transition:border-color 0.18s}
+.legal-card:hover{border-color:var(--gold-dim);text-shadow:none}
+.legal-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--warm);margin-bottom:0.5rem}
+.legal-body{font-size:0.83rem;color:var(--muted);line-height:1.6}
+
+/* BANNER */
+.banner{background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.18);border-radius:10px;padding:1.25rem 1.5rem;display:flex;align-items:flex-start;gap:0.85rem;margin-bottom:2.5rem}
+.banner-icon{font-size:1.3rem;flex-shrink:0;margin-top:0.1rem}
+.banner-text{font-size:0.87rem;color:var(--muted);line-height:1.6}
+.banner-text strong{color:var(--text)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center}
+footer p{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);line-height:1.7}
+footer a{color:var(--gold)}
+footer a:hover{color:var(--warm)}
+
+/* UPDATED BADGE */
+.updated-badge{font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;background:rgba(76,175,125,0.1);color:#4CAF7D;border:1px solid rgba(76,175,125,0.2);border-radius:20px;padding:0.25rem 0.7rem;display:inline-block;margin-left:0.75rem;vertical-align:middle}
+
+/* JOBS HEADER ROW */
+.jobs-header{display:flex;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.75rem}
+.jobs-count{font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted)}
+
+/* SEARCH DEEP-LINK SECTION */
+.deep-link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem}
+.deep-link-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.9rem 1rem;display:flex;flex-direction:column;gap:0.3rem;transition:border-color 0.18s}
+.deep-link-card:hover{border-color:var(--gold-dim)}
+.dl-name{font-size:0.88rem;font-weight:600;color:var(--warm)}
+.dl-note{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.04em}
+.dl-arrow{font-size:0.8rem;color:var(--gold);margin-top:auto;padding-top:0.35rem}
+
+@media(max-width:600px){
+  .hero{padding:3.5rem 1.25rem 2rem}
+  .section{padding:2.5rem 1.25rem}
+  .search-row{padding:0.4rem;gap:0.3rem;flex-direction:column}
+  .search-row input{flex:none;width:100%;font-size:0.9rem;padding:0.2rem 0.5rem;height:30px;line-height:1;-webkit-appearance:none;appearance:none}
+  .search-divider{display:none}
+  .btn-search{font-size:0.9rem;padding:0.5rem;width:100%;justify-content:center}
+  .board-grid,.tips-grid,.legal-grid,.resource-grid{grid-template-columns:1fr}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .tac-grid{grid-template-columns:repeat(2,1fr)}
+}
+.bee{position:fixed;pointer-events:none;z-index:999;width:56px;height:auto;filter:drop-shadow(0 2px 10px rgba(245,200,0,0.25));will-change:transform}
+.bee.flipped{transform:scaleX(-1)}
+@keyframes wingFlap{0%,100%{transform:scaleY(1) rotate(-8deg)}50%{transform:scaleY(0.25) rotate(4deg)}}
+@keyframes wingFlapR{0%,100%{transform:scaleY(1) rotate(8deg)}50%{transform:scaleY(0.25) rotate(-4deg)}}
+@keyframes beeBob{0%,100%{transform:translateY(0px)}50%{transform:translateY(-5px)}}
+@keyframes beeBlink{0%,82%,100%{transform:scaleY(1)}87%,90%{transform:scaleY(2)}}
+.bee-eyelid{transform-box:fill-box;transform-origin:top center;animation:beeBlink 5.5s ease-in-out infinite}
+@keyframes beePeek{0%,60%{transform:translateY(52px)}20%,40%{transform:translateY(0px)}}
+@keyframes beeFlyPath{0%{transform:translate(0,0)}20%{transform:translate(20vw,-18px)}40%{transform:translate(40vw,8px)}60%{transform:translate(60vw,-12px)}80%{transform:translate(80vw,6px)}100%{transform:translate(110vw,0)}}
+@keyframes beeFlyPathR{0%{transform:translate(0,0) scaleX(-1)}20%{transform:translate(-20vw,-18px) scaleX(-1)}40%{transform:translate(-40vw,8px) scaleX(-1)}60%{transform:translate(-60vw,-12px) scaleX(-1)}80%{transform:translate(-80vw,6px) scaleX(-1)}100%{transform:translate(-110vw,0) scaleX(-1)}}
+</style>
+</head>
+<body>
+
+<!-- OYE BAR -->
+<div class="oye-bar">
+  <a href="https://oyecreations.com" target="_blank" rel="noopener noreferrer" class="oye-brand">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" style="height:18px;width:auto" aria-hidden="true">
+      <ellipse cx="250" cy="175" rx="205" ry="135" fill="none" stroke="#C9A84C" stroke-width="13" stroke-linecap="round"/>
+      <defs><clipPath id="oyecp"><ellipse cx="250" cy="175" rx="191" ry="121"/></clipPath></defs>
+      <g clip-path="url(#oyecp)" stroke="#C9A84C" stroke-width="13" stroke-linecap="round" fill="none">
+        <circle cx="148" cy="175" r="63"/>
+        <line x1="175" y1="80" x2="250" y2="168"/><line x1="320" y1="80" x2="250" y2="168"/>
+        <line x1="250" y1="168" x2="250" y2="265"/>
+        <line x1="318" y1="112" x2="318" y2="240"/><line x1="318" y1="112" x2="388" y2="112"/>
+        <line x1="318" y1="176" x2="383" y2="176"/><line x1="318" y1="240" x2="393" y2="240"/>
+      </g>
+    </svg>
+    <span>OYE <em>Creations</em></span>
+  </a>
+  <nav class="oye-nav-links" aria-label="OYE network">
+    <a href="https://multilingo.studio" target="_blank" rel="noopener noreferrer">Multilingo</a>
+    <a href="https://guitaranon.com" target="_blank" rel="noopener noreferrer">GuitarAnon</a>
+    <a href="https://droptimize.org" target="_blank" rel="noopener noreferrer">Droptimize</a>
+  </nav>
+</div>
+
+<!-- MAIN NAV -->
+<nav class="main-nav" aria-label="ResumeBuzz">
+  <div class="nav-inner">
+    <a href="/" class="wordmark" aria-label="ResumeBuzz Home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 52" width="24" height="21" aria-hidden="true">
+        <polygon points="60,26 45,0 15,0 0,26 15,52 45,52" fill="#C9A84C"/>
+        <path d="M30,12 L39,27 L34.5,27 L34.5,40 L25.5,40 L25.5,27 L21,27 Z" fill="#111"/>
+      </svg>
+      <span class="w1">Resume</span><span class="w2">Buzz</span>
+    </a>
+    <div class="nav-links-right">
+      <a href="/">Audit</a>
+      <a href="/build">Build Resume</a>
+      <a href="/block" class="active">Second Chance</a>
+      <a href="/" class="btn-gold">Get Audited Free</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="eyebrow">Fair-Chance Job Board</span>
+  <h1>You served your time.<br><span style="color:var(--gold)">Now let's get you hired.</span></h1>
+  <p class="hero-sub">Live job listings updated weekly. Skills-first search across federal fair-chance jobs, 1,400+ fair-chance employers, staffing agencies, and reentry resources, all in one hive.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num">1,400+</span>
+      <span class="hero-stat-label">Fair-Chance Employers</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">37+</span>
+      <span class="hero-stat-label">States with Ban-the-Box Laws</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">70M</span>
+      <span class="hero-stat-label">Americans with Records</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">$9,600</span>
+      <span class="hero-stat-label">Tax Credit for Employers Who Hire You</span>
+    </div>
+  </div>
+</div>
+
+<!-- HIGH-DEMAND CATEGORIES (compact) -->
+<div style="max-width:1100px;margin:0 auto 2rem;padding:0 1.5rem">
+  <span class="chips-label" style="margin-bottom:0.85rem;">Where to look first: fields with the sweetest fair-chance returns</span>
+  <div class="cat-grid">
+    <div class="cat-item"><div class="cat-salary">$45k+</div><div class="cat-title">CDL Truck Driving</div></div>
+    <div class="cat-item"><div class="cat-salary">$60k+</div><div class="cat-title">Electrician</div></div>
+    <div class="cat-item"><div class="cat-salary">$45k+</div><div class="cat-title">Welding &amp; HVAC</div></div>
+    <div class="cat-item"><div class="cat-salary">$60k+</div><div class="cat-title">Wind Turbine Tech</div></div>
+    <div class="cat-item"><div class="cat-salary">$20-35/hr</div><div class="cat-title">Solar Installation</div></div>
+    <div class="cat-item"><div class="cat-salary">Self-Employed</div><div class="cat-title">Lawn &amp; Landscaping</div></div>
+    <div class="cat-item"><div class="cat-salary">$40k+</div><div class="cat-title">Warehouse &amp; Forklift</div></div>
+    <div class="cat-item"><div class="cat-salary">Remote</div><div class="cat-title">Remote / Data Entry</div></div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-row" role="search">
+    <label for="skillInput" class="sr-only">Search by skill or job type</label>
+    <input type="text" id="skillInput" placeholder="Skill or job type (e.g. welding, warehouse)" aria-label="Search by skill or job type">
+    <div class="search-divider" aria-hidden="true"></div>
+    <label for="locationInput" class="sr-only">Location</label>
+    <input type="text" id="locationInput" placeholder="City or ZIP (optional)" aria-label="Location">
+    <button class="btn-search" id="searchBtn" aria-label="Search jobs">Search Jobs</button>
+  </div>
+</div>
+
+<!-- SKILL CHIPS -->
+<div class="chips-wrap">
+  <span class="chips-label">Browse by skill</span>
+  <div class="chips" role="list" aria-label="Filter by skill">
+    <button class="chip active" data-skill="" role="listitem">All Jobs</button>
+    <button class="chip" data-skill="trucking cdl" role="listitem">CDL / Trucking</button>
+    <button class="chip" data-skill="welding" role="listitem">Welding</button>
+    <button class="chip" data-skill="hvac" role="listitem">HVAC</button>
+    <button class="chip" data-skill="electrician" role="listitem">Electrician</button>
+    <button class="chip" data-skill="construction" role="listitem">Construction</button>
+    <button class="chip" data-skill="warehouse forklift" role="listitem">Warehouse</button>
+    <button class="chip" data-skill="food service cook" role="listitem">Food Service</button>
+    <button class="chip" data-skill="customer service" role="listitem">Customer Service</button>
+    <button class="chip" data-skill="data entry remote" role="listitem">Remote / Data Entry</button>
+    <button class="chip" data-skill="solar installation" role="listitem">Solar</button>
+    <button class="chip" data-skill="landscaping lawn" role="listitem">Landscaping</button>
+    <button class="chip" data-skill="manufacturing" role="listitem">Manufacturing</button>
+  </div>
+</div>
+
+<!-- LIVE JOBS SECTION -->
+<section class="section" aria-labelledby="live-jobs-heading">
+  <div class="section-inner">
+    <div class="jobs-header">
+      <div>
+        <span class="section-label">Live Listings</span>
+        <h2 class="section-title" id="live-jobs-heading" style="margin-bottom:0">Federal Fair-Chance Jobs<span class="updated-badge" id="updatedBadge" aria-live="polite"></span></h2>
+      </div>
+    </div>
+
+    <div class="banner">
+      <span class="banner-icon" aria-hidden="true">&#9657;</span>
+      <p class="banner-text"><strong>These are public federal job listings.</strong> Under the Fair Chance Act, federal employers cannot ask about your criminal history until after a conditional offer. Your application buzzes on merit first. Not every federal role is accessible (law enforcement and security-clearance roles have statutory restrictions) but most civilian positions are. <a href="#legal" style="color:var(--gold)">Know your rights.</a></p>
+    </div>
+
+    <div id="jobsContainer">
+      <div class="jobs-status" role="status" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <div>Loading live listings...</div>
+      </div>
+    </div>
+
+    <!-- 8 TACTICS (compact) -->
+    <div style="margin-top:3rem">
+      <span class="section-label">From 14 Years of Placement Work</span>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--warm);margin-bottom:0.1rem">8 Job Search Tactics That Actually Work</h3>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.5rem">These separate people who get hired from people who keep applying. Work smarter, not just harder. The hive rewards both.</p>
+      <div class="tac-grid">
+        <div class="tac-item"><div class="tac-num">01</div><div class="tac-title">Pre-screen the employer</div><div class="tac-body">Call HR and ask their fair-chance policy before investing time in an application.</div></div>
+        <div class="tac-item"><div class="tac-num">02</div><div class="tac-title">Target Ban-the-Box states first</div><div class="tac-body">37+ states delay the criminal history question until after you prove your skills.</div></div>
+        <div class="tac-item"><div class="tac-num">03</div><div class="tac-title">Run your own background check</div><div class="tac-body">Errors are common. Dispute them before applying using your state's court records.</div></div>
+        <div class="tac-item"><div class="tac-num">04</div><div class="tac-title">Lead with skills, not gaps</div><div class="tac-body">Skills-first format puts your value front. Address the record only when directly asked.</div></div>
+        <div class="tac-item"><div class="tac-num">05</div><div class="tac-title">Get a quick certification</div><div class="tac-body">OSHA 10, forklift, food handler, or CDL permit signal readiness and close gaps fast.</div></div>
+        <div class="tac-item"><div class="tac-num">06</div><div class="tac-title">Apply through reentry orgs</div><div class="tac-body">Their employer relationships convert at much higher rates than cold applications.</div></div>
+        <div class="tac-item"><div class="tac-num">07</div><div class="tac-title">Network back through old contacts</div><div class="tac-body">Referral hires bypass the resume screen entirely. Even a casual voucher changes everything.</div></div>
+        <div class="tac-item"><div class="tac-num">08</div><div class="tac-title">Use Google operators</div><div class="tac-body">Search "hiring felons" + your city or "second chance" + your industry to find quiet employers.</div></div>
+      </div>
+    </div>
+
+    <!-- PODCAST CALLOUT -->
+    <div style="margin-top:2.5rem">
+      <div class="banner" style="align-items:center">
+        <span class="banner-icon" aria-hidden="true">&#127911;</span>
+        <div class="banner-text">
+          <strong>Also worth listening to:</strong> <a href="https://bottomsupfam.com" target="_blank" rel="noopener noreferrer" style="color:var(--gold)">Bottoms Up Fam</a>, a podcast about sobriety, DUI accountability, and finding your way back. Hosted by a man who served over 10 years, was granted parole, and is still fighting to get home. Honest, real, no Instagram version of recovery.
+        </div>
+      </div>
+    </div>
+
+    <!-- SEARCH OTHER BOARDS -->
+    <div style="margin-top:3rem">
+      <span class="section-label">Also Search These Boards</span>
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.25rem">These boards require your skill input above. Click any to open a pre-filled search. The nectar's already loaded.</p>
+      <div class="deep-link-grid" id="deepLinkGrid">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- RESUME CTA 1 -->
+<section class="section" style="background:var(--surface);text-align:center;padding:3rem 1.5rem">
+  <div class="section-inner" style="max-width:600px">
+    <span class="section-label">Free Offer</span>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);color:var(--warm);margin-bottom:0.75rem">Your resume is your first interview.</h2>
+    <p style="color:var(--muted);font-size:0.95rem;margin-bottom:1.75rem;line-height:1.65">We'll run a free AI optimization on your resume: ATS scoring, keyword gaps, format fixes. No catch, no sting. Submit and we'll reach back out within 24 hours.</p>
+    <button class="btn-gold" onclick="document.getElementById('resumeRequestModal').style.display='flex'" style="font-size:1rem;padding:0.75rem 2rem">Get My Free Resume Review</button>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- DEDICATED FAIR-CHANCE JOB BOARDS -->
+<section class="section" aria-labelledby="boards-heading">
+  <div class="section-inner">
+    <span class="section-label">Tier 1: Built for People with Records</span>
+    <h2 class="section-title" id="boards-heading">Dedicated Fair-Chance Job Boards</h2>
+    <p class="section-sub">These platforms exist specifically to connect people with criminal records to employers who have committed to fair-chance hiring. The colony is bigger than you think.</p>
+    <div class="board-grid">
+
+      <a class="board-card" href="https://app.honestjobs.com/jobs" target="_blank" rel="noopener noreferrer">
+        <div class="board-tier">Tier 1: Primary</div>
+        <div class="board-name">Honest Jobs &#8599;</div>
+        <div class="board-domain">app.honestjobs.com</div>
+        <div class="board-desc">National platform connecting people with records to 1,400+ fair-chance employers. Includes housing and transportation resources. Largest dedicated fair-chance job board in the US.</div>
+      </a>
+
+      <a class="board-card" href="https://www.careeronestop.org/JusticeImpacted/default.aspx" target="_blank" rel="noopener noreferrer">
+        <div class="board-tier">Tier 1: Primary</div>
+        <div class="board-name">CareerOneStop &#8599;</div>
+        <div class="board-domain">careeronestop.org</div>
+        <div class="board-desc">U.S. Department of Labor resource built specifically for justice-impacted job seekers. Live job search, career exploration, training resources, and a local reentry program finder. Updated April 2026.</div>
+      </a>
+
+      <a class="board-card" href="https://felonyfriendlyjobs.org" target="_blank" rel="noopener noreferrer">
+        <div class="board-tier">Tier 1: Primary</div>
+        <div class="board-name">Felony Friendly Jobs &#8599;</div>
+        <div class="board-domain">felonyfriendlyjobs.org</div>
+        <div class="board-desc">Employer directory plus reentry resources. Organized by state. Good for targeted local searches.</div>
+      </a>
+
+      <a class="board-card" href="https://www.felonyrecordhub.com" target="_blank" rel="noopener noreferrer">
+        <div class="board-tier">Tier 1: Primary</div>
+        <div class="board-name">Felony Record Hub &#8599;</div>
+        <div class="board-domain">felonyrecordhub.com</div>
+        <div class="board-desc">Curated employer directory, Ban the Box guides, and reentry resources. 10,000+ community members. Covers housing, legal rights, and fair-chance employers organized by company.</div>
+      </a>
+
+      <a class="board-card" href="https://helpforfelons.org/companies-that-hire-felons/" target="_blank" rel="noopener noreferrer">
+        <div class="board-tier">Tier 1: Primary</div>
+        <div class="board-name">Help for Felons &#8599;</div>
+        <div class="board-domain">helpforfelons.org</div>
+        <div class="board-desc">Career guidance, employer lists, and high-paying trade pathways. Strong on skilled trades and self-employment options. Also covers housing and legal aid.</div>
+      </a>
+
+      <a class="board-card" href="https://georeentryconnect.com" target="_blank" rel="noopener noreferrer">
+        <div class="board-tier">Tier 1: Primary</div>
+        <div class="board-name">GEO Reentry Connect &#8599;</div>
+        <div class="board-domain">georeentryconnect.com</div>
+        <div class="board-desc">Employer directory plus employment, housing, education, and treatment resources. Comprehensive reentry hub beyond just jobs.</div>
+      </a>
+
+    </div>
+
+    <!-- TIER 2 -->
+    <div style="margin-top:3rem">
+      <span class="section-label">Tier 2: Mainstream Boards with Fair-Chance Filters</span>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--warm);margin-bottom:1.5rem">Search Major Boards with Fair-Chance Filters</h3>
+      <div class="board-grid">
+
+        <a class="board-card" href="https://www.indeed.com/jobs?q=&sc=0kf%3Aattr%28FCGTU%29%3B" target="_blank" rel="noopener noreferrer">
+          <div class="board-tier">Tier 2: Filtered</div>
+          <div class="board-name">Indeed &#8599;</div>
+          <div class="board-domain">indeed.com</div>
+          <div class="board-desc">Use "Encouraged to Apply" dropdown and select "Fair chance" to filter to employers who explicitly welcome applicants with records.</div>
+        </a>
+
+        <a class="board-card" href="https://www.simplyhired.com/search?q=fair+chance" target="_blank" rel="noopener noreferrer">
+          <div class="board-tier">Tier 2: Filtered</div>
+          <div class="board-name">SimplyHired &#8599;</div>
+          <div class="board-domain">simplyhired.com</div>
+          <div class="board-desc">Has a dedicated felon-friendly filter to surface employers who conduct background checks later in the process.</div>
+        </a>
+
+        <a class="board-card" href="https://www.ziprecruiter.com/jobs-search?search=fair+chance" target="_blank" rel="noopener noreferrer">
+          <div class="board-tier">Tier 2: Filtered</div>
+          <div class="board-name">ZipRecruiter &#8599;</div>
+          <div class="board-domain">ziprecruiter.com</div>
+          <div class="board-desc">Felon-friendly filter surfaces employers participating in fair-chance programs. Large national job volume.</div>
+        </a>
+
+        <a class="board-card" href="https://www.jobcase.com/positions?query=fair+chance" target="_blank" rel="noopener noreferrer">
+          <div class="board-tier">Tier 2: Filtered</div>
+          <div class="board-name">Jobcase &#8599;</div>
+          <div class="board-domain">jobcase.com</div>
+          <div class="board-desc">Community-oriented job board with felon-friendly listings and a support community for job seekers facing barriers.</div>
+        </a>
+
+        <a class="board-card" href="https://www.usajobs.gov/Search/Results?k=&p=1" target="_blank" rel="noopener noreferrer">
+          <div class="board-tier">Tier 2: Federal</div>
+          <div class="board-name">USAJobs &#8599;</div>
+          <div class="board-domain">usajobs.gov</div>
+          <div class="board-desc">Federal jobs are protected by the Fair Chance Act. Criminal history cannot be asked until after a conditional offer. Federal jobs include strong benefits.</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- TIER 3 STAFFING -->
+    <div style="margin-top:3rem">
+      <span class="section-label">Tier 3: Staffing and Temp Agencies</span>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--warm);margin-bottom:0.5rem">Staffing Agencies That Place People with Records</h3>
+      <p style="font-size:0.87rem;color:var(--muted);margin-bottom:1.5rem">Staffing agencies often have relationships with employers before background checks run. Temp-to-hire is a proven path. Prove your value first and let your work do the buzzing.</p>
+      <div class="resource-grid">
+        <div class="resource-card">
+          <div class="resource-name">Integrity Staffing Solutions</div>
+          <div class="resource-desc">Specializes in warehouse and manufacturing placements. Major client is Amazon. Known for fair-chance placement.</div>
+          <a href="https://www.integritystaffing.com" target="_blank" rel="noopener" class="resource-url">integritystaffing.com &#8599;</a>
+        </div>
+        <div class="resource-card">
+          <div class="resource-name">PeopleReady / TrueBlue</div>
+          <div class="resource-desc">Day labor, construction, and light industrial. Daily pay available. Walk-in friendly. Good starting point.</div>
+          <a href="https://www.peopleready.com" target="_blank" rel="noopener" class="resource-url">peopleready.com &#8599;</a>
+        </div>
+        <div class="resource-card">
+          <div class="resource-name">Spherion Staffing</div>
+          <div class="resource-desc">Diverse industries including light industrial, clerical, and professional. Case-by-case background review.</div>
+          <a href="https://www.spherion.com" target="_blank" rel="noopener" class="resource-url">spherion.com &#8599;</a>
+        </div>
+        <div class="resource-card">
+          <div class="resource-name">Manpower</div>
+          <div class="resource-desc">Administrative, warehouse, and customer service roles. Large national network. Evaluate case-by-case.</div>
+          <a href="https://www.manpower.com" target="_blank" rel="noopener" class="resource-url">manpower.com &#8599;</a>
+        </div>
+        <div class="resource-card">
+          <div class="resource-name">Kelly Services</div>
+          <div class="resource-desc">Various sectors including manufacturing, engineering, and science. One of the oldest and largest staffing firms.</div>
+          <a href="https://www.kellyservices.com" target="_blank" rel="noopener" class="resource-url">kellyservices.com &#8599;</a>
+        </div>
+        <div class="resource-card">
+          <div class="resource-name">Adecco</div>
+          <div class="resource-desc">General staffing across multiple industries. Global firm with consistent fair-chance evaluation policies.</div>
+          <a href="https://www.adeccousa.com" target="_blank" rel="noopener" class="resource-url">adeccousa.com &#8599;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- FAIR-CHANCE EMPLOYERS BY INDUSTRY -->
+<section class="section" aria-labelledby="employers-heading">
+  <div class="section-inner">
+    <span class="section-label">Companies with Public Commitments</span>
+    <h2 class="section-title" id="employers-heading">Fair-Chance Employers by Industry</h2>
+    <p class="section-sub">These companies signed the Fair Chance Business Pledge or publicly committed to case-by-case hiring. Policies vary, so always call HR before applying. Scout the hive before you land.</p>
+
+    <div class="accordion" id="employerAccordion">
+
+      <div class="acc-item open">
+        <button class="acc-trigger" aria-expanded="true" aria-controls="acc-retail">
+          <div class="acc-trigger-left">
+            <span class="acc-industry">Retail &amp; Grocery</span>
+            <span class="acc-count">11 companies</span>
+          </div>
+          <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-body" id="acc-retail">
+          <p class="acc-note">These retailers have signed the Fair Chance Business Pledge. Policies vary by store location and role. Management positions may have different requirements.</p>
+          <div class="employer-list">
+            <span class="employer-tag">Walmart</span>
+            <span class="employer-tag">Target</span>
+            <span class="employer-tag">Costco</span>
+            <span class="employer-tag">Kroger</span>
+            <span class="employer-tag">Home Depot</span>
+            <span class="employer-tag">Lowe's</span>
+            <span class="employer-tag">Best Buy</span>
+            <span class="employer-tag">IKEA</span>
+            <span class="employer-tag">Kohl's</span>
+            <span class="employer-tag">Staples</span>
+            <span class="employer-tag">Gap</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false" aria-controls="acc-food">
+          <div class="acc-trigger-left">
+            <span class="acc-industry">Food Service &amp; Hospitality</span>
+            <span class="acc-count">14 companies</span>
+          </div>
+          <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-body" id="acc-food" style="display:none">
+          <p class="acc-note">Greyston Bakery pioneered Open Hiring (no application, no background check). Waffle House is consistently one of the most accessible employers.</p>
+          <div class="employer-list">
+            <span class="employer-tag">Starbucks</span>
+            <span class="employer-tag">McDonald's</span>
+            <span class="employer-tag">Tyson Foods</span>
+            <span class="employer-tag">Perdue Farms</span>
+            <span class="employer-tag">Butterball Farms</span>
+            <span class="employer-tag">Coca-Cola</span>
+            <span class="employer-tag">PepsiCo</span>
+            <span class="employer-tag">The Hershey Company</span>
+            <span class="employer-tag">Kellogg Company</span>
+            <span class="employer-tag">Ben &amp; Jerry's</span>
+            <span class="employer-tag">Clif Bar</span>
+            <span class="employer-tag">Greyston Bakery</span>
+            <span class="employer-tag">Waffle House</span>
+            <span class="employer-tag">Busboys and Poets</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false" aria-controls="acc-logistics">
+          <div class="acc-trigger-left">
+            <span class="acc-industry">Logistics, Trucking &amp; Delivery</span>
+            <span class="acc-count">14 companies</span>
+          </div>
+          <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-body" id="acc-logistics" style="display:none">
+          <p class="acc-note">CDL truck driving is one of the highest-earning fair-chance paths. Note: some vehicular felonies may affect CDL eligibility. Insurance rules vary by carrier. Call directly.</p>
+          <div class="employer-list">
+            <span class="employer-tag">UPS</span>
+            <span class="employer-tag">FedEx</span>
+            <span class="employer-tag">J.B. Hunt</span>
+            <span class="employer-tag">Swift Transportation</span>
+            <span class="employer-tag">Western Express</span>
+            <span class="employer-tag">C.H. Robinson</span>
+            <span class="employer-tag">Anderson Trucking Services</span>
+            <span class="employer-tag">Gordon Trucking</span>
+            <span class="employer-tag">FFE Transportation</span>
+            <span class="employer-tag">Dutch Maid Logistics</span>
+            <span class="employer-tag">DeBoer Transportation</span>
+            <span class="employer-tag">Core Carrier</span>
+            <span class="employer-tag">Davis Transport</span>
+            <span class="employer-tag">E.W. Wylie</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false" aria-controls="acc-mfg">
+          <div class="acc-trigger-left">
+            <span class="acc-industry">Manufacturing &amp; Industrial</span>
+            <span class="acc-count">7 companies</span>
+          </div>
+          <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-body" id="acc-mfg" style="display:none">
+          <p class="acc-note">Manufacturing has some of the most consistent fair-chance hiring. Physical work, often union, frequently starts at $18-24/hr with benefits.</p>
+          <div class="employer-list">
+            <span class="employer-tag">Georgia-Pacific</span>
+            <span class="employer-tag">Koch Industries</span>
+            <span class="employer-tag">Caterpillar</span>
+            <span class="employer-tag">Tyson Foods</span>
+            <span class="employer-tag">Golden State Foods</span>
+            <span class="employer-tag">Elkhart Plastics</span>
+            <span class="employer-tag">Philly Shipyard</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false" aria-controls="acc-tech">
+          <div class="acc-trigger-left">
+            <span class="acc-industry">Tech &amp; Corporate</span>
+            <span class="acc-count">10 companies</span>
+          </div>
+          <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-body" id="acc-tech" style="display:none">
+          <p class="acc-note">Tech companies often have case-by-case policies for roles not requiring security clearance or sensitive data access. Entry-level tech support and data center roles are most accessible.</p>
+          <div class="employer-list">
+            <span class="employer-tag">Google</span>
+            <span class="employer-tag">Meta</span>
+            <span class="employer-tag">Microsoft</span>
+            <span class="employer-tag">Dropbox</span>
+            <span class="employer-tag">LinkedIn</span>
+            <span class="employer-tag">Glassdoor</span>
+            <span class="employer-tag">Uber</span>
+            <span class="employer-tag">Lyft</span>
+            <span class="employer-tag">Intel</span>
+            <span class="employer-tag">WeWork</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" aria-expanded="false" aria-controls="acc-other">
+          <div class="acc-trigger-left">
+            <span class="acc-industry">Healthcare, Travel &amp; Other</span>
+            <span class="acc-count">8 companies</span>
+          </div>
+          <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-body" id="acc-other" style="display:none">
+          <p class="acc-note">Healthcare and pharmacy roles have additional licensing requirements that may be affected by certain convictions. Call HR first. Entry-level support and logistics roles are more accessible.</p>
+          <div class="employer-list">
+            <span class="employer-tag">CVS Health</span>
+            <span class="employer-tag">Johns Hopkins Hospital</span>
+            <span class="employer-tag">Prudential</span>
+            <span class="employer-tag">American Airlines</span>
+            <span class="employer-tag">Enterprise Rent-A-Car</span>
+            <span class="employer-tag">Under Armour</span>
+            <span class="employer-tag">Unilever</span>
+            <span class="employer-tag">Xerox</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- RESUME CTA 2 -->
+<section class="section" style="background:linear-gradient(135deg,rgba(201,168,76,0.07) 0%,transparent 60%);text-align:center;padding:3rem 1.5rem">
+  <div class="section-inner" style="max-width:600px">
+    <span class="section-label">14 Years. 1,000+ Clients.</span>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);color:var(--warm);margin-bottom:0.75rem">A strong resume opens doors a record can't close.</h2>
+    <p style="color:var(--muted);font-size:0.95rem;margin-bottom:1.75rem;line-height:1.65">Skills-first format. ATS-optimized. Built to get you in the room. Submit your resume and we'll send back a free AI-powered review. No email list, no upsell. Just honey.</p>
+    <button class="btn-gold" onclick="document.getElementById('resumeRequestModal').style.display='flex'" style="font-size:1rem;padding:0.75rem 2rem">Submit for Free Review</button>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- GOVERNMENT PROGRAMS -->
+<section class="section" aria-labelledby="programs-heading">
+  <div class="section-inner">
+    <span class="section-label">Reentry Resources</span>
+    <h2 class="section-title" id="programs-heading">Government Programs &amp; Nonprofits</h2>
+    <p class="section-sub">These organizations have real employer relationships. Applying through a reentry org converts at significantly higher rates than cold applying. Find your local hive.</p>
+    <div class="resource-grid">
+
+      <div class="resource-card">
+        <div class="resource-name">CEO Works</div>
+        <a href="https://ceoworks.org" target="_blank" rel="noopener" class="resource-url">ceoworks.org &#8599;</a>
+        <div class="resource-desc">Center for Employment Opportunities. Reports 90% job placement within 10 days. Locations in California, New York, and more. Transitional work program before permanent placement.</div>
+        <span class="resource-type type-nonprofit">Nonprofit</span>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-name">National Reentry Resource Center</div>
+        <a href="https://nationalreentryresourcecenter.org" target="_blank" rel="noopener" class="resource-url">nationalreentryresourcecenter.org &#8599;</a>
+        <div class="resource-desc">Directory of Second Chance Act grantees in every state. Find local reentry programs funded by the federal government. Best starting point for finding local help.</div>
+        <span class="resource-type type-federal">Federal</span>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-name">Second Chance Business Coalition</div>
+        <a href="https://secondchancebusinesscoalition.org" target="_blank" rel="noopener" class="resource-url">secondchancebusinesscoalition.org &#8599;</a>
+        <div class="resource-desc">50+ major corporations expanding opportunity for people with records. Member companies include JPMorgan Chase, Accenture, and more. Find member employers near you.</div>
+        <span class="resource-type type-nonprofit">Coalition</span>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-name">Federal Bonding Program</div>
+        <a href="https://bonds4jobs.com" target="_blank" rel="noopener" class="resource-url">bonds4jobs.com &#8599;</a>
+        <div class="resource-desc">Free fidelity bonding insurance for at-risk hires. Eliminates one of the main reasons employers hesitate to hire people with records. Free to you and the employer.</div>
+        <span class="resource-type type-federal">Federal Program</span>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-name">Work Opportunity Tax Credit (WOTC)</div>
+        <a href="https://www.dol.gov/agencies/eta/wotc" target="_blank" rel="noopener" class="resource-url">dol.gov/agencies/eta/wotc &#8599;</a>
+        <div class="resource-desc">Employers who hire you can receive up to $9,600 in federal tax credits. Use this as a selling point in your job search. You make the employer money just by getting hired.</div>
+        <span class="resource-type type-federal">Tax Incentive</span>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-name">Goodwill Industries</div>
+        <a href="https://www.goodwill.org/find-a-job/" target="_blank" rel="noopener" class="resource-url">goodwill.org &#8599;</a>
+        <div class="resource-desc">Workforce development, job training, and direct hiring. 155+ regional organizations. Good for getting certifications, building resume, and making connections.</div>
+        <span class="resource-type type-nonprofit">Nonprofit</span>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-name">Amos House</div>
+        <a href="https://amoshouse.com" target="_blank" rel="noopener" class="resource-url">amoshouse.com &#8599;</a>
+        <div class="resource-desc">Rhode Island. Reports 90% success rate for program participants. Strong employer relationships and wraparound services.</div>
+        <span class="resource-type type-nonprofit">Nonprofit (RI)</span>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-name">D.C. Central Kitchen</div>
+        <a href="https://dccentralkitchen.org" target="_blank" rel="noopener" class="resource-url">dccentralkitchen.org &#8599;</a>
+        <div class="resource-desc">Culinary job training program for people facing barriers to employment. Graduates placed in food service jobs with strong retention rates.</div>
+        <span class="resource-type type-nonprofit">Nonprofit (DC)</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- LEGAL -->
+<section class="section" id="legal" aria-labelledby="legal-heading">
+  <div class="section-inner">
+    <span class="section-label">Know Your Rights</span>
+    <h2 class="section-title" id="legal-heading">Legal Landscape</h2>
+    <p class="section-sub">Understanding these laws helps you push back on unlawful screening and target the states where your record carries the least sting.</p>
+    <div class="legal-grid">
+      <a class="legal-card" href="https://www.nelp.org/insights-research/fair-chance-hiring/" target="_blank" rel="noopener noreferrer">
+        <div class="legal-title">Ban the Box / Fair Chance Laws &#8599;</div>
+        <div class="legal-body">As of 2026, 37+ states and 150+ cities have Ban the Box or Fair Chance laws. These laws delay criminal history questions until after a conditional offer, require individualized assessment of conviction relevance, and may limit reporting periods (often 7 years in CA, KS, MA). Look up your state's specific law before applying.</div>
+      </a>
+      <a class="legal-card" href="https://www.congress.gov/bill/116th-congress/senate-bill/387/text" target="_blank" rel="noopener noreferrer">
+        <div class="legal-title">Federal Fair Chance Act &#8599;</div>
+        <div class="legal-body">Delays criminal inquiry for federal hiring and federal contractors until after a conditional offer. If a federal employer or contractor asks about your record before making an offer, they are breaking federal law. Report violations to your state's EEOC office.</div>
+      </a>
+      <a class="legal-card" href="https://www.eeoc.gov/laws/guidance/enforcement-guidance-consideration-arrest-and-conviction-records-employment-decisions" target="_blank" rel="noopener noreferrer">
+        <div class="legal-title">EEOC Green Factors &#8599;</div>
+        <div class="legal-body">Employers must consider three factors before rejecting you for a criminal record: (1) nature of the offense, (2) time elapsed since the conviction, and (3) relevance of the offense to the specific job duties. Blanket bans on all convictions are not legal under EEOC guidance.</div>
+      </a>
+      <a class="legal-card" href="https://www.irs.gov/businesses/small-businesses-self-employed/work-opportunity-tax-credit" target="_blank" rel="noopener noreferrer">
+        <div class="legal-title">Work Opportunity Tax Credit &#8599;</div>
+        <div class="legal-body">Employers who hire you may receive up to $9,600 in federal tax credits. Use this as leverage in negotiations. Mention it directly: "I qualify for WOTC, which means you may receive a tax credit of up to $9,600 for hiring me." This shifts the conversation.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>
+    <a href="/">ResumeBuzz</a> &nbsp;&middot;&nbsp;
+    <a href="https://oyecreations.com" target="_blank" rel="noopener">OYE Creations</a> &nbsp;&middot;&nbsp;
+    Job listings updated weekly via automated refresh. Always verify employer policies directly before applying.
+  </p>
+  <p style="margin-top:0.5rem">Policies change. Call before applying. This page is a research tool, not an endorsement. Buzz responsibly.</p>
+</footer>
+
+<style>
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#resumeRequestModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:999;align-items:center;justify-content:center;padding:1.5rem}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2rem;max-width:520px;width:100%;max-height:90vh;overflow-y:auto}
+.modal-box h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--warm);margin-bottom:0.4rem}
+.modal-box p{font-size:0.88rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6}
+.modal-field{margin-bottom:1rem}
+.modal-field label{display:block;font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem}
+.modal-field input,.modal-field textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:0.65rem 0.85rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 150ms}
+.modal-field input:focus,.modal-field textarea:focus{border-color:var(--gold)}
+.modal-field textarea{min-height:140px;resize:vertical}
+.modal-actions{display:flex;gap:0.75rem;margin-top:1.25rem}
+.btn-ghost-sm{background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.875rem;padding:0.55rem 1.25rem;border-radius:6px;cursor:pointer;transition:border-color 150ms,color 150ms}
+.btn-ghost-sm:hover{border-color:var(--muted);color:var(--text)}
+</style>
+
+<script>
+const SKILLS_MAP = {
+  '': { label: 'All Jobs', query: '' },
+  'trucking cdl': { label: 'CDL / Trucking', query: 'driver' },
+  'welding': { label: 'Welding', query: 'welder' },
+  'hvac': { label: 'HVAC', query: 'hvac' },
+  'electrician': { label: 'Electrician', query: 'electrician' },
+  'construction': { label: 'Construction', query: 'construction' },
+  'warehouse forklift': { label: 'Warehouse', query: 'warehouse' },
+  'food service cook': { label: 'Food Service', query: 'food service' },
+  'customer service': { label: 'Customer Service', query: 'customer service' },
+  'data entry remote': { label: 'Remote / Data Entry', query: 'data entry' },
+  'solar installation': { label: 'Solar', query: 'solar' },
+  'landscaping lawn': { label: 'Landscaping', query: 'grounds maintenance' },
+  'manufacturing': { label: 'Manufacturing', query: 'production' },
+};
+
+const DEEP_LINK_BOARDS = [
+  { name: 'Honest Jobs', note: 'Dedicated fair-chance', base: 'https://app.honestjobs.com/jobs?query=' },
+  { name: 'CareerOneStop', note: 'DOL - Justice Impacted', base: 'https://www.careeronestop.org/JusticeImpacted/FindJobs/find-jobs.aspx?keyword=' },
+  { name: 'Indeed (Fair Chance)', note: 'Fair chance filter', base: 'https://www.indeed.com/jobs?q=fair+chance+' },
+  { name: 'SimplyHired', note: 'Felon-friendly filter', base: 'https://www.simplyhired.com/search?q=fair+chance+' },
+  { name: 'ZipRecruiter', note: 'Fair-chance listings', base: 'https://www.ziprecruiter.com/jobs-search?search=fair+chance+' },
+  { name: 'Jobcase', note: 'Community job board', base: 'https://www.jobcase.com/positions?query=fair+chance+' },
+  { name: 'USAJobs', note: 'Federal - Fair Chance Act', base: 'https://www.usajobs.gov/Search/Results?k=' },
+];
+
+let activeSkill = '';
+let activeLocation = '';
+
+function relativeDate(iso) {
+  try {
+    const d = new Date(iso);
+    const now = Date.now();
+    const diff = now - d.getTime();
+    const days = Math.floor(diff / 86400000);
+    if (days === 0) return 'Today';
+    if (days === 1) return 'Yesterday';
+    if (days < 30) return `${days}d ago`;
+    const months = Math.floor(days / 30);
+    return `${months}mo ago`;
+  } catch {
+    return '';
+  }
+}
+
+function sourceClass(src) {
+  if (!src) return 'src-other';
+  const s = src.toLowerCase();
+  if (s.includes('usajobs') || s.includes('federal')) return 'src-usajobs';
+  if (s.includes('indeed')) return 'src-indeed';
+  return 'src-other';
+}
+
+function renderJobRow(job) {
+  const date = relativeDate(job.date);
+  const salary = job.salary ? `<span class="job-row-salary">${job.salary}</span>` : '';
+  const loc = job.location ? `<span class="job-row-loc">${job.location}</span>` : '';
+
+  return `
+  <div class="job-row">
+    <div class="job-row-main">
+      <div class="job-row-title">${job.title || 'Position'}</div>
+      <div class="job-row-meta">
+        ${job.company ? `<span class="job-row-agency">${job.company}</span>` : ''}
+        ${loc}
+        ${salary}
+      </div>
+    </div>
+    <div class="job-row-right">
+      ${date ? `<span class="job-row-date">${date}</span>` : ''}
+      <span class="job-row-source ${sourceClass(job.source)}">${job.source || 'Board'}</span>
+      <a href="${job.url}" target="_blank" rel="noopener noreferrer" class="btn-apply" aria-label="Apply for ${job.title}">
+        Apply &#8599;
+      </a>
+    </div>
+  </div>`;
+}
+
+function renderDeepLinks(skill) {
+  const q = SKILLS_MAP[skill]?.label || skill || 'fair chance';
+  const encoded = encodeURIComponent(q);
+  const grid = document.getElementById('deepLinkGrid');
+  if (!grid) return;
+  grid.innerHTML = DEEP_LINK_BOARDS.map(b => `
+    <a href="${b.base}${encoded}" target="_blank" rel="noopener noreferrer" class="deep-link-card">
+      <div class="dl-name">${b.name}</div>
+      <div class="dl-note">${b.note}</div>
+      <div class="dl-arrow">Search "${q}" &#8599;</div>
+    </a>`).join('');
+}
+
+async function loadJobs(skill, location) {
+  const container = document.getElementById('jobsContainer');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="jobs-status" role="status" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
+      <div>Loading live listings${skill ? ' for ' + (SKILLS_MAP[skill]?.label || skill) : ''}...</div>
+    </div>`;
+
+  renderDeepLinks(skill);
+
+  const params = new URLSearchParams();
+  if (skill) params.set('skill', SKILLS_MAP[skill]?.query || skill);
+  if (location) params.set('location', location);
+
+  let data;
+  try {
+    const res = await fetch(`/api/jobs/listings?${params}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    data = await res.json();
+  } catch (err) {
+    container.innerHTML = `
+      <div class="jobs-status error" role="alert">
+        Live listings temporarily unavailable. Use the board links above to search directly.
+      </div>`;
+    return;
+  }
+
+  const jobs = data.jobs || [];
+  const badge = document.getElementById('updatedBadge');
+
+  if (data.fetched && badge) {
+    const d = new Date(data.fetched);
+    badge.textContent = 'Updated ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  if (jobs.length === 0) {
+    container.innerHTML = `
+      <div class="jobs-status" role="status">
+        No live listings found for this search. Try a different skill or location, or use the board links below to search directly.
+      </div>`;
+    return;
+  }
+
+  const BATCH = 5;
+  let shown = BATCH;
+
+  container.innerHTML = `
+    <div class="jobs-header" style="margin-bottom:1rem">
+      <span class="jobs-count">${jobs.length} listing${jobs.length === 1 ? '' : 's'} - ${skill ? (SKILLS_MAP[skill]?.label || skill) : 'all categories'}</span>
+    </div>
+    <div class="jobs-list" role="list" aria-label="Job listings">
+      ${jobs.map((j, i) => `<div role="listitem"${i >= BATCH ? ' class="jobs-extra" style="display:none"' : ''}>${renderJobRow(j)}</div>`).join('')}
+    </div>
+    ${jobs.length > BATCH ? `
+    <div id="jobsMoreWrap" style="text-align:center;margin-top:1rem">
+      <button id="jobsToggleBtn" class="btn-ghost-sm">Show 5 more</button>
+    </div>` : ''}`;
+
+  const toggleBtn = document.getElementById('jobsToggleBtn');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function() {
+      const hidden = container.querySelectorAll('.jobs-extra[style*="display:none"]');
+      let revealed = 0;
+      hidden.forEach(el => {
+        if (revealed < BATCH) { el.style.display = ''; revealed++; }
+      });
+      shown += revealed;
+      const stillHidden = container.querySelectorAll('.jobs-extra[style="display:none"]').length;
+      if (stillHidden === 0) {
+        document.getElementById('jobsMoreWrap').remove();
+      } else {
+        this.textContent = `Show ${Math.min(BATCH, stillHidden)} more`;
+      }
+    });
+  }
+}
+
+// Chip filter clicks
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(c => {
+      c.classList.remove('active');
+      c.setAttribute('aria-pressed', 'false');
+    });
+    chip.classList.add('active');
+    chip.setAttribute('aria-pressed', 'true');
+    activeSkill = chip.dataset.skill || '';
+    document.getElementById('skillInput').value = activeSkill ? (SKILLS_MAP[activeSkill]?.label || activeSkill) : '';
+    loadJobs(activeSkill, activeLocation);
+  });
+});
+
+// Search button
+document.getElementById('searchBtn').addEventListener('click', () => {
+  const skillVal = document.getElementById('skillInput').value.trim().toLowerCase();
+  activeLocation = document.getElementById('locationInput').value.trim();
+
+  // Try to match a chip
+  const matchedChip = [...document.querySelectorAll('.chip')].find(c => {
+    const s = c.dataset.skill;
+    return s && (s.includes(skillVal) || skillVal.includes(s.split(' ')[0]));
+  });
+
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  if (matchedChip) {
+    matchedChip.classList.add('active');
+    activeSkill = matchedChip.dataset.skill;
+  } else {
+    document.querySelector('[data-skill=""]').classList.add('active');
+    activeSkill = skillVal;
+  }
+
+  loadJobs(activeSkill, activeLocation);
+});
+
+// Enter key in inputs
+['skillInput', 'locationInput'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('searchBtn').click();
+  });
+});
+
+// Accordion
+document.querySelectorAll('.acc-trigger').forEach(trigger => {
+  trigger.addEventListener('click', () => {
+    const item = trigger.closest('.acc-item');
+    const isOpen = item.classList.contains('open');
+    const body = item.querySelector('.acc-body');
+
+    if (isOpen) {
+      item.classList.remove('open');
+      body.style.display = 'none';
+      trigger.setAttribute('aria-expanded', 'false');
+    } else {
+      item.classList.add('open');
+      body.style.display = 'block';
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+// Initial load
+loadJobs('', '');
+</script>
+
+<script src="/assets/bees.js?v=17"></script>
+
+<!-- RESUME REQUEST MODAL -->
+<div id="resumeRequestModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="if(event.target===this)this.style.display='none'">
+  <div class="modal-box">
+    <h3 id="modalTitle">Free Resume Review</h3>
+    <p>We'll run an AI optimization and send you feedback within 24 hours. No list, no upsell.</p>
+    <form id="resumeRequestForm">
+      <div class="modal-field">
+        <label for="rr-name">Your Name</label>
+        <input type="text" id="rr-name" placeholder="First and last name" required>
+      </div>
+      <div class="modal-field">
+        <label for="rr-email">Email Address</label>
+        <input type="email" id="rr-email" placeholder="Where we send your review" required>
+      </div>
+      <div class="modal-field">
+        <label for="rr-role">Target Job or Role</label>
+        <input type="text" id="rr-role" placeholder="e.g. Warehouse Associate, CDL Driver">
+      </div>
+      <div class="modal-field">
+        <label for="rr-resume">Paste Your Resume</label>
+        <textarea id="rr-resume" placeholder="Paste your resume text here..." required></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="submit" class="btn-gold" id="rrSubmitBtn">Submit for Review</button>
+        <button type="button" class="btn-ghost-sm" onclick="document.getElementById('resumeRequestModal').style.display='none'">Cancel</button>
+      </div>
+      <div id="rrStatus" style="margin-top:0.75rem;font-size:0.875rem;display:none"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+document.getElementById('resumeRequestForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('rrSubmitBtn');
+  const status = document.getElementById('rrStatus');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+  status.style.display = 'none';
+  try {
+    const res = await fetch('/api/resume-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: document.getElementById('rr-name').value,
+        email: document.getElementById('rr-email').value,
+        role: document.getElementById('rr-role').value,
+        resume: document.getElementById('rr-resume').value,
+        submitted: new Date().toISOString()
+      })
+    });
+    if (!res.ok) throw new Error();
+    status.style.display = 'block';
+    status.style.color = '#4CAF7D';
+    status.textContent = 'Submitted. We\'ll be in touch within 24 hours.';
+    this.reset();
+    btn.textContent = 'Submitted';
+  } catch {
+    status.style.display = 'block';
+    status.style.color = 'var(--red)';
+    status.textContent = 'Something went wrong. Try again.';
+    btn.disabled = false;
+    btn.textContent = 'Submit for Review';
+  }
+});
+</script>
+<script>window.OYEChat = { brand: 'resumebuzz', adminUrl: 'https://bink.oyecreations.com', subjects: ['AI Builder', 'Human Writer', 'CV vs Resume'], turnstileSiteKey: '0x4AAAAAADUIs5uXgonNVbPD' };</script>
+<script defer src="https://bink.oyecreations.com/assets/chat-widget.js?v=22"></script>
+</body>
+</html>

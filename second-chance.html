@@ -16,6 +16,7 @@
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
 @font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair-italic.woff2') format('woff2')}
+@keyframes dt-pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}70%{box-shadow:0 0 0 6px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}.dt-sig{display:inline-block;width:6px;height:6px;background:#22c55e;border-radius:50%;animation:dt-pulse 2s ease-in-out infinite;flex-shrink:0;vertical-align:middle;margin-right:2px;}
 </style>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -961,12 +962,12 @@ footer a:hover{color:var(--warm)}
 <div style="background:rgba(201,168,76,0.05);border-top:1px solid rgba(201,168,76,0.12);padding:9px 24px;">
   <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56" style="height:16px;width:auto;flex-shrink:0;" aria-hidden="true" fill="none"><path d="M6,20 A18,18 0 0,1 42,20 Q42,38 24,54 Q6,38 6,20 Z" fill="#C9A84C"/><polyline points="13,28 24,14 35,28" stroke="#111111" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="dt-sig" aria-hidden="true"></span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56" style="height:16px;width:auto;flex-shrink:0;" aria-hidden="true" fill="none"><path d="M6,20 A18,18 0 0,1 42,20 Q42,38 24,54 Q6,38 6,20 Z" fill="#C9A84C"/><polyline points="13,28 24,14 35,28" stroke="#111111" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;">droptimize</span>
       <span style="font-family:'DM Mono',monospace;font-size:10px;color:#8C8C8C;opacity:0.5;">·</span>
       <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;"><strong style="color:#C9A84C;font-weight:500;">100/100</strong> Lighthouse</span>
     </div>
-    <a href="https://droptimize.org" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#8C8C8C;text-decoration:none;opacity:0.75;white-space:nowrap;transition:color 150ms,opacity 150ms;" onmouseover="this.style.color='#C9A84C';this.style.opacity='1'" onmouseout="this.style.color='#8C8C8C';this.style.opacity='0.75'">Site enhanced by droptimize.org &#x2192;</a>
+    <span style="display:flex;align-items:center;gap:10px;flex-shrink:0;"><span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:#8C8C8C;opacity:0.45;white-space:nowrap;">Audited May 2026</span><a href="https://droptimize.org" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#8C8C8C;text-decoration:none;opacity:0.75;white-space:nowrap;transition:color 150ms,opacity 150ms;" onmouseover="this.style.color='#C9A84C';this.style.opacity='1'" onmouseout="this.style.color='#8C8C8C';this.style.opacity='0.75'">Site enhanced by droptimize.org &#x2192;</a></span>
   </div>
 </div>
 <footer>

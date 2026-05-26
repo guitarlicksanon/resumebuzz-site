@@ -17,6 +17,12 @@
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
 @font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair-italic.woff2') format('woff2')}
 @keyframes dt-pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}70%{box-shadow:0 0 0 6px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}.dt-sig{display:inline-block;width:6px;height:6px;background:#22c55e;border-radius:50%;animation:dt-pulse 2s ease-in-out infinite;flex-shrink:0;vertical-align:middle;margin-left:0;}
+  .dt-lnk{opacity:.75;transition:opacity .15s;text-decoration:none}
+  .dt-lnk:hover{opacity:1}
+  .dt-lnk .dt-t1{color:#EBEBEB;transition:color .15s}
+  .dt-lnk .dt-t2{color:#C9A84C;transition:color .15s}
+  .dt-lnk:hover .dt-t1{color:#C9A84C}
+  .dt-lnk:hover .dt-t2{color:#EBEBEB}
 </style>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -967,7 +973,7 @@ footer a:hover{color:var(--warm)}
       <span style="font-family:'DM Mono',monospace;font-size:10px;color:#8C8C8C;opacity:0.5;">·</span>
       <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;"><strong style="color:#C9A84C;font-weight:500;">100/100</strong> Lighthouse</span>
     </div>
-    <span style="display:flex;align-items:center;gap:10px;flex-shrink:0;"><span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:#8C8C8C;opacity:0.45;white-space:nowrap;">Audited May 2026</span><a href="https://droptimize.org" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#8C8C8C;text-decoration:none;opacity:0.75;white-space:nowrap;transition:color 150ms,opacity 150ms;" onmouseover="this.style.opacity='1';this.getElementsByTagName('span')[0].style.color='#C9A84C';this.getElementsByTagName('span')[1].style.color='#EBEBEB'" onmouseout="this.style.opacity='0.75';this.getElementsByTagName('span')[0].style.color='#EBEBEB';this.getElementsByTagName('span')[1].style.color='#C9A84C'"><span style="color:#EBEBEB;transition:color 150ms">Site enhanced by droptimize</span><span style="color:#C9A84C;transition:color 150ms">.org &#x2192;</span></a></span>
+    <span style="display:flex;align-items:center;gap:10px;flex-shrink:0;"><span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:#8C8C8C;opacity:0.45;white-space:nowrap;">Audited May 2026</span><a class="dt-lnk" href="https://droptimize.org" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap;"><span class="dt-t1">Site enhanced by droptimize</span><span class="dt-t2">.org &#x2192;</span></a></span>
   </div>
 </div>
 <footer>

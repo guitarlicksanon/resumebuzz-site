@@ -642,62 +642,40 @@ body{
   /* ── AUTH ── */
   var loginOverlay = $('loginOverlay');
   var dashboard    = $('dashboard');
-  var loginPw      = $('loginPw');
-  var loginBtn     = $('loginBtn');
-  var loginError   = $('loginError');
-  var eyeBtn       = $('eyeBtn');
-  var eyeIcon      = $('eyeIcon');
-  var eyeVisible   = false;
+  var BINK = 'https://bink.oyecreations.com/';
+  var RETURN_URL = window.location.href.split('?')[0];
+  var grantToken = new URLSearchParams(window.location.search).get('grant');
 
-  eyeBtn.addEventListener('click', function(){
-    eyeVisible = !eyeVisible;
-    loginPw.type = eyeVisible ? 'text' : 'password';
-    eyeIcon.innerHTML = eyeVisible
-      ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
-      : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
-  });
-
-  async function checkSession(){
-    try{
+  async function bootstrap() {
+    if (grantToken) {
+      try {
+        var r = await fetch('/api/admin/grant', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: grantToken })
+        });
+        var d = await r.json();
+        if (d.ok) {
+          history.replaceState(null, '', RETURN_URL);
+          showDashboard();
+          return;
+        }
+      } catch(e) {}
+      window.location.href = BINK + '?return=' + encodeURIComponent(RETURN_URL);
+      return;
+    }
+    try {
       var r = await fetch('/api/auth');
       var d = await r.json();
-      if(d.ok){
+      if (d.ok) {
         showDashboard();
       } else {
-        loginOverlay.style.display = 'flex';
-        dashboard.style.display = 'none';
+        window.location.href = BINK + '?return=' + encodeURIComponent(RETURN_URL);
       }
-    } catch(e){
-      loginOverlay.style.display = 'flex';
-      dashboard.style.display = 'none';
+    } catch(e) {
+      window.location.href = BINK + '?return=' + encodeURIComponent(RETURN_URL);
     }
-  }
-
-  async function doLogin(){
-    var pw = loginPw.value;
-    if(!pw) return;
-    loginBtn.disabled = true;
-    loginBtn.textContent = 'Signing in...';
-    loginError.style.display = 'none';
-    try{
-      var r = await fetch('/api/auth', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({password: pw})
-      });
-      if(r.ok){
-        showDashboard();
-      } else {
-        loginError.style.display = 'block';
-        loginPw.value = '';
-        loginPw.focus();
-      }
-    } catch(e){
-      loginError.textContent = 'Connection error. Try again.';
-      loginError.style.display = 'block';
-    }
-    loginBtn.disabled = false;
-    loginBtn.textContent = 'Sign In';
   }
 
   function showDashboard(){
@@ -707,17 +685,11 @@ body{
     initDashboard();
   }
 
-  async function doLogout(){
-    document.cookie = 'rb_session=; Max-Age=0; Path=/';
-    loginPw.value = '';
-    loginError.style.display = 'none';
-    dashboard.style.display = 'none';
-    loginOverlay.style.display = 'flex';
-    loginPw.focus();
+  function doLogout(){
+    document.cookie = 'rb_session=; Max-Age=0; Path=/; Secure; SameSite=Strict';
+    window.location.href = BINK;
   }
 
-  loginBtn.addEventListener('click', doLogin);
-  loginPw.addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
   $('logoutBtn').addEventListener('click', doLogout);
   $('logoutBtn2').addEventListener('click', doLogout);
 
@@ -842,7 +814,7 @@ body{
   });
 
   /* ── INIT ── */
-  checkSession();
+  bootstrap();
 
 })();
 

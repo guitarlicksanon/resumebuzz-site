@@ -6,6 +6,10 @@ pages_build_output_dir = "."
 binding = "JD_STORE"
 id = "0d7dd8dca8134af78ed139dc7fd459da"
 
+[[kv_namespaces]]
+binding = "OYE_ADMIN_KV"
+id = "5ac473004a3e46c689acaa9918f80963"
+
 [vars]
 PRICE_AI_SINGLE   = "price_1TZYSkJvPEXScjfdBoxWXZnV"
 PRICE_AI_POLISH   = "price_1TZYUrJvPEXScjfdUfeSYwAO"

@@ -16,6 +16,7 @@ async function fetchStripeData(env) {
     const [sessData, subsData, pastDueData, cancelledData] = await Promise.all([sessRes.json(), subsRes.json(), pastDueRes.json(), cancelledRes.json()]);
 
     const recentOrders = (sessData.data || []).map(s => ({
+      id: s.id,
       email: s.customer_email || s.customer_details?.email || '',
       amount_cents: s.amount_total || 0,
       plan: s.metadata?.plan || '',

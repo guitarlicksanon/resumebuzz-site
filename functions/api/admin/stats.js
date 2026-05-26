@@ -1,43 +1,87 @@
 // GET /api/admin/stats — admin stats endpoint for ResumeBuzz
 
-export async function onRequestGet({ request, env }) {
-  const headers = { "Content-Type": "application/json" };
+async function fetchStripeData(env) {
+  if (!env.STRIPE_SECRET_KEY) return null;
+  const auth = { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` };
+  const base = 'https://api.stripe.com/v1';
+  const thirtyDaysAgo = Math.floor(Date.now() / 1000) - 30 * 86400;
 
-  // Auth check
-  const secret = request.headers.get("X-Admin-Secret");
+  try {
+    const [sessRes, subsRes, pastDueRes, cancelledRes] = await Promise.all([
+      fetch(`${base}/checkout/sessions?limit=20&status=complete&created[gte]=${thirtyDaysAgo}`, { headers: auth }),
+      fetch(`${base}/subscriptions?status=active&limit=100`, { headers: auth }),
+      fetch(`${base}/subscriptions?status=past_due&limit=20`, { headers: auth }),
+      fetch(`${base}/subscriptions?status=canceled&created[gte]=${thirtyDaysAgo}&limit=20`, { headers: auth }),
+    ]);
+    const [sessData, subsData, pastDueData, cancelledData] = await Promise.all([sessRes.json(), subsRes.json(), pastDueRes.json(), cancelledRes.json()]);
+
+    const recentOrders = (sessData.data || []).map(s => ({
+      email: s.customer_email || s.customer_details?.email || '',
+      amount_cents: s.amount_total || 0,
+      plan: s.metadata?.plan || '',
+      market: s.metadata?.market || '',
+      created: new Date(s.created * 1000).toISOString(),
+    }));
+
+    const revenue_30d_cents = recentOrders.reduce((t, o) => t + (o.amount_cents || 0), 0);
+
+    let mrr_cents = 0;
+    const activeSubs = subsData.data || [];
+    for (const s of activeSubs) {
+      for (const item of (s.items?.data || [])) {
+        const p = item.price;
+        if (!p?.recurring) continue;
+        const amt = (p.unit_amount || 0) * (item.quantity || 1);
+        const { interval, interval_count = 1 } = p.recurring;
+        if (interval === 'month') mrr_cents += amt / interval_count;
+        else if (interval === 'year') mrr_cents += amt / (12 * interval_count);
+      }
+    }
+
+    const failedPayments = (pastDueData.data || []).map(s => ({
+      customer: s.customer || '',
+      amount_cents: s.items?.data?.[0]?.price?.unit_amount || 0,
+      plan: s.metadata?.plan || s.items?.data?.[0]?.price?.nickname || '',
+      created: new Date(s.created * 1000).toISOString(),
+      current_period_end: new Date(s.current_period_end * 1000).toISOString(),
+    }));
+
+    const recentCancelled = (cancelledData.data || []).map(s => ({
+      customer: s.customer || '',
+      plan: s.metadata?.plan || s.items?.data?.[0]?.price?.nickname || '',
+      cancelled_at: new Date(((s.canceled_at || s.ended_at) || s.created) * 1000).toISOString(),
+    }));
+
+    return { mrr_cents: Math.round(mrr_cents), active_subs: activeSubs.length, revenue_30d_cents, recentOrders, failedPayments, recentCancelled };
+  } catch (e) {
+    return { error: e.message };
+  }
+}
+
+export async function onRequestGet({ request, env }) {
+  const headers = { 'Content-Type': 'application/json' };
+
+  const secret = request.headers.get('X-Admin-Secret');
   if (!secret || secret !== env.ADMIN_SECRET) {
-    return new Response(JSON.stringify({ error: "unauthorized" }), {
-      status: 401,
-      headers,
-    });
+    return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers });
   }
 
   try {
-    // Count active pro subscribers (keys with prefix 'pro:')
-    const proList = await env.JD_STORE.list({ prefix: "pro:" });
-    const proSubscribers = proList.keys.length;
+    const [proList, draftList, jdList, stripe] = await Promise.all([
+      env.JD_STORE.list({ prefix: 'pro:' }),
+      env.JD_STORE.list({ prefix: 'draft:' }),
+      env.JD_STORE.list({ prefix: 'jd:' }),
+      fetchStripeData(env),
+    ]);
 
-    // Count draft submissions (keys with prefix 'draft:')
-    const draftList = await env.JD_STORE.list({ prefix: "draft:" });
-    const draftCount = draftList.keys.length;
-
-    // Count job description entries (keys with prefix 'jd:')
-    const jdList = await env.JD_STORE.list({ prefix: "jd:" });
-    const jdCount = jdList.keys.length;
-
-    return new Response(
-      JSON.stringify({
-        brand: "resumebuzz",
-        proSubscribers,
-        draftCount,
-        jdCount,
-      }),
-      { status: 200, headers }
-    );
+    return new Response(JSON.stringify({
+      brand: 'resumebuzz',
+      proSubscribers: proList.keys.length,
+      draftCount: draftList.keys.length,
+      jdCount: jdList.keys.length,
+      stripe,
+    }), { status: 200, headers });
   } catch (e) {
-    return new Response(
-      JSON.stringify({ brand: "resumebuzz", error: e.message }),
-      { status: 500, headers }
-    );
+    return new Response(JSON.stringify({ brand: 'resumebuzz', error: e.message }), { status: 500, headers });
   }
 }

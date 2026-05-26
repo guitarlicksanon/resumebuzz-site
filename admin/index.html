@@ -871,12 +871,21 @@ async function loadRequests() {
           <summary style="cursor:pointer;font-size:0.82rem;color:var(--muted);user-select:none">View Resume</summary>
           <pre style="margin-top:0.75rem;font-size:0.78rem;color:var(--text);white-space:pre-wrap;line-height:1.5;background:var(--bg);padding:1rem;border-radius:6px;max-height:300px;overflow-y:auto">${r.resume}</pre>
         </details>
-        <a href="mailto:${r.email}?subject=Your Free Resume Review&body=Hi ${r.name}," class="panel-action" style="margin-top:0.75rem;display:inline-block;text-decoration:none">Reply ↗</a>
+        <a href="#" data-email="${r.email}" data-name="${r.name}" class="panel-action panel-reply" style="margin-top:0.75rem;display:inline-block;text-decoration:none">Reply ↗</a>
       </div>`).join('');
   } catch {
     el.innerHTML = '<p style="color:var(--red)">Failed to load requests.</p>';
   }
 }
+
+document.addEventListener('click', function(e) {
+  const el = e.target.closest('.panel-reply');
+  if (!el) return;
+  e.preventDefault();
+  const email = el.getAttribute('data-email');
+  const name = el.getAttribute('data-name');
+  window.location.href = 'mailto:' + email + '?subject=Your%20Free%20Resume%20Review&body=Hi%20' + encodeURIComponent(name) + ',';
+});
 </script>
 </body>
 </html>

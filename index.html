@@ -1621,7 +1621,7 @@ details.faq-item summary:hover{color:var(--gold)}
         <div class="limit-plan">Unlimited Audits</div>
         <div class="limit-price">$49 <span>/ month</span></div>
         <p class="limit-cost-note">Each audit costs us about 2 cents in AI processing. At 50 audits a month that's a dollar in real costs. $9.99 covers our overhead and keeps the hive running.</p>
-        <a href="mailto:hello@oyecreations.com?subject=ResumeBuzz%20Unlimited%20Access" class="limit-btn">Get Unlimited Access &rarr;</a>
+        <a href="#" id="unlimitedAccessLink" class="limit-btn">Get Unlimited Access &rarr;</a>
       </div>
       <button class="btn-ghost" id="limitStartOver">Start Over</button>
     </div>
@@ -1830,7 +1830,7 @@ details.faq-item summary:hover{color:var(--gold)}
 </section>
 </main>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 (function(){
   var landing = document.getElementById('landing');
   var jobDesc = document.getElementById('job-desc');
@@ -2371,6 +2371,9 @@ details.faq-item summary:hover{color:var(--gold)}
     var ey=document.getElementById('heroEyebrow');if(ey)ey.textContent=s.ey;
     if(s.rtl){var sec=document.getElementById('heroSection');if(sec)sec.dir='rtl';}
   }).catch(function(){});
+  // Set mailto link dynamically to prevent CF email obfuscation injection
+  var ual=document.getElementById('unlimitedAccessLink');
+  if(ual){ual.href='mai'+'lto:hello'+'@oyecreations.com?subject=ResumeBuzz%20Unlimited%20Access';}
 })();
 </script>
 </body>

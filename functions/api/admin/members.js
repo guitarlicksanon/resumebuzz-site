@@ -81,12 +81,25 @@ export async function onRequestPost({ request, env }) {
     return new Response(JSON.stringify({ ok: false, error: 'invalid JSON' }), { status: 400, headers });
   }
 
-  const { email, blocked } = body;
+  const { email, blocked, pro } = body;
   if (!email) {
     return new Response(JSON.stringify({ ok: false, error: 'email required' }), { status: 400, headers });
   }
 
   const normalized = email.toLowerCase().trim();
+
+  if (typeof pro !== 'undefined') {
+    try {
+      if (pro) {
+        await env.JD_STORE.put('pro:' + normalized, JSON.stringify({ granted_manually: true, created_at: new Date().toISOString() }));
+      } else {
+        await env.JD_STORE.delete('pro:' + normalized);
+      }
+      return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
+    } catch (e) {
+      return new Response(JSON.stringify({ ok: false, error: e.message }), { status: 500, headers });
+    }
+  }
 
   try {
     if (blocked === false) {

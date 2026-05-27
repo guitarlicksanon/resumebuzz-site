@@ -475,6 +475,33 @@ textarea{resize:vertical;line-height:1.55}
   user-select:none;
   -webkit-user-select:none;
 }
+.output-content .out-line,
+.output-content .out-bullet,
+.output-content .out-subbullet,
+.output-content .out-rolelabel{
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+.output-content .out-empty{
+  height:1.1em;
+}
+.output-content .out-bullet{
+  padding-left:1.6em;
+  text-indent:-1.6em;
+}
+.output-content .out-subbullet{
+  padding-left:3.2em;
+  text-indent:-1.4em;
+  color:#3A3A3A;
+}
+.output-content .out-rolelabel{
+  font-size:11px;
+  letter-spacing:0.08em;
+  color:#666;
+  margin-top:0.35em;
+  margin-bottom:0.1em;
+  font-weight:600;
+}
 .output-placeholder{
   font-family:'DM Mono',monospace;
   font-size:13px;
@@ -892,6 +919,10 @@ textarea{resize:vertical;line-height:1.55}
         <div>
           <div style="font-size:0.95rem;font-weight:700;color:var(--gold)">🐝 Your draft is ready!</div>
           <div id="paySubtitle" style="font-size:0.8rem;color:var(--muted);margin-top:0.2rem">Pay to download a clean, watermark-free copy. No strings, no stings.</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.55rem;line-height:1.5;max-width:560px">
+            <strong style="color:var(--gold-dim)">How to use your files:</strong>
+            Upload the <strong style="color:#E8E8E8">DOCX</strong> when a job application asks for your resume. ATS parsers (Workday, Greenhouse, Lever, iCIMS) read DOCX cleanest and pull every keyword. If the application allows additional uploads, attach the <strong style="color:#E8E8E8">PDF</strong> as the color version so recruiters see the styled layout. Use the PDF for print, interviews, and emailed introductions.
+          </div>
         </div>
         <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
           <a href="#" id="payOnceBtn" style="background:linear-gradient(135deg,var(--gold-bright),var(--amber));color:#111;font-weight:700;font-size:0.88rem;padding:0.6rem 1.4rem;border-radius:6px;text-decoration:none;white-space:nowrap;box-shadow:0 3px 12px rgba(245,200,64,0.3)">Pay &amp; Download $19</a>
@@ -974,6 +1005,43 @@ textarea{resize:vertical;line-height:1.55}
   var isGenerating  = false;
   var lastIntake    = null;
   var lastScoreData = null;
+  var resumeText    = '';
+
+  function stripDashes(s){
+    return s ? s.replace(/[—–]/g, ', ') : s;
+  }
+
+  function getResumeText(){
+    return resumeText || outputContent.textContent || '';
+  }
+
+  function applyResumeLayout(){
+    var src = resumeText;
+    if(!src) return;
+    var lines = src.split('\n');
+    var frag = document.createDocumentFragment();
+    for(var i=0;i<lines.length;i++){
+      var raw = lines[i];
+      var div = document.createElement('div');
+      if(raw === ''){
+        div.className = 'out-empty';
+      } else if(/^\s{2,}•\s/.test(raw)){
+        div.className = 'out-subbullet';
+        div.textContent = raw;
+      } else if(/^-\s/.test(raw)){
+        div.className = 'out-bullet';
+        div.textContent = raw;
+      } else if(/^(ACHIEVEMENTS|RESPONSIBILITIES)\s*$/.test(raw.trim())){
+        div.className = 'out-rolelabel';
+        div.textContent = raw.trim();
+      } else {
+        div.className = 'out-line';
+        div.textContent = raw;
+      }
+      frag.appendChild(div);
+    }
+    outputContent.replaceChildren(frag);
+  }
 
   /* ── TEMPLATE PICKER ──────────────────────────────── */
   var stylesByStage = {
@@ -1471,6 +1539,7 @@ textarea{resize:vertical;line-height:1.55}
 
   async function doGenerate(intake){
     outputContent.textContent = '';
+    resumeText = '';
     outputPlaceholder.style.display = 'none';
     document.getElementById('watermark').style.display = 'none';
     document.getElementById('payCta').style.display = 'none';
@@ -1527,12 +1596,15 @@ textarea{resize:vertical;line-height:1.55}
             try{
               var evt = JSON.parse(jsonStr);
               if(evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta'){
-                outputContent.textContent += evt.delta.text;
+                var clean = stripDashes(evt.delta.text);
+                resumeText += clean;
+                outputContent.textContent += clean;
                 tokenCount++;
                 outputArea.scrollTop = outputArea.scrollHeight;
               } else if(evt.type === 'message_stop'){
                 stopTimer();
                 setGenerating(false);
+                applyResumeLayout();
                 var m2 = Math.floor(timerSeconds/60);
                 var s2 = timerSeconds % 60;
                 statusLine.textContent = 'Done - ' + tokenCount + ' chunks · ' + m2 + ':' + (s2<10?'0':'')+s2;
@@ -1548,6 +1620,7 @@ textarea{resize:vertical;line-height:1.55}
       stopTimer();
       if(isGenerating){
         setGenerating(false);
+        applyResumeLayout();
         statusLine.textContent = 'Done - ' + tokenCount + ' chunks';
         if (!isAdmin) document.getElementById('watermark').style.display = 'block';
         if (!isAdmin) document.getElementById('payCta').style.display = 'flex';
@@ -1571,7 +1644,7 @@ textarea{resize:vertical;line-height:1.55}
       setTimeout(function(){copyBtn.textContent = 'Copy'}, 1800);
       return;
     }
-    var text = outputContent.textContent;
+    var text = getResumeText();
     if(!text) return;
     navigator.clipboard.writeText(text).then(function(){
       copyBtn.textContent = 'Copied!';
@@ -1596,6 +1669,7 @@ textarea{resize:vertical;line-height:1.55}
 
   clearBtn.addEventListener('click', function(){
     outputContent.textContent = '';
+    resumeText = '';
     outputContent.className = 'output-content';
     outputPlaceholder.style.display = 'block';
     document.getElementById('watermark').style.display = 'none';
@@ -1729,7 +1803,7 @@ textarea{resize:vertical;line-height:1.55}
       var res = await fetch('/api/score', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({text: outputContent.textContent.trim()})
+        body: JSON.stringify({text: getResumeText().trim()})
       });
       if (!res.ok) throw new Error('score ' + res.status);
       var data = await res.json();
@@ -1831,7 +1905,7 @@ textarea{resize:vertical;line-height:1.55}
       questions.push({
         id: 'fp_cloud_terms',
         label: 'Cloud and infrastructure terms',
-        hint: 'Confirm which of these umbrella terms are accurate for your stack. The rebuild will weave in any that apply — these appear in ATS filters but are often missing even when the underlying work qualifies.',
+        hint: 'Confirm which of these umbrella terms are accurate for your stack. The rebuild will weave in any that apply. These terms appear in ATS filters but are often missing even when the underlying work qualifies.',
         ph: 'e.g. "Yes: serverless architecture, edge computing, cloud deployment" or "Add: SaaS, stakeholder management, cross-functional collaboration"',
         rows: 2
       });
@@ -1862,7 +1936,7 @@ textarea{resize:vertical;line-height:1.55}
         id: 'fp_concurrent',
         label: 'Concurrent or overlapping roles',
         hint: 'If you hold or have held multiple jobs at the same time, tell us which one is most relevant to this application. The rebuild will lead with that role and order the rest by fit rather than date.',
-        ph: 'e.g. "Primary role is OYE Creations — list James Innes second, HotelPlanner third" or "All roles are current but the consulting work is the focus"',
+        ph: 'e.g. "Primary role is OYE Creations, list James Innes second, HotelPlanner third" or "All roles are current but the consulting work is the focus"',
         rows: 2
       });
     }
@@ -1993,7 +2067,7 @@ textarea{resize:vertical;line-height:1.55}
   /* ── DOWNLOAD / CHECKOUT ───────────────────────────── */
   document.getElementById('payOnceBtn').addEventListener('click', async function(e){
     e.preventDefault();
-    var md = (outputContent.textContent || '').trim();
+    var md = getResumeText().trim();
     if(!md){ alert('Generate a resume preview first.'); return; }
 
     // Promo code unlocked - free direct download

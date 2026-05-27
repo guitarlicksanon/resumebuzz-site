@@ -1120,12 +1120,12 @@ details.faq-item summary:hover{color:var(--gold)}
           </svg>
         </div>
         <p class="dropzone-title">Drop your resume here</p>
-        <p class="dropzone-sub">PDF or DOCX, up to 5MB</p>
+        <p class="dropzone-sub"><strong style="color:var(--gold)">DOCX recommended</strong> &middot; PDF accepted &middot; up to 5MB</p>
         <button class="btn-gold" type="button" id="browseBtn">Browse Files</button>
         <input type="file" id="fileInput" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
       </div>
       <div class="error-msg" id="errorMsg" role="alert" aria-live="polite"></div>
-      <p class="upload-note">Your resume is analyzed and immediately deleted. Nothing is stored on our end.<br>We recommend uploading a copy with your name, address, phone, and email removed. The audit only needs your experience, skills, and formatting.</p>
+      <p class="upload-note"><strong style="color:var(--text)">Why DOCX?</strong> Real ATS systems (Workday, Greenhouse, Lever, iCIMS, Taleo) extract text from DOCX cleanly and index every word. PDF works for our audit, but for actual job applications you should always upload the DOCX. Save the PDF for print, interviews, and recruiter email follow-ups.<br><br>Your resume is analyzed and immediately deleted. Nothing is stored on our end.<br>We recommend uploading a copy with your name, address, phone, and email removed. The audit only needs your experience, skills, and formatting.</p>
     </div>
 
     <div style="max-width:600px;margin:1.5rem auto 0;display:flex;align-items:center;gap:1.25rem">
@@ -1994,9 +1994,9 @@ details.faq-item summary:hover{color:var(--gold)}
 
     var subMap = [
       {key:'ats_compatibility', barId:'bar1', valSel:'.subscores .subscore:nth-child(1) .subscore-val'},
-      {key:'keyword_density',   barId:'bar2', valSel:'.subscores .subscore:nth-child(2) .subscore-val'},
-      {key:'impact_language',   barId:'bar3', valSel:'.subscores .subscore:nth-child(3) .subscore-val'},
-      {key:'structure',         barId:'bar4', valSel:'.subscores .subscore:nth-child(4) .subscore-val'}
+      {key:'keyword_density', barId:'bar2', valSel:'.subscores .subscore:nth-child(2) .subscore-val'},
+      {key:'impact_language', barId:'bar3', valSel:'.subscores .subscore:nth-child(3) .subscore-val'},
+      {key:'structure', barId:'bar4', valSel:'.subscores .subscore:nth-child(4) .subscore-val'}
     ];
     subMap.forEach(function(m){
       var cat = data[m.key];

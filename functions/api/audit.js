@@ -73,7 +73,7 @@ function uint8ToBase64(bytes) {
 }
 
 function buildPrompt(jobDescription) {
-  let prompt = `You are an expert resume writer and ATS specialist with 14 years of experience and over 1,000 resumes written for clients across 6 continents — service, tech, business, engineering, medical, and board-level roles.
+  let prompt = `You are an expert resume writer and ATS specialist with 14 years of experience and over 1,000 resumes written for clients across 6 continents, service, tech, business, engineering, medical, and board-level roles.
 
 Audit the resume and return ONLY a valid JSON object with this exact structure. No markdown, no explanation, no text outside the JSON:
 
@@ -105,7 +105,7 @@ Scoring guidelines:
 - Impact Language (0-25): Deduct for weak verbs (worked, helped, assisted, responsible for), passive voice, bullet points without quantified results.
 - Structure & Completeness (0-25): Deduct for missing professional summary, wrong section order for experience level, inappropriate length, missing key sections.
 
-Provide 2-4 findings per category. Be specific and actionable — name the actual problem, not a generic tip. critical = must fix before applying, warning = should fix, info = nice to have.`;
+Provide 2-4 findings per category. Be specific and actionable, name the actual problem, not a generic tip. critical = must fix before applying, warning = should fix, info = nice to have.`;
 
   if (jobDescription && jobDescription.trim().length > 0) {
     prompt += `

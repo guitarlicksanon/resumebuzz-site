@@ -1,7 +1,7 @@
 (function () {
   var uidCounter = 0;
 
-  /* ── round-eye flying bee (colony bees — unchanged) ─────────────── */
+  /* ── round-eye flying bee (colony bees, unchanged) ─────────────── */
   function makeBuzzSVG(expression) {
     var uid = uidCounter++;
     var mouth = '';
@@ -56,7 +56,7 @@
     );
   }
 
-  /* ── bored office bee — sits on dropzone corner ─────────────────── */
+  /* ── bored office bee, sits on dropzone corner ─────────────────── */
   function spawnOfficeBee(dz) {
     var uid = uidCounter++;
 
@@ -76,7 +76,7 @@
       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"' +
       ' style="overflow:visible;display:block;width:100%;height:auto;">' +
       '<defs><clipPath id="ob-' + uid + '"><ellipse cx="50" cy="92" rx="22" ry="18"/></clipPath></defs>' +
-      /* folded wings — occasional flutter via JS */
+      /* folded wings, occasional flutter via JS */
       '<ellipse id="ob-wl-' + uid + '" cx="31" cy="78" rx="14" ry="6" fill="rgba(200,240,255,0.32)" stroke="rgba(200,240,255,0.5)" stroke-width="0.6" style="transform-box:fill-box;transform-origin:right center;transform:rotate(-22deg)"/>' +
       '<ellipse id="ob-wr-' + uid + '" cx="69" cy="78" rx="14" ry="6" fill="rgba(200,240,255,0.32)" stroke="rgba(200,240,255,0.5)" stroke-width="0.6" style="transform-box:fill-box;transform-origin:left center;transform:rotate(22deg)"/>' +
       /* body */
@@ -84,7 +84,7 @@
       '<rect x="28" y="84" width="44" height="6" fill="#111" clip-path="url(#ob-' + uid + ')"/>' +
       '<rect x="28" y="95" width="44" height="6" fill="#111" clip-path="url(#ob-' + uid + ')"/>' +
       '<path d="M47,109 Q50,115 53,109" stroke="#111" stroke-width="1.5" fill="none" stroke-linecap="round"/>' +
-      /* left arm — animated toward phone */
+      /* left arm, animated toward phone */
       '<g id="ob-al-' + uid + '" style="transform-origin:37px 86px;transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1);">' +
         '<line x1="37" y1="86" x2="25" y2="100" stroke="#111" stroke-width="2" stroke-linecap="round"/>' +
         '<circle cx="23" cy="102" r="3" fill="#F5C800" stroke="#111" stroke-width="0.8"/>' +
@@ -97,7 +97,7 @@
       '<line x1="34" y1="122" x2="30" y2="127" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>' +
       '<line x1="60" y1="107" x2="66" y2="122" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>' +
       '<line x1="66" y1="122" x2="70" y2="127" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>' +
-      /* head — shifted down 12px to close gap with body */
+      /* head, shifted down 12px to close gap with body */
       '<g transform="translate(0,12)">' +
       '<circle cx="50" cy="40" r="22" fill="#F5C800"/>' +
       '<circle cx="38" cy="46" r="5" fill="#FFA040" opacity="0.2"/>' +
@@ -110,12 +110,12 @@
       '<ellipse cx="58" cy="38" rx="4.5" ry="4.5" fill="#111"/>' +
       '<circle cx="43.5" cy="36.5" r="1.3" fill="white" opacity="0.85"/>' +
       '<circle cx="59.5" cy="36.5" r="1.3" fill="white" opacity="0.85"/>' +
-      /* droopy lids — half-covering eyes */
+      /* droopy lids, half-covering eyes */
       '<rect x="37" y="33" width="10" height="5.5" rx="2.5" fill="white"' +
       ' style="transform-box:fill-box;transform-origin:center top;animation:beeBlink 6s ease-in-out infinite;"/>' +
       '<rect x="53" y="33" width="10" height="5.5" rx="2.5" fill="white"' +
       ' style="transform-box:fill-box;transform-origin:center top;animation:beeBlink 6s ease-in-out infinite 0.08s;"/>' +
-      /* glasses — oversized */
+      /* glasses, oversized */
       '<rect x="26" y="27" width="20" height="17" rx="3" fill="none" stroke="#111" stroke-width="2.8"/>' +
       '<rect x="54" y="27" width="20" height="17" rx="3" fill="none" stroke="#111" stroke-width="2.8"/>' +
       '<line x1="46" y1="35.5" x2="54" y2="35.5" stroke="#111" stroke-width="2.8"/>' +
@@ -129,7 +129,7 @@
       '<line x1="57" y1="20" x2="65" y2="6" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>' +
       '<circle cx="67" cy="4" r="3" fill="#111"/>' +
       '</g>' +
-      /* phone — starts hidden */
+      /* phone, starts hidden */
       '<g id="ob-ph-' + uid + '" style="opacity:0;' +
       'transform:translateY(10px) scale(0.4);transform-origin:18px 96px;' +
       'transition:opacity 0.35s ease,transform 0.4s cubic-bezier(0.34,1.56,0.64,1);">' +
@@ -336,12 +336,12 @@
 
     /* rest of the colony */
     var pool = [
-      function () { doFlyby(createBee(rExpr()), false, rand(H * 0.2,  H * 0.7)); },
-      function () { doBob(createBee(rExpr()),   rand(W * 0.1,  W * 0.4), rand(H * 0.55, H * 0.75)); },
-      function () { doBob(createBee('grin'),    rand(W * 0.6,  W * 0.85), rand(H * 0.4, H * 0.65)); },
-      function () { doPeek(createBee('neutral'),rand(W * 0.2,  W * 0.5), rand(100, 160)); },
-      function () { doIdle(createBee('frown'),  rand(W * 0.7,  W * 0.9), rand(H * 0.5, H * 0.75)); },
-      function () { doPeek(createBee('grin'),   rand(W * 0.65, W * 0.85), rand(80, 140)); },
+      function () { doFlyby(createBee(rExpr()), false, rand(H * 0.2, H * 0.7)); },
+      function () { doBob(createBee(rExpr()), rand(W * 0.1, W * 0.4), rand(H * 0.55, H * 0.75)); },
+      function () { doBob(createBee('grin'), rand(W * 0.6, W * 0.85), rand(H * 0.4, H * 0.65)); },
+      function () { doPeek(createBee('neutral'),rand(W * 0.2, W * 0.5), rand(100, 160)); },
+      function () { doIdle(createBee('frown'), rand(W * 0.7, W * 0.9), rand(H * 0.5, H * 0.75)); },
+      function () { doPeek(createBee('grin'), rand(W * 0.65, W * 0.85), rand(80, 140)); },
     ];
     shuffle(pool);
     var count = 2 + Math.floor(Math.random() * 2);
@@ -420,7 +420,7 @@
     });
   }
 
-  /* ── draggable buddy bee — stays where dropped ──────────────────── */
+  /* ── draggable buddy bee, stays where dropped ──────────────────── */
   function spawnBuddyBee() {
     var mobile = window.innerWidth < 768;
     var SIZE   = mobile ? 44 : 54;
@@ -621,11 +621,11 @@
 
     bee.addEventListener('mousedown', function (e) { e.preventDefault(); startDrag(e.clientX, e.clientY); });
     window.addEventListener('mousemove', function (e) { if (dragging) { e.preventDefault(); moveDrag(e.clientX, e.clientY); } });
-    window.addEventListener('mouseup',   function (e) { if (dragging) endDrag(e.clientX, e.clientY); });
+    window.addEventListener('mouseup', function (e) { if (dragging) endDrag(e.clientX, e.clientY); });
 
     bee.addEventListener('touchstart', function (e) { e.preventDefault(); var t = e.touches[0]; startDrag(t.clientX, t.clientY); }, { passive: false });
     window.addEventListener('touchmove', function (e) { if (dragging) { e.preventDefault(); var t = e.touches[0]; moveDrag(t.clientX, t.clientY); } }, { passive: false });
-    window.addEventListener('touchend',  function (e) { if (dragging) { var t = e.changedTouches[0]; endDrag(t.clientX, t.clientY); } });
+    window.addEventListener('touchend', function (e) { if (dragging) { var t = e.changedTouches[0]; endDrag(t.clientX, t.clientY); } });
 
     scheduleBob();
   }

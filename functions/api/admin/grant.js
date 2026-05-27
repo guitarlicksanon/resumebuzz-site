@@ -1,4 +1,4 @@
-// POST /api/admin/grant — exchanges a bink grant token for an rb_session cookie
+// POST /api/admin/grant, exchanges a bink grant token for an rb_session cookie
 
 async function hmacHex(message, secret) {
   const enc = new TextEncoder();

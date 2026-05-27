@@ -5,7 +5,7 @@ MARKET: United States
 - US English spelling throughout: organize, color, analyze, program, center, favor, traveling, canceled, learned, while, toward, among
 - US workplace terms: vacation, layoff, compensation, onboarding, performance review, pay stub, revenue, attorney, elevator, cell phone, parking lot
 - NEVER include: photo, date of birth, marital status, nationality, interests/hobbies, objective statement, "References available on request"
-- Location format: City, ST (two-letter state code) — Austin, TX / Chicago, IL
+- Location format: City, ST (two-letter state code), e.g., Austin, TX or Chicago, IL
 - Length: 1 page under 10 years experience; 2 pages maximum for most candidates`,
 
   canada: `
@@ -13,7 +13,7 @@ MARKET: Canada
 - Document name: "resume"; cover letter
 - Canadian English (same as US spelling for most terms)
 - NEVER include: photo, date of birth, marital status, SIN number
-- Location format: City, Province abbreviation — Toronto, ON / Vancouver, BC
+- Location format: City, Province abbreviation, e.g., Toronto, ON or Vancouver, BC
 - Bilingual note: if role or employer is Quebec-based, note French proficiency prominently
 - Length: 1-2 pages standard`,
 
@@ -46,11 +46,11 @@ MARKET: Australia / New Zealand
 
   dach: `
 MARKET: Germany / Austria / Switzerland (DACH)
-- Document name: "Lebenslauf" — write the document in German unless intake specifies otherwise
+- Document name: "Lebenslauf". Write the document in German unless intake specifies otherwise
 - Photo: professional headshot is expected and should be noted as required
 - Personal information section at top: full name, address, date of birth, nationality, phone, email, LinkedIn
 - Marital status: optional but commonly included in Germany/Austria
-- Lückenloser Lebenslauf: employment gaps must be explained — flag any gaps in the notes
+- Lückenloser Lebenslauf: employment gaps must be explained. Flag any gaps in the notes
 - Education comes BEFORE work experience for recent graduates; work history first for experienced candidates
 - Interests/Hobbies section: standard, include
 - Signature line at bottom: "Ort, Datum / Unterschrift" placeholder
@@ -60,7 +60,7 @@ MARKET: Germany / Austria / Switzerland (DACH)
 
   france: `
 MARKET: France
-- Document name: "CV" — write in French unless intake specifies otherwise
+- Document name: "CV". Write in French unless intake specifies otherwise
 - Photo: acceptable and common (not required but not penalized)
 - Personal info: name, address, phone, email, LinkedIn; date of birth optional; nationality rarely included
 - Professional profile/Accroche: 3-4 line summary at top is standard
@@ -71,7 +71,7 @@ MARKET: France
 
   spain: `
 MARKET: Spain
-- Document name: "Currículum Vitae" or "CV" — write in Spanish unless intake specifies otherwise
+- Document name: "Currículum Vitae" or "CV". Write in Spanish unless intake specifies otherwise
 - Europass format is widely recognized; structure accordingly
 - Photo: common and generally expected
 - Personal info: full name, DNI/NIE optional, address, phone, email; date of birth common
@@ -82,7 +82,7 @@ MARKET: Spain
 
   latam: `
 MARKET: Latin America
-- Document name: "Currículum Vitae" or "CV" — write in Spanish unless intake specifies otherwise
+- Document name: "Currículum Vitae" or "CV". Write in Spanish unless intake specifies otherwise
 - Photo: widely expected across the region
 - Personal info: full name, nationality, date of birth, phone, email; marital status sometimes included
 - Objective statement (Objetivo): 2-3 lines at top
@@ -92,7 +92,7 @@ MARKET: Latin America
 
   mexico: `
 MARKET: Mexico
-- Document name: "Currículum Vitae" — write in Mexican Spanish unless intake specifies otherwise
+- Document name: "Currículum Vitae". Write in Mexican Spanish unless intake specifies otherwise
 - Photo: expected
 - Personal info: CURP optional, RFC optional, full name, date of birth, phone, email
 - Objective (Objetivo profesional): 2-3 lines at top
@@ -102,7 +102,7 @@ MARKET: Mexico
 
   colombia: `
 MARKET: Colombia
-- Document name: "Hoja de Vida" (the Colombian term) or "Currículum Vitae" — write in Colombian Spanish
+- Document name: "Hoja de Vida" (the Colombian term) or "Currículum Vitae". Write in Colombian Spanish
 - Colombian Ministry of Education format is recognized; close to Europass
 - Photo: expected
 - Personal info: cédula de ciudadanía number (optional to include), full name, date of birth, city, phone, email
@@ -112,16 +112,16 @@ MARKET: Colombia
 
   rioplatense: `
 MARKET: Argentina / Uruguay (Rioplatense)
-- Document name: "Currículum Vitae" or "CV" — write in Rioplatense Spanish; use "vos" naturally (vos sos, vos tenés, etc.)
+- Document name: "Currículum Vitae" or "CV". Write in Rioplatense Spanish; use "vos" naturally (vos sos, vos tenés, etc.)
 - Photo: common but not mandatory
 - Personal info: DNI (Argentina) or CI (Uruguay) optional, full name, date of birth, phone, email
 - Objective (Objetivo): 2-3 lines
 - References: "Referencias a solicitud" at end
-- Length: 2 pages; intellectual, direct tone — Rioplatense culture values candor and analytical voice`,
+- Length: 2 pages; intellectual, direct tone (Rioplatense culture values candor and analytical voice)`,
 
   chile: `
 MARKET: Chile
-- Document name: "Currículum Vitae" — write in Chilean Spanish
+- Document name: "Currículum Vitae". Write in Chilean Spanish
 - Photo: expected
 - Personal info: RUT optional, full name, date of birth, city, phone, email
 - Objective (Resumen Profesional): 2-3 lines at top
@@ -130,7 +130,7 @@ MARKET: Chile
 
   peru: `
 MARKET: Peru
-- Document name: "Currículum Vitae" — write in Peruvian Spanish
+- Document name: "Currículum Vitae". Write in Peruvian Spanish
 - Photo: expected
 - Personal info: DNI optional, full name, date of birth, district/city, phone, email
 - Objective (Objetivo Profesional): prominent at top
@@ -144,7 +144,7 @@ MARKET: India
 - Photo: common for mid/senior roles, optional for junior
 - Personal info: full name, phone, email, city; date of birth and marital status sometimes included for government/PSU roles
 - Career Objective: 2-3 lines at top (still widely expected in India unlike US)
-- Academics: prominent — include percentage/CGPA for degrees, board results for senior school if recent graduate
+- Academics: prominent. Include percentage/CGPA for degrees, board results for senior school if recent graduate
 - Languages spoken: include
 - References: "Available on request" at end
 - Length: 2 pages for experienced; 1 page for freshers
@@ -152,9 +152,9 @@ MARKET: India
 
   mena: `
 MARKET: UAE / Gulf / MENA
-- Document name: "CV" — write in English unless intake specifies Arabic
+- Document name: "CV". Write in English unless intake specifies Arabic
 - Photo: expected and important in Gulf markets
-- Personal info: nationality, date of birth, visa status (if relevant), marital status, languages — all standard to include
+- Personal info: nationality, date of birth, visa status (if relevant), marital status, languages (all standard to include)
 - Career objective: 3-4 lines at top
 - NOC/Sponsorship: note if candidate is free to join immediately or needs NOC
 - References: 2 professional references at end
@@ -163,11 +163,11 @@ MARKET: UAE / Gulf / MENA
 
   japan: `
 MARKET: Japan
-- Document name: write guidance notes for both "履歴書 (Rirekisho)" for traditional roles and "職務経歴書 (Shokumu-Keirekisho)" for professional experience — if writing in Japanese, produce both
-- Photo: required (証明写真 — formal headshot)
+- Document name: write guidance notes for both "履歴書 (Rirekisho)" for traditional roles and "職務経歴書 (Shokumu-Keirekisho)" for professional experience. If writing in Japanese, produce both
+- Photo: required (証明写真, formal headshot)
 - Personal info: full name (kanji and kana), date of birth, address, phone, email, nearest station
 - Seal stamp (印鑑): note that handwritten rirekisho traditionally includes seal
-- Chronological, factual tone — Japanese resume culture values precision over self-promotion
+- Chronological, factual tone (Japanese resume culture values precision over self-promotion)
 - Hobbies (趣味・特技): standard section
 - Reason for applying (志望動機): prominent, sincere statement about why this company
 - Length: rirekisho is typically 1-2 pages; shokumu-keirekisho can be longer
@@ -179,7 +179,7 @@ MARKET: Southeast Asia (Philippines, Malaysia, Singapore, Indonesia)
 - Photo: expected across most of the region
 - Personal info: nationality, date of birth, city, phone, email; LinkedIn prominent
 - Objective: 2-3 lines
-- Language skills: prominent — English proficiency level, other languages
+- Language skills: prominent (English proficiency level, other languages)
 - References: 2-3 at end or "available upon request"
 - Length: 2 pages standard
 - Professional English; avoid idioms that may not translate across the region`,
@@ -293,10 +293,10 @@ function detectIndustry(targetRole) {
 }
 
 function buildSystemPrompt(intake) {
-  const base = `You are a professional resume writer with 14 years of experience placing candidates across every industry, career level, and geography. You have written thousands of CVs, resumes, cover letters, and LinkedIn profiles for everyone from new graduates to C-suite executives. Your writing sounds unmistakably human — no clichés, no filler, no AI-sounding output.
+  const base = `You are a professional resume writer with 14 years of experience placing candidates across every industry, career level, and geography. You have written thousands of CVs, resumes, cover letters, and LinkedIn profiles for everyone from new graduates to C-suite executives. Your writing sounds unmistakably human. No clichés, no filler, no AI-sounding output.
 
-CORE RULES — NON-NEGOTIABLE
-- Third person throughout (no "I", "me", "my") — except LinkedIn which uses first person
+CORE RULES, NON-NEGOTIABLE
+- Third person throughout (no "I", "me", "my"). Exception: LinkedIn uses first person.
 - Present tense for the current role; past tense for all previous roles
 - Never start a bullet with: "Responsible for", "Tasked with", "Helped with", "Assisted with", "Worked on", "Involved in", "Participated in"
 - Every bullet must begin with a strong action verb
@@ -304,14 +304,14 @@ CORE RULES — NON-NEGOTIABLE
 - At least 60% of bullets must include a metric or specific outcome
 - Never pad. Every word earns its place.
 - Rewrite the client's wording. Do not copy sentences verbatim. EXCEPTION: specific numbers, percentages, dollar figures, ratios, and named counts are FACTS, not wording. They must survive rewriting intact. If the input says "400% above quota," "2,000+ clients," "95%+ conversion rate," "62 languages," "100/100 scores," or any other specific figure, that exact figure must appear in the output bullet. Abstracting a number into a vague phrase ("strong results," "high conversion") is a critical error.
-- Never use a dash as a clause separator in prose. Constructions like "drove revenue growth - a record for the team" or "built the platform - no engineering team required" are lazy and read as AI-generated. Rewrite so each sentence flows without the dash. Dashes in date ranges (2022 - Present) are fine.
+- ABSOLUTE DASH BAN. Never output em-dash (—) or en-dash (–) anywhere in the document, for any reason. These long dashes are an AI signature and are banned outright. Use commas, periods, colons, parentheses, or the word "to" for ranges. The only acceptable dash-shaped character is the plain ASCII hyphen (-), and only in two contexts: date ranges (e.g., January 2022 - Present) and compound words (e.g., problem-solving, customer-facing). Never use any dash as a clause separator in prose. Constructions like "drove revenue growth - a record for the team" or "built the platform - no engineering team required" are lazy and read as AI-generated. Rewrite each sentence so it flows without any dash.
 - Concurrent roles: when a candidate holds multiple simultaneous positions (multiple roles with the same end date or multiple current roles), list each one as a separate entry in order of relevance to the target role. Do not consolidate them into a single entry and do not add commentary about holding multiple roles at once.
 - Education dates: if no graduation year is provided for an education entry, omit the date field entirely. Do not add "(In Progress)", "(Expected)", or any placeholder text.
 - Employment date format: always write dates as Month YYYY (e.g., January 2024 - Present, not 2024 - Present). Month-level precision is required for ATS tenure parsing.
 - Soft phrases are banned. Never write "exceeded expectations," "consistent positive feedback," "recognized for [quality]," "earned a reputation for," "strong track record of," or any other unfalsifiable soft claim. If a metric exists to support the claim, lead with the metric and cut the soft preamble entirely. "Completed 400% more orders than quota" is correct. "Exceeded expectations completing 400% more orders" is not.
 - Section headers must use standard ATS-safe labels. Use "Projects" not "Projects (Shipped & Live)" or any other decorated variant. Never add parenthetical descriptions, status labels, or emoji to section headers.
 
-GOLDEN RULE — LENGTH
+GOLDEN RULE: LENGTH
 1-2 pages is the standard. 3+ pages only when content genuinely requires it (extensive publications, training portfolios, multi-sector careers). Never pad to hit a page target; never cut strong content to stay short.
 
 CAREER LEVELS
@@ -348,7 +348,7 @@ CAREER LEVELS
   if (isTechnicalRole) {
     prompt += `
 
-SKILLS PLACEMENT — TECHNICAL ROLES
+SKILLS PLACEMENT: TECHNICAL ROLES
 For technical and AI/ML target roles, place the Technical Skills section immediately after the Professional Summary, before Work Experience. This ensures ATS keyword scanning hits skills before the experience section.`;
   }
 
@@ -362,7 +362,7 @@ The candidate's stack includes serverless or edge-compute platforms. In the Skil
   if (hasShippedProducts) {
     prompt += `
 
-PROJECTS SECTION — BUILDER/FOUNDER CANDIDATES
+PROJECTS SECTION: BUILDER/FOUNDER CANDIDATES
 This candidate has shipped live products (URLs or deployed tools appear in their work history). Add a dedicated "Projects" section after Work Experience and before Education. List each distinct shipped product as a 2-3 bullet entry: product name in bold, what it does, the tech stack or approach, and any scale or outcome metrics. Do not repeat bullets that already appear in the Work Experience section.`;
   }
 
@@ -374,7 +374,7 @@ This candidate has shipped live products (URLs or deployed tools appear in their
   if (isHigherEdRole) {
     prompt += `
 
-HIGHER EDUCATION SECTOR — TERMINOLOGY
+HIGHER EDUCATION SECTOR: TERMINOLOGY
 For this higher education role, translate the candidate's experience into the terminology ATS systems and hiring managers at colleges and universities expect. Never invent experience. Only apply terms where the candidate's work genuinely supports them.
 
 Compliance and regulation: FERPA, Title IV, 34 CFR Part 668, Satisfactory Academic Progress (SAP), Return to Title IV (R2T4), institutional compliance, audit readiness
@@ -385,7 +385,7 @@ Professional associations and frameworks: NACADA, AACRAO, NACUBO, student-center
     if (isFinancialAidRole) {
       prompt += `
 
-FINANCIAL AID SPECIFIC — use these terms wherever experience supports them:
+FINANCIAL AID SPECIFIC. Use these terms wherever experience supports them:
 Federal programs: Pell Grant, Federal Direct Loans, FFELP, Federal Work-Study, subsidized/unsubsidized loans, Parent PLUS, Grad PLUS
 Processes: FAFSA verification, dependency override, professional judgment, COA (Cost of Attendance), EFC (Expected Family Contribution), COD (Common Origination and Disbursement), NSLDS (National Student Loan Data System), FSA ID, entrance counseling, exit counseling, financial literacy counseling
 Compliance: R2T4 calculation, SAP policy, 34 CFR Part 668, audit trail, reconciliation, ED reporting
@@ -410,7 +410,7 @@ function formatExperience(expList) {
     lines.push(`COMPANY: ${job.company || ""}`);
     lines.push(`TITLE: ${job.title || ""}`);
     lines.push(`LOCATION: ${job.location || ""}`);
-    lines.push(`DATES: ${job.start || ""} – ${job.end || ""}`);
+    lines.push(`DATES: ${job.start || ""} to ${job.end || ""}`);
     lines.push(`RAW NOTES: ${job.description || ""}`);
     const achievements = job.achievements || [];
     if (achievements.length > 0) {
@@ -547,16 +547,16 @@ function buildPrompt(intake) {
 == SPECIALIZED SECTIONS ==
 When the intake includes any of the following fields, create a dedicated, clearly-labeled section for each one that is present. Place specialized sections after Work Experience and before Education unless the target role is academic, in which case Education and Publications come first.
 
-- Presentations / Speaking: section header "Presentations" — list each as: **Title**, Conference or Venue, Month YYYY
-- Courses Taught: section header "Teaching Experience" — list: **Course Name**, Institution, Term/Year
-- Courses Completed: section header "Professional Development" — list: **Course or Program**, Provider, Year
-- Residencies & Fellowships: section header "Clinical Training" — list: **Program Name**, Institution, Specialty, Dates. Use this section for nursing, medical, and allied health candidates. Do not fold residency content into Work Experience.
-- Awards & Honors: section header "Awards & Honors" — list: **Award Name**, Granting Body, Year
-- Research & Grants: section header "Research" — list: **Project Title**, Institution or Sponsor, Role, Dates
-- Professional Memberships: section header "Professional Affiliations" — list: **Organization**, membership level or role, year joined
-- Patents: section header "Patents" — list: **Patent Title**, Patent No., Year Granted
-- Board / Advisory: section header "Board & Advisory Roles" — list: **Organization**, Role, Dates
-- Volunteer Work: section header "Volunteer Experience" — apply the same action-verb bullet standard as Work Experience
+- Presentations / Speaking: section header "Presentations". List each as: **Title**, Conference or Venue, Month YYYY
+- Courses Taught: section header "Teaching Experience". List: **Course Name**, Institution, Term/Year
+- Courses Completed: section header "Professional Development". List: **Course or Program**, Provider, Year
+- Residencies & Fellowships: section header "Clinical Training". List: **Program Name**, Institution, Specialty, Dates. Use this section for nursing, medical, and allied health candidates. Do not fold residency content into Work Experience.
+- Awards & Honors: section header "Awards & Honors". List: **Award Name**, Granting Body, Year
+- Research & Grants: section header "Research". List: **Project Title**, Institution or Sponsor, Role, Dates
+- Professional Memberships: section header "Professional Affiliations". List: **Organization**, membership level or role, year joined
+- Patents: section header "Patents". List: **Patent Title**, Patent No., Year Granted
+- Board / Advisory: section header "Board & Advisory Roles". List: **Organization**, Role, Dates
+- Volunteer Work: section header "Volunteer Experience". Apply the same action-verb bullet standard as Work Experience
 
 Only include sections for fields that contain data. Never create an empty section.`);
 
@@ -573,8 +573,27 @@ ALL CAPS on their own line (e.g., PROFESSIONAL SUMMARY, WORK EXPERIENCE, EDUCATI
 No hash symbols, no underlines, no dashes under the header.
 
 WORK EXPERIENCE ENTRIES
-Format: Company Name | Job Title | City, ST | Start Month YYYY - End Month YYYY
-Bullets on lines below, each starting with a plain hyphen and space: - Achievement here.
+Format the role header on a single line: Company Name | Job Title | City, ST | Start Month YYYY - End Month YYYY
+
+Under each role, split the bullets into two clearly labeled subsections, each label on its own line in ALL CAPS, plain text, no decoration:
+
+ACHIEVEMENTS
+- Outcomes, wins, and measurable results. At least 60% must include a metric, dollar figure, percentage, ratio, named count, or other specific outcome. These are the bullets that prove impact. 2 to 5 bullets per role; quality over quantity.
+
+RESPONSIBILITIES
+- Scope and ongoing duties that define the role but did not produce a discrete measurable win. Keep this list short: 2 to 4 bullets per role. Skip this subsection entirely if every bullet is genuinely an achievement.
+
+Use the ACHIEVEMENTS label first, then RESPONSIBILITIES. Omit either subsection if it would be empty. Do not invent responsibilities to pad the section. For very short tenures (under 6 months) a single combined list is acceptable, but most roles must use the split.
+
+BULLET FORMAT
+Primary bullets: each line starts with a plain hyphen and a space, e.g., - Led platform migration cutting infra cost 38%.
+Keep each primary bullet concise: one sentence, ideally under 22 words. If a bullet would be longer than that, split it into a primary bullet plus one or two sub-bullets that supply context.
+
+Sub-bullets: optional context bullets under a primary bullet. Use a sub-bullet only when the primary bullet genuinely needs added detail (the tech stack used, a notable constraint, a scale figure that does not fit in the main line). Sub-bullet format is two spaces of indent, then a middle-dot character, then a space, then the text. Example:
+- Led platform migration cutting infra cost 38%, saving $1.2M annually
+  • Replaced legacy ESB with Cloudflare Workers across 14 services
+  • Migration completed in 6 months with zero downtime
+Use no more than 2 sub-bullets per primary bullet. Never nest a sub-bullet under a sub-bullet. If a role would have more than 2 sub-bullets in total, fold the detail back into the primary bullets instead.
 
 EDUCATION ENTRIES
 Degree and Major on one line. Institution on the next line. Year (if provided) on the next line.
@@ -583,8 +602,9 @@ SKILLS SECTION
 Category: item, item, item (plain text, no bold, no asterisks).
 
 UNIVERSAL RULES
-- No ** bold **, no * italic *, no ## headers, no --- horizontal rules, no [ ]( ) links.
-- Use a plain hyphen (-) for all bullets.
+- No ** bold **, no * italic *, no ## headers, no horizontal rules made of dashes or any other character, no [ ]( ) links.
+- Use a plain hyphen (-) for all primary bullets and a middle dot (•) for sub-bullets only.
+- Never output an em-dash (—) or en-dash (–) anywhere in the document. See the ABSOLUTE DASH BAN in CORE RULES.
 - Separate sections with one blank line.
 Do not add commentary, preamble, or notes outside the document. Output only the document.`);
 

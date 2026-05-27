@@ -1,4 +1,4 @@
-// POST /api/webhook  — Stripe webhook handler
+// POST /api/webhook, Stripe webhook handler
 
 async function hmacSha256Hex(message, secret) {
   const enc = new TextEncoder();

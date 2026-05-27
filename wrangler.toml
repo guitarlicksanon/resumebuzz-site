@@ -17,7 +17,7 @@ PRICE_HUMAN       = "price_1TZYXaJvPEXScjfd2BQS90c5"
 PRICE_CV          = "price_1TZYZZJvPEXScjfdfgeijAO4"
 PRICE_PRO_MONTHLY = "price_1TZYdOJvPEXScjfd1mUqBWNF"
 
-# Secrets — set via Cloudflare Pages dashboard → Settings → Variables and Secrets:
+# Secrets: set via Cloudflare Pages dashboard → Settings → Variables and Secrets:
 #   STRIPE_SECRET_KEY      sk_live_*
 #   STRIPE_WEBHOOK_SECRET  whsec_*
 #   RESEND_API_KEY         re_*

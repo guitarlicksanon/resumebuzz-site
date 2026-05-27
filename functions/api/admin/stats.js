@@ -1,4 +1,4 @@
-// GET /api/admin/stats — admin stats endpoint for ResumeBuzz
+// GET /api/admin/stats, admin stats endpoint for ResumeBuzz
 
 async function fetchStripeData(env) {
   if (!env.STRIPE_SECRET_KEY) return null;

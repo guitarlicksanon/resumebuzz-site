@@ -17,7 +17,7 @@ function crc32(b) {
   return (c ^ 0xFFFFFFFF) >>> 0;
 }
 
-// ── ZIP writer (STORED — no compression) ────────────────────
+// ── ZIP writer (STORED, no compression) ────────────────────
 function buildZip(files) {
   const enc = new TextEncoder();
   const entries = files.map(({ name, data }) => ({
@@ -38,16 +38,16 @@ function buildZip(files) {
     const { name, data } = entries[i];
     localOffsets.push(pos);
     dv.setUint32(pos, 0x04034b50, true); pos += 4;
-    dv.setUint16(pos, 20,          true); pos += 2;
-    dv.setUint16(pos, 0,           true); pos += 2;
-    dv.setUint16(pos, 0,           true); pos += 2; // STORED
-    dv.setUint16(pos, 0,           true); pos += 2;
-    dv.setUint16(pos, 0,           true); pos += 2;
-    dv.setUint32(pos, crcs[i],     true); pos += 4;
+    dv.setUint16(pos, 20, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2; // STORED
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint32(pos, crcs[i], true); pos += 4;
     dv.setUint32(pos, data.length, true); pos += 4;
     dv.setUint32(pos, data.length, true); pos += 4;
     dv.setUint16(pos, name.length, true); pos += 2;
-    dv.setUint16(pos, 0,           true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
     buf.set(name, pos); pos += name.length;
     buf.set(data, pos); pos += data.length;
   }
@@ -55,35 +55,35 @@ function buildZip(files) {
   const cdStart = pos;
   for (let i = 0; i < entries.length; i++) {
     const { name, data } = entries[i];
-    dv.setUint32(pos, 0x02014b50,    true); pos += 4;
-    dv.setUint16(pos, 20,            true); pos += 2;
-    dv.setUint16(pos, 20,            true); pos += 2;
-    dv.setUint16(pos, 0,             true); pos += 2;
-    dv.setUint16(pos, 0,             true); pos += 2;
-    dv.setUint16(pos, 0,             true); pos += 2;
-    dv.setUint16(pos, 0,             true); pos += 2;
-    dv.setUint32(pos, crcs[i],       true); pos += 4;
-    dv.setUint32(pos, data.length,   true); pos += 4;
-    dv.setUint32(pos, data.length,   true); pos += 4;
-    dv.setUint16(pos, name.length,   true); pos += 2;
-    dv.setUint16(pos, 0,             true); pos += 2;
-    dv.setUint16(pos, 0,             true); pos += 2;
-    dv.setUint16(pos, 0,             true); pos += 2;
-    dv.setUint16(pos, 0,             true); pos += 2;
-    dv.setUint32(pos, 0,             true); pos += 4;
+    dv.setUint32(pos, 0x02014b50, true); pos += 4;
+    dv.setUint16(pos, 20, true); pos += 2;
+    dv.setUint16(pos, 20, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint32(pos, crcs[i], true); pos += 4;
+    dv.setUint32(pos, data.length, true); pos += 4;
+    dv.setUint32(pos, data.length, true); pos += 4;
+    dv.setUint16(pos, name.length, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint16(pos, 0, true); pos += 2;
+    dv.setUint32(pos, 0, true); pos += 4;
     dv.setUint32(pos, localOffsets[i],true); pos += 4;
     buf.set(name, pos); pos += name.length;
   }
 
   const cdLen = pos - cdStart;
-  dv.setUint32(pos, 0x06054b50,        true); pos += 4;
-  dv.setUint16(pos, 0,                 true); pos += 2;
-  dv.setUint16(pos, 0,                 true); pos += 2;
-  dv.setUint16(pos, entries.length,    true); pos += 2;
-  dv.setUint16(pos, entries.length,    true); pos += 2;
-  dv.setUint32(pos, cdLen,             true); pos += 4;
-  dv.setUint32(pos, cdStart,           true); pos += 4;
-  dv.setUint16(pos, 0,                 true);
+  dv.setUint32(pos, 0x06054b50, true); pos += 4;
+  dv.setUint16(pos, 0, true); pos += 2;
+  dv.setUint16(pos, 0, true); pos += 2;
+  dv.setUint16(pos, entries.length, true); pos += 2;
+  dv.setUint16(pos, entries.length, true); pos += 2;
+  dv.setUint32(pos, cdLen, true); pos += 4;
+  dv.setUint32(pos, cdStart, true); pos += 4;
+  dv.setUint16(pos, 0, true);
   return buf;
 }
 
@@ -176,7 +176,7 @@ function buildDocumentXml(markdown) {
     if (line.startsWith("## ")) {
       const text = line.slice(3).trim();
       if (firstHeading) {
-        // Candidate name — large, centered, gold accent
+        // Candidate name, large, centered, gold accent
         firstHeading = false;
         paras.push(
           `<w:p><w:pPr><w:jc w:val="center"/><w:spacing w:before="0" w:after="80"/>` +
@@ -185,7 +185,7 @@ function buildDocumentXml(markdown) {
           `<w:color w:val="1A1A1A"/></w:rPr><w:t>${esc(text)}</w:t></w:r></w:p>`
         );
       } else {
-        // Section header — bold caps, gold underline
+        // Section header, bold caps, gold underline
         firstHeading = false;
         paras.push(
           `<w:p><w:pPr><w:spacing w:before="200" w:after="60"/>` +
@@ -209,7 +209,7 @@ function buildDocumentXml(markdown) {
       continue;
     }
 
-    // Normal paragraph — contact lines, job headers, etc.
+    // Normal paragraph, contact lines, job headers, etc.
     firstHeading = false;
     const runs = parseRuns(line);
     const centered = !paras.length; // center the line right after name if nothing yet
@@ -234,12 +234,12 @@ function buildDocumentXml(markdown) {
 
 function generateDocx(markdown) {
   return buildZip([
-    { name: "[Content_Types].xml",          data: CONTENT_TYPES },
-    { name: "_rels/.rels",                  data: PKG_RELS },
-    { name: "word/document.xml",            data: buildDocumentXml(markdown) },
+    { name: "[Content_Types].xml", data: CONTENT_TYPES },
+    { name: "_rels/.rels", data: PKG_RELS },
+    { name: "word/document.xml", data: buildDocumentXml(markdown) },
     { name: "word/_rels/document.xml.rels", data: WORD_RELS },
-    { name: "word/styles.xml",              data: STYLES },
-    { name: "word/settings.xml",            data: SETTINGS },
+    { name: "word/styles.xml", data: STYLES },
+    { name: "word/settings.xml", data: SETTINGS },
   ]);
 }
 

@@ -120,11 +120,11 @@ Rules:
 - target.role: the person's current or most recent job title
 - target.industry: infer from their work history (e.g. "SaaS", "Healthcare", "Finance")
 - summary_notes: copy the professional summary or profile verbatim if present, otherwise ""
-- achievements[]: bullet points or notable wins listed under each job — each as a separate string, strip leading dashes/bullets
+- achievements[]: bullet points or notable wins listed under each job, each as a separate string, strip leading dashes/bullets
 - skills.technical: programming languages, frameworks, hard technical skills
 - skills.tools: software, platforms, apps, systems (Salesforce, Jira, etc.)
-- skills.languages: spoken/written languages only (e.g. "English — Native")
-- certifications[]: each cert as one string — "Name, Issuer, Year" — omit year if not present
+- skills.languages: spoken/written languages only (e.g. "English, Native")
+- certifications[]: each cert as one string, "Name, Issuer, Year", omit year if not present
 - education[].honors: include GPA here if present (e.g. "3.9 GPA" or "Magna Cum Laude")
 - Use "Present" for current roles, not "Current" or "Now"
 - If a field is absent, use "" or []

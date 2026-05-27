@@ -91,6 +91,85 @@ function parseClaudeJson(rawText) {
   return JSON.parse(s);
 }
 
+async function extractPdfAsAts(arrayBuffer, env) {
+  const bytes = new Uint8Array(arrayBuffer);
+  const base64Data = uint8ToBase64(bytes);
+  const today = new Date().toISOString().slice(0, 10);
+  const currentYear = today.slice(0, 4);
+  const extractionPrompt = `You are a basic ATS text extractor (Workday, Greenhouse, Lever, iCIMS, Taleo). Do two things and only these two things:
+
+1. Extract the plain text from this PDF EXACTLY as a real ATS pipeline would.
+2. List visual or layout hazards that would damage text EXTRACTION itself.
+
+EXTRACTION RULES (follow strictly, do not "improve" the output):
+- Read top-to-bottom, left-to-right as a single column. Multi-column layouts must be interleaved by visual reading order — do not reorder them to make them readable. That mangling is what real ATS produces.
+- Drop all visual cues: bold, italic, color, font size, font choice, alignment, spacing. They do not survive extraction.
+- Embedded images, charts, icons, skill bars, and logos are invisible — never transcribe content shown only in them.
+- Tables: read each row's cells left-to-right separated by single spaces. No column alignment preserved.
+- Headers and footers that repeat across pages: include once if they appear on the first page, omit from subsequent pages.
+- If text is rendered as part of an image, it is invisible to extraction; do not include it.
+
+HAZARDS RULE — what counts and what does not:
+ats_hazards must ONLY list layout/formatting/encoding problems that mangle, lose, or merge the extracted text. Examples that COUNT:
+- Multi-column layout that interleaves dates with skills in the extracted text
+- Tables holding job titles or dates where columns collapse into run-on strings
+- Skill category labels without a delimiter (e.g., "DevelopmentPython, SQL" with no colon) so the label merges with the first skill
+- Contact info rendered only in an image or graphic
+- Skill bars or charts conveying data with no text equivalent
+- Embedded fonts that may not extract (replacement characters in output)
+- A run-on italicized paragraph that should have been discrete entries but cannot be parsed as separate jobs
+
+DO NOT list, at any severity, any of the following — they are scoring judgments handled elsewhere, not extraction hazards:
+- Future-dated or current-year start dates. The current date is ${today}; ${currentYear} is the present year and is never future-dated. End dates of "Present" are valid current employment markers regardless of how many roles share them.
+- Multiple concurrent "Present" roles. Freelance, contract, advisory, founder, fractional, board, and part-time overlap is normal. Never flag concurrent active roles as an extraction or ATS hazard.
+- Missing graduation years from Education. Omitting graduation years is a deliberate age-bias protection; never flag it as a hazard at any severity.
+- Missing dates from early-career or pre-2000 experience entries; never flag.
+- Length, keyword choice, weak verbs, missing summary, section order, or any other interpretive scoring concern. Those belong to the scoring step, not extraction.
+
+Return ONLY a valid JSON object with this exact structure. No markdown, no commentary outside the JSON:
+
+{
+  "extracted_text": "<the plain extracted text, with line breaks preserved by \\n>",
+  "ats_hazards": [
+    {"severity": "critical" | "warning" | "info", "text": "<one specific extraction hazard, 1-2 sentences>"}
+  ]
+}`;
+
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": env.ANTHROPIC_API_KEY,
+      "anthropic-version": "2023-06-01",
+      "anthropic-beta": "pdfs-2024-09-25",
+    },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-6",
+      max_tokens: 4096,
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "document",
+              source: { type: "base64", media_type: "application/pdf", data: base64Data },
+            },
+            { type: "text", text: extractionPrompt },
+          ],
+        },
+      ],
+    }),
+  });
+
+  if (!res.ok) throw new Error("Claude PDF extraction error: " + res.status);
+  const data = await res.json();
+  const parsed = parseClaudeJson(data.content[0].text);
+  return {
+    text: String(parsed.extracted_text || "").trim(),
+    hazards: Array.isArray(parsed.ats_hazards) ? parsed.ats_hazards : [],
+  };
+}
+
 function buildPrompt(jobDescription) {
   const today = new Date().toISOString().slice(0, 10);
   const currentYear = today.slice(0, 4);
@@ -186,40 +265,15 @@ export async function onRequestPost({ request, env }) {
     const arrayBuffer = await file.arrayBuffer();
     const prompt = buildPrompt(jobDescription);
 
-    let claudeMessages;
-    let extraHeaders = {};
+    let extractedText;
+    let extractionHazards = [];
 
     if (isPdf) {
-      const bytes = new Uint8Array(arrayBuffer);
-      const base64Data = uint8ToBase64(bytes);
-      claudeMessages = [
-        {
-          role: "user",
-          content: [
-            {
-              type: "document",
-              source: {
-                type: "base64",
-                media_type: "application/pdf",
-                data: base64Data,
-              },
-            },
-            {
-              type: "text",
-              text: prompt,
-            },
-          ],
-        },
-      ];
-      extraHeaders["anthropic-beta"] = "pdfs-2024-09-25";
+      const extraction = await extractPdfAsAts(arrayBuffer, env);
+      extractedText = extraction.text;
+      extractionHazards = extraction.hazards;
     } else {
-      const extractedText = await extractDocxText(arrayBuffer);
-      claudeMessages = [
-        {
-          role: "user",
-          content: `${prompt}\n\nRESUME TEXT:\n${extractedText}`,
-        },
-      ];
+      extractedText = await extractDocxText(arrayBuffer);
     }
 
     const claudeResponse = await fetch("https://api.anthropic.com/v1/messages", {
@@ -228,12 +282,16 @@ export async function onRequestPost({ request, env }) {
         "Content-Type": "application/json",
         "x-api-key": env.ANTHROPIC_API_KEY,
         "anthropic-version": "2023-06-01",
-        ...extraHeaders,
       },
       body: JSON.stringify({
         model: "claude-sonnet-4-6",
         max_tokens: 2048,
-        messages: claudeMessages,
+        messages: [
+          {
+            role: "user",
+            content: `${prompt}\n\nRESUME TEXT (as extracted by ATS):\n${extractedText}`,
+          },
+        ],
       }),
     });
 
@@ -244,6 +302,22 @@ export async function onRequestPost({ request, env }) {
     const claudeData = await claudeResponse.json();
     const rawText = claudeData.content[0].text;
     const auditResult = parseClaudeJson(rawText);
+
+    if (extractionHazards.length && auditResult.ats_compatibility) {
+      const existing = Array.isArray(auditResult.ats_compatibility.findings)
+        ? auditResult.ats_compatibility.findings
+        : [];
+      auditResult.ats_compatibility.findings = [...extractionHazards, ...existing];
+      const criticalHazards = extractionHazards.filter((h) => h.severity === "critical").length;
+      const warningHazards = extractionHazards.filter((h) => h.severity === "warning").length;
+      const deduction = criticalHazards * 3 + warningHazards * 1;
+      if (deduction > 0 && typeof auditResult.ats_compatibility.score === "number") {
+        auditResult.ats_compatibility.score = Math.max(0, auditResult.ats_compatibility.score - deduction);
+        if (typeof auditResult.overall_score === "number") {
+          auditResult.overall_score = Math.max(0, auditResult.overall_score - deduction);
+        }
+      }
+    }
 
     if (jobDescription && jobDescription.trim().length > 80 && env.JD_STORE) {
       const key = `jd_raw:audit:${Date.now()}:${Math.random().toString(36).slice(2, 9)}`;

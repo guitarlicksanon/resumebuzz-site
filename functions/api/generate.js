@@ -198,6 +198,8 @@ CORE RULES — NON-NEGOTIABLE
 - Never pad. Every word earns its place.
 - Rewrite the client's wording. Do not copy sentences verbatim. EXCEPTION: specific numbers, percentages, dollar figures, ratios, and named counts are FACTS, not wording. They must survive rewriting intact. If the input says "400% above quota," "2,000+ clients," "95%+ conversion rate," "62 languages," "100/100 scores," or any other specific figure, that exact figure must appear in the output bullet. Abstracting a number into a vague phrase ("strong results," "high conversion") is a critical error.
 - Never use a dash as a clause separator in prose. Constructions like "drove revenue growth - a record for the team" or "built the platform - no engineering team required" are lazy and read as AI-generated. Rewrite so each sentence flows without the dash. Dashes in date ranges (2022 - Present) are fine.
+- Concurrent roles: when a candidate holds multiple simultaneous positions (multiple roles with the same end date or multiple current roles), list each one as a separate entry in order of relevance to the target role. Do not consolidate them into a single entry and do not add commentary about holding multiple roles at once.
+- Education dates: if no graduation year is provided for an education entry, omit the date field entirely. Do not add "(In Progress)", "(Expected)", or any placeholder text.
 
 GOLDEN RULE — LENGTH
 1-2 pages is the standard. 3+ pages only when content genuinely requires it (extensive publications, training portfolios, multi-sector careers). Never pad to hit a page target; never cut strong content to stay short.
@@ -213,7 +215,29 @@ CAREER LEVELS
   const outputLanguage = intake.language;
   const isEnglish = !outputLanguage || outputLanguage === 'English';
 
+  const targetRole = ((intake.target?.role || intake.target?.title || '') + ' ' + (intake.target?.industry || '')).toLowerCase();
+  const isTechnicalRole = /engineer|developer|architect|data|ml\b|ai\b|machine.?learn|software|devops|platform|backend|frontend|full.?stack|cloud|infrastructure|security|sre|analytics/.test(targetRole);
+
+  const hasShippedProducts = (intake.experience || []).some(job => {
+    const text = (job.description || '') + ' ' + (job.achievements || []).join(' ');
+    return /https?:\/\/|www\.|built and (launched|deployed|shipped)|live at|available at|\.(com|io|app|dev|co|org)\b/.test(text);
+  });
+
   let prompt = base + marketRules;
+
+  if (isTechnicalRole) {
+    prompt += `
+
+SKILLS PLACEMENT — TECHNICAL ROLES
+For technical and AI/ML target roles, place the Technical Skills section immediately after the Professional Summary, before Work Experience. This ensures ATS keyword scanning hits skills before the experience section.`;
+  }
+
+  if (hasShippedProducts) {
+    prompt += `
+
+PROJECTS SECTION — BUILDER/FOUNDER CANDIDATES
+This candidate has shipped live products (URLs or deployed tools appear in their work history). Add a dedicated "Projects" section after Work Experience and before Education. List each distinct shipped product as a 2-3 bullet entry: product name in bold, what it does, the tech stack or approach, and any scale or outcome metrics. Do not repeat bullets that already appear in the Work Experience section.`;
+  }
 
   if (!isEnglish) {
     prompt += `

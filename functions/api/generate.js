@@ -369,15 +369,31 @@ function buildPrompt(intake) {
 
   const hasAdditional =
     additional.volunteer ||
+    additional.awards ||
     additional.publications ||
+    additional.presentations ||
+    additional.courses_taught ||
+    additional.courses_completed ||
+    additional.research ||
+    additional.residencies ||
+    additional.memberships ||
     additional.board ||
+    additional.patents ||
     additional.other;
 
   if (hasAdditional) {
     parts.push("\n== ADDITIONAL ==");
-    if (additional.volunteer) parts.push(`Volunteer: ${additional.volunteer}`);
+    if (additional.volunteer) parts.push(`Volunteer Work: ${additional.volunteer}`);
+    if (additional.awards) parts.push(`Awards & Honors: ${additional.awards}`);
     if (additional.publications) parts.push(`Publications: ${additional.publications}`);
+    if (additional.presentations) parts.push(`Presentations / Speaking: ${additional.presentations}`);
+    if (additional.courses_taught) parts.push(`Courses Taught: ${additional.courses_taught}`);
+    if (additional.courses_completed) parts.push(`Courses Completed / Professional Development: ${additional.courses_completed}`);
+    if (additional.research) parts.push(`Research & Grants: ${additional.research}`);
+    if (additional.residencies) parts.push(`Residencies & Fellowships: ${additional.residencies}`);
+    if (additional.memberships) parts.push(`Professional Memberships: ${additional.memberships}`);
     if (additional.board) parts.push(`Board / Advisory: ${additional.board}`);
+    if (additional.patents) parts.push(`Patents: ${additional.patents}`);
     if (additional.other) parts.push(`Other: ${additional.other}`);
   }
 
@@ -389,6 +405,23 @@ function buildPrompt(intake) {
   if (intake.template) {
     parts.push(`\n== TEMPLATE ==\n${intake.template}`);
   }
+
+  parts.push(`
+== SPECIALIZED SECTIONS ==
+When the intake includes any of the following fields, create a dedicated, clearly-labeled section for each one that is present. Place specialized sections after Work Experience and before Education unless the target role is academic, in which case Education and Publications come first.
+
+- Presentations / Speaking: section header "Presentations" — list each as: **Title**, Conference or Venue, Month YYYY
+- Courses Taught: section header "Teaching Experience" — list: **Course Name**, Institution, Term/Year
+- Courses Completed: section header "Professional Development" — list: **Course or Program**, Provider, Year
+- Residencies & Fellowships: section header "Clinical Training" — list: **Program Name**, Institution, Specialty, Dates. Use this section for nursing, medical, and allied health candidates. Do not fold residency content into Work Experience.
+- Awards & Honors: section header "Awards & Honors" — list: **Award Name**, Granting Body, Year
+- Research & Grants: section header "Research" — list: **Project Title**, Institution or Sponsor, Role, Dates
+- Professional Memberships: section header "Professional Affiliations" — list: **Organization**, membership level or role, year joined
+- Patents: section header "Patents" — list: **Patent Title**, Patent No., Year Granted
+- Board / Advisory: section header "Board & Advisory Roles" — list: **Organization**, Role, Dates
+- Volunteer Work: section header "Volunteer Experience" — apply the same action-verb bullet standard as Work Experience
+
+Only include sections for fields that contain data. Never create an empty section.`);
 
   parts.push(`
 == OUTPUT FORMAT ==

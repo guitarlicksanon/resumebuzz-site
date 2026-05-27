@@ -704,20 +704,52 @@ textarea{resize:vertical;line-height:1.55}
       <div class="collapsible-body" id="additionalBody">
         <div class="field-group" style="margin-top:0.875rem">
           <div>
-            <label>Volunteer</label>
-            <textarea id="addVolunteer" rows="2" placeholder=""></textarea>
+            <label>Volunteer Work</label>
+            <textarea id="addVolunteer" rows="2" placeholder="Organization, role, dates. One per line."></textarea>
+          </div>
+          <div>
+            <label>Awards &amp; Honors</label>
+            <textarea id="addAwards" rows="2" placeholder="Award name, granting body, year. One per line."></textarea>
           </div>
           <div>
             <label>Publications</label>
-            <textarea id="addPublications" rows="2" placeholder=""></textarea>
+            <textarea id="addPublications" rows="2" placeholder="Author(s), title, journal/outlet, year. One per line."></textarea>
           </div>
           <div>
-            <label>Board Memberships</label>
-            <textarea id="addBoard" rows="2" placeholder=""></textarea>
+            <label>Presentations / Speaking</label>
+            <textarea id="addPresentations" rows="2" placeholder="Talk title, conference or venue, month year. One per line."></textarea>
+          </div>
+          <div>
+            <label>Courses Taught</label>
+            <textarea id="addCoursesTaught" rows="2" placeholder="Course name, institution, term. One per line."></textarea>
+          </div>
+          <div>
+            <label>Courses Completed</label>
+            <textarea id="addCoursesCompleted" rows="2" placeholder="Course or program name, provider, year. One per line."></textarea>
+          </div>
+          <div>
+            <label>Research &amp; Grants</label>
+            <textarea id="addResearch" rows="2" placeholder="Project title, institution or sponsor, your role, dates. One per line."></textarea>
+          </div>
+          <div>
+            <label>Residencies &amp; Fellowships</label>
+            <textarea id="addResidencies" rows="2" placeholder="Program name, institution, specialty, dates. One per line."></textarea>
+          </div>
+          <div>
+            <label>Professional Memberships</label>
+            <textarea id="addMemberships" rows="2" placeholder="Organization name, membership type, year joined. One per line."></textarea>
+          </div>
+          <div>
+            <label>Board &amp; Advisory Roles</label>
+            <textarea id="addBoard" rows="2" placeholder="Organization, your role, dates. One per line."></textarea>
+          </div>
+          <div>
+            <label>Patents</label>
+            <textarea id="addPatents" rows="2" placeholder="Patent title, patent number, year granted. One per line."></textarea>
           </div>
           <div>
             <label>Other</label>
-            <textarea id="addOther" rows="2" placeholder=""></textarea>
+            <textarea id="addOther" rows="2" placeholder="Anything that does not fit the categories above."></textarea>
           </div>
         </div>
       </div>
@@ -1375,8 +1407,16 @@ textarea{resize:vertical;line-height:1.55}
       },
       additional: {
         volunteer: document.getElementById('addVolunteer').value.trim(),
+        awards: document.getElementById('addAwards').value.trim(),
         publications: document.getElementById('addPublications').value.trim(),
+        presentations: document.getElementById('addPresentations').value.trim(),
+        courses_taught: document.getElementById('addCoursesTaught').value.trim(),
+        courses_completed: document.getElementById('addCoursesCompleted').value.trim(),
+        research: document.getElementById('addResearch').value.trim(),
+        residencies: document.getElementById('addResidencies').value.trim(),
+        memberships: document.getElementById('addMemberships').value.trim(),
         board: document.getElementById('addBoard').value.trim(),
+        patents: document.getElementById('addPatents').value.trim(),
         other: document.getElementById('addOther').value.trim()
       },
       writer_notes: document.getElementById('writerNotes').value.trim(),

@@ -383,9 +383,8 @@ function buildDocumentXml(markdown, hyperlinkCtx, options) {
     const subMatch = rawLine.match(/^\s{2,}[•\-]\s+(.*)$/);
     if (subMatch) {
       firstHeading = false;
-      const keepNext = nextIsBulletLike(i) ? "<w:keepNext/>" : "";
       paras.push(
-        `<w:p><w:pPr><w:ind w:left="720" w:hanging="180"/>${keepNext}<w:keepLines/>` +
+        `<w:p><w:pPr><w:ind w:left="720" w:hanging="180"/><w:keepLines/><w:widowControl/>` +
         `<w:spacing w:before="0" w:after="40"/></w:pPr>` +
         `<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:t xml:space="preserve">• </w:t></w:r>` +
         runsXml(subMatch[1], 20, hyperlinkCtx) +
@@ -397,9 +396,8 @@ function buildDocumentXml(markdown, hyperlinkCtx, options) {
     if (trimmed.startsWith("- ") || trimmed.startsWith("• ")) {
       const text = trimmed.slice(2).trim();
       firstHeading = false;
-      const keepNext = nextIsBulletLike(i) ? "<w:keepNext/>" : "";
       paras.push(
-        `<w:p><w:pPr><w:ind w:left="360" w:hanging="180"/>${keepNext}<w:keepLines/>` +
+        `<w:p><w:pPr><w:ind w:left="360" w:hanging="180"/><w:keepLines/><w:widowControl/>` +
         `<w:spacing w:before="0" w:after="40"/></w:pPr>` +
         `<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:t xml:space="preserve">• </w:t></w:r>` +
         runsXml(text, 20, hyperlinkCtx) +

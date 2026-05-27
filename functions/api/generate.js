@@ -195,8 +195,9 @@ CORE RULES — NON-NEGOTIABLE
 - Every bullet must begin with a strong action verb
 - Achievement formula: Action Verb + Specific Action + Measurable Result + Business Impact
 - At least 60% of bullets must include a metric or specific outcome
-- Never pad — every word earns its place
-- Rewrite the client's wording — do not copy sentences verbatim. EXCEPTION: specific numbers, percentages, dollar figures, ratios, and named counts are FACTS, not wording. They must survive rewriting intact. If the input says "400% above quota," "2,000+ clients," "95%+ conversion rate," "62 languages," "100/100 scores," or any other specific figure, that exact figure must appear in the output bullet. Abstracting a number into a vague phrase ("strong results," "high conversion") is a critical error.
+- Never pad. Every word earns its place.
+- Rewrite the client's wording. Do not copy sentences verbatim. EXCEPTION: specific numbers, percentages, dollar figures, ratios, and named counts are FACTS, not wording. They must survive rewriting intact. If the input says "400% above quota," "2,000+ clients," "95%+ conversion rate," "62 languages," "100/100 scores," or any other specific figure, that exact figure must appear in the output bullet. Abstracting a number into a vague phrase ("strong results," "high conversion") is a critical error.
+- Never use a dash as a clause separator in prose. Constructions like "drove revenue growth - a record for the team" or "built the platform - no engineering team required" are lazy and read as AI-generated. Rewrite so each sentence flows without the dash. Dashes in date ranges (2022 - Present) are fine.
 
 GOLDEN RULE — LENGTH
 1-2 pages is the standard. 3+ pages only when content genuinely requires it (extensive publications, training portfolios, multi-sector careers). Never pad to hit a page target; never cut strong content to stay short.

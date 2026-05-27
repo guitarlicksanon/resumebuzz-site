@@ -99,7 +99,19 @@ export async function onRequestPost({ request, env }) {
     });
     const data = await res.json();
     if (data.error) return json({ error: data.error.message }, 400);
-    return json({ ok: true, features: (data.marketing_features || []).map(function (f) { return f.name; }) });
+    const savedFeatures = (data.marketing_features || []).map(function (f) { return f.name; });
+    if (env.JD_STORE) {
+      await Promise.all(PRICES.map(async function (p) {
+        try {
+          const pr = await fetch(`${base}/prices/${p.price_id}?expand[]=product`, { headers: stripeAuth });
+          const pd = await pr.json();
+          if (pd.product && pd.product.id === product_id) {
+            await env.JD_STORE.put('bullets:' + p.price_id, JSON.stringify(savedFeatures));
+          }
+        } catch (e) {}
+      }));
+    }
+    return json({ ok: true, features: savedFeatures });
   } catch (e) {
     return json({ error: e.message }, 500);
   }

@@ -439,6 +439,9 @@ nav{
 }
 .pkg-btn:hover{border-color:var(--gold);background:rgba(201,168,76,0.08);transform:translateY(-1px)}
 .pkg-btn:active{transform:scale(0.97)}
+.pkg-features{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:7px;}
+.pkg-features li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.4;}
+.pkg-features li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px;}
 
 footer{
   background:var(--surface);
@@ -1178,6 +1181,7 @@ details.faq-item summary:hover{color:var(--gold)}
         <div class="package-card">
           <div class="pkg-name">AI Single Draft</div>
           <div class="pkg-includes">Resume + cover letter, AI-generated instantly</div>
+          <ul class="pkg-features" id="features-price_1TZYSkJvPEXScjfdBoxWXZnV" aria-label="AI Draft features"></ul>
           <div class="pkg-price">$19</div>
           <a href="/build?plan=single" class="pkg-btn">Build Now &rarr;</a>
         </div>
@@ -1185,18 +1189,21 @@ details.faq-item summary:hover{color:var(--gold)}
           <div class="popular-badge">Most Popular</div>
           <div class="pkg-name">AI Draft + Human Polish</div>
           <div class="pkg-includes">AI draft reviewed and refined by a professional writer</div>
+          <ul class="pkg-features" id="features-price_1TZYUrJvPEXScjfdUfeSYwAO" aria-label="AI Draft + Human Polish features"></ul>
           <div class="pkg-price">$79</div>
           <a href="/build?plan=polish" class="pkg-btn">Build Now &rarr;</a>
         </div>
         <div class="package-card">
           <div class="pkg-name">Human Written Resume</div>
           <div class="pkg-includes">Resume + cover letter, written by a professional. Market-specific for your country and language.</div>
+          <ul class="pkg-features" id="features-price_1TZYXaJvPEXScjfd2BQS90c5" aria-label="Human Written Resume features"></ul>
           <div class="pkg-price">$149</div>
           <a href="/order?plan=human" class="pkg-btn">Buzz Me In &rarr;</a>
         </div>
         <div class="package-card">
           <div class="pkg-name">CV Package</div>
           <div class="pkg-includes">International / academic CV + cover letter</div>
+          <ul class="pkg-features" id="features-price_1TZYZZJvPEXScjfdfgeijAO4" aria-label="CV Package features"></ul>
           <div class="pkg-price">$199</div>
           <a href="/order?plan=cv" class="pkg-btn">Buzz Me In &rarr;</a>
         </div>
@@ -1765,6 +1772,7 @@ details.faq-item summary:hover{color:var(--gold)}
         <div class="package-card">
           <div class="pkg-name">AI Single Draft</div>
           <div class="pkg-includes">Resume + cover letter, AI-generated instantly</div>
+          <ul class="pkg-features" id="features2-price_1TZYSkJvPEXScjfdBoxWXZnV" aria-label="AI Draft features"></ul>
           <div class="pkg-price">$19</div>
           <a href="/build?plan=single" class="pkg-btn">Build Now &rarr;</a>
         </div>
@@ -1772,18 +1780,21 @@ details.faq-item summary:hover{color:var(--gold)}
           <div class="popular-badge">Most Popular</div>
           <div class="pkg-name">AI Draft + Human Polish</div>
           <div class="pkg-includes">AI draft reviewed and refined by a professional writer</div>
+          <ul class="pkg-features" id="features2-price_1TZYUrJvPEXScjfdUfeSYwAO" aria-label="AI Draft + Human Polish features"></ul>
           <div class="pkg-price">$79</div>
           <a href="/build?plan=polish" class="pkg-btn">Build Now &rarr;</a>
         </div>
         <div class="package-card">
           <div class="pkg-name">Human Written Resume</div>
           <div class="pkg-includes">Resume + cover letter, written by a professional. Market-specific for your country and language.</div>
+          <ul class="pkg-features" id="features2-price_1TZYXaJvPEXScjfd2BQS90c5" aria-label="Human Written Resume features"></ul>
           <div class="pkg-price">$149</div>
           <a href="/order?plan=human" class="pkg-btn">Buzz Me In &rarr;</a>
         </div>
         <div class="package-card">
           <div class="pkg-name">CV Package</div>
           <div class="pkg-includes">International / academic CV + cover letter</div>
+          <ul class="pkg-features" id="features2-price_1TZYZZJvPEXScjfdfgeijAO4" aria-label="CV Package features"></ul>
           <div class="pkg-price">$199</div>
           <a href="/order?plan=cv" class="pkg-btn">Buzz Me In &rarr;</a>
         </div>
@@ -2377,5 +2388,23 @@ details.faq-item summary:hover{color:var(--gold)}
 })();
 </script>
 <script>(function(){var D='buzzresume.com';(window.requestIdleCallback||function(cb,o){setTimeout(cb,o&&o.timeout?Math.min(o.timeout,500):500)})(function(){fetch('https://bink.oyecreations.com/api/public/scores?domain='+D).then(function(r){return r.json();}).then(function(d){if(!d.ok||!d.scores)return;var s=d.scores,m,i;function u(c,v){if(v==null)return;m=document.querySelectorAll(c);for(i=0;i<m.length;i++)m[i].textContent=v;}u('.oye-s-seo',s.seo);u('.oye-s-sec',s.security);u('.oye-s-perf',s.performance);u('.oye-s-a11y',s.accessibility);u('.oye-s-bp',s.bestPractices);if(d.date){var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],dt=new Date(d.date+'T00:00:00Z'),lbl='Audited '+mo[dt.getUTCMonth()]+' '+dt.getUTCFullYear();u('.oye-s-date',lbl);}}).catch(function(){});},{timeout:2000});})();</script>
+<script defer>
+(function(){
+  fetch('/api/bullets').then(function(r){return r.json();}).then(function(d){
+    if(!d.ok||!d.bullets)return;
+    Object.keys(d.bullets).forEach(function(priceId){
+      var features=d.bullets[priceId];
+      if(!features||!features.length)return;
+      var html=features.map(function(f){
+        return '<li>'+f.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</li>';
+      }).join('');
+      ['features-','features2-'].forEach(function(prefix){
+        var ul=document.getElementById(prefix+priceId);
+        if(ul)ul.innerHTML=html;
+      });
+    });
+  }).catch(function(){});
+})();
+</script>
 </body>
 </html>

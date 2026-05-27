@@ -233,6 +233,9 @@ CAREER LEVELS
     return /https?:\/\/|www\.|built and (launched|deployed|shipped)|live at|available at|\.(com|io|app|dev|co|org)\b/.test(text);
   });
 
+  const isHigherEdRole = /financial.?aid|student.?services|academic.?advi|enrollment|registrar|bursar|higher.?ed|university|college|student.?success|student.?affairs|admissions|academic.?counsel|educational.?counsel/.test(targetRole);
+  const isFinancialAidRole = /financial.?aid|aid.?advi|aid.?couns/.test(targetRole);
+
   let prompt = base + marketRules;
 
   if (isTechnicalRole) {
@@ -254,6 +257,28 @@ The candidate's stack includes serverless or edge-compute platforms. In the Skil
 
 PROJECTS SECTION — BUILDER/FOUNDER CANDIDATES
 This candidate has shipped live products (URLs or deployed tools appear in their work history). Add a dedicated "Projects" section after Work Experience and before Education. List each distinct shipped product as a 2-3 bullet entry: product name in bold, what it does, the tech stack or approach, and any scale or outcome metrics. Do not repeat bullets that already appear in the Work Experience section.`;
+  }
+
+  if (isHigherEdRole) {
+    prompt += `
+
+HIGHER EDUCATION SECTOR — TERMINOLOGY
+For this higher education role, translate the candidate's experience into the terminology ATS systems and hiring managers at colleges and universities expect. Never invent experience. Only apply terms where the candidate's work genuinely supports them.
+
+Compliance and regulation: FERPA, Title IV, 34 CFR Part 668, Satisfactory Academic Progress (SAP), Return to Title IV (R2T4), institutional compliance, audit readiness
+Advising and student success: caseload management, student retention, early alert, intrusive advising, academic planning, case notes, degree audit, holistic advising, wraparound services
+Systems: Banner, Ellucian, PeopleSoft, CampusVue, Colleague, PowerFAIDS, Salesforce, student information system (SIS)
+Professional associations and frameworks: NACADA, AACRAO, NACUBO, student-centered, equitable access, first-generation students, underrepresented populations`;
+
+    if (isFinancialAidRole) {
+      prompt += `
+
+FINANCIAL AID SPECIFIC — use these terms wherever experience supports them:
+Federal programs: Pell Grant, Federal Direct Loans, FFELP, Federal Work-Study, subsidized/unsubsidized loans, Parent PLUS, Grad PLUS
+Processes: FAFSA verification, dependency override, professional judgment, COA (Cost of Attendance), EFC (Expected Family Contribution), COD (Common Origination and Disbursement), NSLDS (National Student Loan Data System), FSA ID, entrance counseling, exit counseling, financial literacy counseling
+Compliance: R2T4 calculation, SAP policy, 34 CFR Part 668, audit trail, reconciliation, ED reporting
+Professional standard: NASFAA compliance, consumer information disclosure`;
+    }
   }
 
   if (!isEnglish) {
@@ -425,7 +450,30 @@ Only include sections for fields that contain data. Never create an empty sectio
 
   parts.push(`
 == OUTPUT FORMAT ==
-Write the document in clean Markdown. Use ## for section headers. Use **bold** for company names and job titles. Use - for bullets.
+Output the document as plain text with NO markdown syntax whatsoever. Follow these conventions exactly:
+
+CONTACT BLOCK
+Name on line 1 (plain text, no bold, no asterisks).
+Location | Email | Phone | LinkedIn on line 2, pipe-separated.
+
+SECTION HEADERS
+ALL CAPS on their own line (e.g., PROFESSIONAL SUMMARY, WORK EXPERIENCE, EDUCATION, SKILLS, CERTIFICATIONS).
+No hash symbols, no underlines, no dashes under the header.
+
+WORK EXPERIENCE ENTRIES
+Format: Company Name | Job Title | City, ST | Start Month YYYY - End Month YYYY
+Bullets on lines below, each starting with a plain hyphen and space: - Achievement here.
+
+EDUCATION ENTRIES
+Degree and Major on one line. Institution on the next line. Year (if provided) on the next line.
+
+SKILLS SECTION
+Category: item, item, item (plain text, no bold, no asterisks).
+
+UNIVERSAL RULES
+- No ** bold **, no * italic *, no ## headers, no --- horizontal rules, no [ ]( ) links.
+- Use a plain hyphen (-) for all bullets.
+- Separate sections with one blank line.
 Do not add commentary, preamble, or notes outside the document. Output only the document.`);
 
   return parts.join("\n");

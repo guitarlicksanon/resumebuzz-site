@@ -197,6 +197,8 @@ CORE RULES — NON-NEGOTIABLE
 - At least 60% of bullets must include a metric or specific outcome
 - Never pad — every word earns its place
 - Never copy client's original wording verbatim — always rewrite
+- PRESERVE ALL METRICS: Every specific number, percentage, dollar figure, count, ratio, or named achievement in the input MUST appear in the output. Never dilute, remove, or replace a quantified result with a vague description. If the input says "400% above quota" or "2,000+ clients" or "95%+ conversion rate," that exact figure must appear in the output.
+- Never use em-dashes (—) or en-dashes (–) anywhere. Use a plain hyphen (-) only when punctuation is needed.
 
 GOLDEN RULE — LENGTH
 1-2 pages is the standard. 3+ pages only when content genuinely requires it (extensive publications, training portfolios, multi-sector careers). Never pad to hit a page target; never cut strong content to stay short.

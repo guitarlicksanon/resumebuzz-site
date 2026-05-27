@@ -551,6 +551,13 @@ textarea{resize:vertical;line-height:1.55}
   text-indent:-1.4em;
   color:#3A3A3A;
 }
+.output-content .out-link{
+  color:#1B5E9B;
+  text-decoration:underline;
+  text-underline-offset:2px;
+  word-break:break-all;
+}
+.output-content .out-link:hover{color:#0F3D6B}
 .output-content .out-rolelabel{
   font-size:11px;
   letter-spacing:0.08em;
@@ -1110,6 +1117,34 @@ textarea{resize:vertical;line-height:1.55}
     return s ? s.replace(/[—–]/g, ', ') : s;
   }
 
+  function escapeHtml(s){
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  var LINK_RE = /(\b[A-Za-z0-9._+\-]+@[A-Za-z0-9\-]+(?:\.[A-Za-z0-9\-]+)+\b)|(https?:\/\/[^\s<]+)|(\b(?:[A-Za-z0-9][A-Za-z0-9\-]*\.)+(?:com|org|net|io|app|dev|co|me|ai|xyz|tech|studio|design|page|site|info|edu|gov|us|uk|ca|au)(?:\/[^\s<]*)?)/g;
+
+  function linkify(text){
+    var escaped = escapeHtml(text);
+    return escaped.replace(LINK_RE, function(match, email, url, bare){
+      var trail = '';
+      var target = match;
+      if(!email){
+        var m2 = target.match(/^(.*?)([.,;:!?)\]'"]+)$/);
+        if(m2){ target = m2[1]; trail = m2[2]; }
+      }
+      if(email){
+        return '<a class="out-link" href="mailto:' + target + '">' + target + '</a>' + trail;
+      }
+      var href = url ? target : 'https://' + target;
+      return '<a class="out-link" href="' + href + '" target="_blank" rel="noopener noreferrer">' + target + '</a>' + trail;
+    });
+  }
+
   function getResumeText(){
     return resumeText || outputContent.textContent || '';
   }
@@ -1126,16 +1161,16 @@ textarea{resize:vertical;line-height:1.55}
         div.className = 'out-empty';
       } else if(/^\s{2,}•\s/.test(raw)){
         div.className = 'out-subbullet';
-        div.textContent = raw;
+        div.innerHTML = linkify(raw);
       } else if(/^-\s/.test(raw)){
         div.className = 'out-bullet';
-        div.textContent = raw;
+        div.innerHTML = linkify(raw);
       } else if(/^(ACHIEVEMENTS|RESPONSIBILITIES)\s*$/.test(raw.trim())){
         div.className = 'out-rolelabel';
         div.textContent = raw.trim();
       } else {
         div.className = 'out-line';
-        div.textContent = raw;
+        div.innerHTML = linkify(raw);
       }
       frag.appendChild(div);
     }

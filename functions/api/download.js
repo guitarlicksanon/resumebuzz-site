@@ -102,11 +102,19 @@ const PKG_RELS = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
 </Relationships>`;
 
-const WORD_RELS = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+function buildWordRels(hyperlinks) {
+  const links = hyperlinks
+    .map((h) =>
+      `  <Relationship Id="${h.id}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink" Target="${escAttr(h.target)}" TargetMode="External"/>`
+    )
+    .join("\n");
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
   <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
   <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" Target="settings.xml"/>
+${links}
 </Relationships>`;
+}
 
 const SETTINGS = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
@@ -135,6 +143,13 @@ const STYLES = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <w:style w:type="paragraph" w:default="1" w:styleId="Normal">
     <w:name w:val="Normal"/>
   </w:style>
+  <w:style w:type="character" w:styleId="Hyperlink">
+    <w:name w:val="Hyperlink"/>
+    <w:rPr>
+      <w:color w:val="1B5E9B"/>
+      <w:u w:val="single"/>
+    </w:rPr>
+  </w:style>
 </w:styles>`;
 
 // ── Markdown → DOCX XML ──────────────────────────────────────
@@ -142,7 +157,42 @@ function esc(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function parseRuns(text) {
+function escAttr(s) {
+  return esc(s).replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+}
+
+const LINK_RE = /(\b[A-Za-z0-9._+\-]+@[A-Za-z0-9\-]+(?:\.[A-Za-z0-9\-]+)+\b)|(https?:\/\/[^\s<]+)|(\b(?:[A-Za-z0-9][A-Za-z0-9\-]*\.)+(?:com|org|net|io|app|dev|co|me|ai|xyz|tech|studio|design|page|site|info|edu|gov|us|uk|ca|au)(?:\/[^\s<]*)?)/g;
+
+function splitLinks(text) {
+  const segs = [];
+  let lastIdx = 0;
+  let m;
+  LINK_RE.lastIndex = 0;
+  while ((m = LINK_RE.exec(text)) !== null) {
+    const start = m.index;
+    let end = start + m[0].length;
+    let target = m[0];
+    let trail = "";
+    const isEmail = !!m[1];
+    if (!isEmail) {
+      const tm = target.match(/^(.*?)([.,;:!?)\]'"]+)$/);
+      if (tm) {
+        target = tm[1];
+        trail = tm[2];
+        end = start + target.length;
+      }
+    }
+    if (start > lastIdx) segs.push({ kind: "text", t: text.slice(lastIdx, start) });
+    const href = isEmail ? `mailto:${target}` : m[2] ? target : `https://${target}`;
+    segs.push({ kind: "link", t: target, href });
+    if (trail) segs.push({ kind: "text", t: trail });
+    lastIdx = end + trail.length;
+  }
+  if (lastIdx < text.length) segs.push({ kind: "text", t: text.slice(lastIdx) });
+  return segs.length ? segs : [{ kind: "text", t: text }];
+}
+
+function parseBoldRuns(text) {
   const runs = [];
   const re = /\*\*([^*]+)\*\*/g;
   let last = 0, m;
@@ -155,16 +205,36 @@ function parseRuns(text) {
   return runs.length ? runs : [{ t: text, b: false }];
 }
 
-function runsXml(runs, sz = 22) {
-  return runs.map(r => {
-    const rPr = r.b
-      ? `<w:rPr><w:b/><w:bCs/><w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/></w:rPr>`
-      : `<w:rPr><w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/></w:rPr>`;
-    return `<w:r>${rPr}<w:t xml:space="preserve">${esc(r.t)}</w:t></w:r>`;
-  }).join("");
+function buildRunXml(run, sz) {
+  const rPr = run.b
+    ? `<w:rPr><w:b/><w:bCs/><w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/></w:rPr>`
+    : `<w:rPr><w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/></w:rPr>`;
+  return `<w:r>${rPr}<w:t xml:space="preserve">${esc(run.t)}</w:t></w:r>`;
 }
 
-function buildDocumentXml(markdown) {
+function buildLinkRunXml(text, sz) {
+  return `<w:r><w:rPr><w:rStyle w:val="Hyperlink"/><w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/></w:rPr><w:t xml:space="preserve">${esc(text)}</w:t></w:r>`;
+}
+
+function runsXml(text, sz, hyperlinkCtx) {
+  const segs = splitLinks(text);
+  const out = [];
+  for (const seg of segs) {
+    if (seg.kind === "link") {
+      const rId = `rId${hyperlinkCtx.nextId++}`;
+      hyperlinkCtx.list.push({ id: rId, target: seg.href });
+      out.push(
+        `<w:hyperlink r:id="${rId}" w:history="1">${buildLinkRunXml(seg.t, sz)}</w:hyperlink>`
+      );
+    } else {
+      const boldRuns = parseBoldRuns(seg.t);
+      for (const br of boldRuns) out.push(buildRunXml(br, sz));
+    }
+  }
+  return out.join("");
+}
+
+function buildDocumentXml(markdown, hyperlinkCtx) {
   const lines = markdown.split("\n");
   const paras = [];
   let firstHeading = true;
@@ -176,7 +246,6 @@ function buildDocumentXml(markdown) {
     if (line.startsWith("## ")) {
       const text = line.slice(3).trim();
       if (firstHeading) {
-        // Candidate name, large, centered, gold accent
         firstHeading = false;
         paras.push(
           `<w:p><w:pPr><w:jc w:val="center"/><w:spacing w:before="0" w:after="80"/>` +
@@ -185,7 +254,6 @@ function buildDocumentXml(markdown) {
           `<w:color w:val="1A1A1A"/></w:rPr><w:t>${esc(text)}</w:t></w:r></w:p>`
         );
       } else {
-        // Section header, bold caps, gold underline
         firstHeading = false;
         paras.push(
           `<w:p><w:pPr><w:spacing w:before="200" w:after="60"/>` +
@@ -203,26 +271,24 @@ function buildDocumentXml(markdown) {
       paras.push(
         `<w:p><w:pPr><w:ind w:left="360" w:hanging="180"/><w:spacing w:before="0" w:after="40"/></w:pPr>` +
         `<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:t xml:space="preserve">• </w:t></w:r>` +
-        runsXml(parseRuns(text), 20) +
+        runsXml(text, 20, hyperlinkCtx) +
         `</w:p>`
       );
       continue;
     }
 
-    // Normal paragraph, contact lines, job headers, etc.
     firstHeading = false;
-    const runs = parseRuns(line);
-    const centered = !paras.length; // center the line right after name if nothing yet
+    const centered = !paras.length;
     paras.push(
       `<w:p><w:pPr>${centered ? '<w:jc w:val="center"/>' : ''}<w:spacing w:before="0" w:after="80"/></w:pPr>` +
-      runsXml(runs, 22) +
+      runsXml(line, 22, hyperlinkCtx) +
       `</w:p>`
     );
   }
 
   return (
     `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n` +
-    `<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">\n` +
+    `<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">\n` +
     `<w:body>\n` +
     paras.join("\n") + "\n" +
     `<w:sectPr>` +
@@ -233,11 +299,13 @@ function buildDocumentXml(markdown) {
 }
 
 function generateDocx(markdown) {
+  const hyperlinkCtx = { nextId: 100, list: [] };
+  const documentXml = buildDocumentXml(markdown, hyperlinkCtx);
   return buildZip([
     { name: "[Content_Types].xml", data: CONTENT_TYPES },
     { name: "_rels/.rels", data: PKG_RELS },
-    { name: "word/document.xml", data: buildDocumentXml(markdown) },
-    { name: "word/_rels/document.xml.rels", data: WORD_RELS },
+    { name: "word/document.xml", data: documentXml },
+    { name: "word/_rels/document.xml.rels", data: buildWordRels(hyperlinkCtx.list) },
     { name: "word/styles.xml", data: STYLES },
     { name: "word/settings.xml", data: SETTINGS },
   ]);

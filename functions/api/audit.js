@@ -81,6 +81,16 @@ function uint8ToBase64(bytes) {
   return btoa(binary);
 }
 
+function parseClaudeJson(rawText) {
+  let s = String(rawText || "").trim();
+  const fence = s.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/);
+  if (fence) s = fence[1].trim();
+  const first = s.indexOf("{");
+  const last = s.lastIndexOf("}");
+  if (first !== -1 && last !== -1 && last > first) s = s.slice(first, last + 1);
+  return JSON.parse(s);
+}
+
 function buildPrompt(jobDescription) {
   const today = new Date().toISOString().slice(0, 10);
   const currentYear = today.slice(0, 4);
@@ -233,7 +243,7 @@ export async function onRequestPost({ request, env }) {
 
     const claudeData = await claudeResponse.json();
     const rawText = claudeData.content[0].text;
-    const auditResult = JSON.parse(rawText);
+    const auditResult = parseClaudeJson(rawText);
 
     if (jobDescription && jobDescription.trim().length > 80 && env.JD_STORE) {
       const key = `jd_raw:audit:${Date.now()}:${Math.random().toString(36).slice(2, 9)}`;

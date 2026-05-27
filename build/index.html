@@ -244,6 +244,63 @@ textarea{resize:vertical;line-height:1.55}
 }
 .btn-add:hover{border-color:var(--gold);color:var(--warm);background:rgba(232,184,75,0.16)}
 
+/* SKILL SUGGESTIONS */
+.skill-label-row{display:flex;align-items:center;justify-content:space-between;gap:0.5rem;margin-bottom:0.25rem}
+.skill-label-row label{margin:0}
+.btn-suggest{
+  background:rgba(232,184,75,0.08);
+  border:1px solid var(--gold-dim);
+  color:var(--gold);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.7rem;
+  padding:0.22rem 0.55rem;
+  border-radius:5px;
+  cursor:pointer;
+  transition:border-color 0.18s,color 0.18s,background 0.18s,opacity 0.18s;
+  display:inline-flex;
+  align-items:center;
+  gap:0.35rem;
+  font-weight:500;
+  white-space:nowrap;
+}
+.btn-suggest:hover{border-color:var(--gold);color:var(--warm);background:rgba(232,184,75,0.16)}
+.btn-suggest[disabled]{opacity:0.55;cursor:wait}
+.suggest-spinner{display:none;width:10px;height:10px;border:1.5px solid var(--gold-dim);border-top-color:var(--gold);border-radius:50%;animation:suggest-spin 0.7s linear infinite}
+.btn-suggest.loading .suggest-spinner{display:inline-block}
+@keyframes suggest-spin{to{transform:rotate(360deg)}}
+.suggest-chips{display:flex;flex-wrap:wrap;gap:0.32rem;margin-top:0.4rem}
+.suggest-chips:empty{margin-top:0}
+.suggest-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:0.3rem;
+  background:rgba(232,184,75,0.06);
+  border:1px solid var(--gold-dim);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.72rem;
+  padding:0.18rem 0.5rem;
+  border-radius:14px;
+  cursor:pointer;
+  transition:background 0.15s,border-color 0.15s,color 0.15s,opacity 0.15s;
+}
+.suggest-chip:hover{background:rgba(232,184,75,0.18);border-color:var(--gold);color:var(--warm)}
+.suggest-chip .chip-x{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:14px;height:14px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.15);
+  color:var(--muted);
+  font-size:0.7rem;
+  line-height:1;
+}
+.suggest-chip .chip-x:hover{background:rgba(0,0,0,0.3);color:var(--text)}
+.suggest-chip.dismissed{opacity:0.35;pointer-events:none}
+.suggest-empty{font-size:0.72rem;color:var(--muted);font-style:italic}
+.suggest-error{font-size:0.72rem;color:#e36a6a}
+
 /* EXPERIENCE CARDS */
 .exp-list,.edu-list{
   display:flex;
@@ -708,16 +765,37 @@ textarea{resize:vertical;line-height:1.55}
       <div class="section-header">Skills</div>
       <div class="field-group">
         <div>
-          <label>Technical Skills</label>
+          <div class="skill-label-row">
+            <label for="skillsTechnical">Technical Skills</label>
+            <button type="button" class="btn-suggest" data-target="skillsTechnical" data-bucket="technical">
+              <span class="suggest-spinner"></span>
+              <span class="suggest-label">🐝 Suggest</span>
+            </button>
+          </div>
           <textarea id="skillsTechnical" rows="2" placeholder="Python, SQL, Tableau..."></textarea>
+          <div class="suggest-chips" id="suggestChips-skillsTechnical"></div>
         </div>
         <div>
-          <label>Tools &amp; Platforms</label>
+          <div class="skill-label-row">
+            <label for="skillsTools">Tools &amp; Platforms</label>
+            <button type="button" class="btn-suggest" data-target="skillsTools" data-bucket="tools">
+              <span class="suggest-spinner"></span>
+              <span class="suggest-label">🐝 Suggest</span>
+            </button>
+          </div>
           <textarea id="skillsTools" rows="2" placeholder="Salesforce, Jira, Google Analytics..."></textarea>
+          <div class="suggest-chips" id="suggestChips-skillsTools"></div>
         </div>
         <div>
-          <label>Languages</label>
+          <div class="skill-label-row">
+            <label for="skillsLanguages">Languages</label>
+            <button type="button" class="btn-suggest" data-target="skillsLanguages" data-bucket="languages">
+              <span class="suggest-spinner"></span>
+              <span class="suggest-label">🐝 Suggest</span>
+            </button>
+          </div>
           <textarea id="skillsLanguages" rows="2" placeholder="English (Native), Spanish (Professional)"></textarea>
+          <div class="suggest-chips" id="suggestChips-skillsLanguages"></div>
         </div>
       </div>
     </div>
@@ -1516,6 +1594,101 @@ textarea{resize:vertical;line-height:1.55}
       template: tpl
     };
   }
+
+  /* ── SKILL SUGGESTIONS ───────────────────────────── */
+  document.querySelectorAll('.btn-suggest').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if(btn.classList.contains('loading')) return;
+      var targetId = btn.getAttribute('data-target');
+      var bucket = btn.getAttribute('data-bucket');
+      var chipsEl = document.getElementById('suggestChips-' + targetId);
+      var textarea = document.getElementById(targetId);
+      if(!chipsEl || !textarea) return;
+
+      chipsEl.innerHTML = '';
+      btn.classList.add('loading');
+      btn.setAttribute('disabled','disabled');
+
+      var payload = {
+        jobDescription: (document.getElementById('jobDescription').value || '').trim(),
+        targetRole: (document.getElementById('targetRole').value || '').trim(),
+        targetIndustry: (document.getElementById('targetIndustry').value || '').trim(),
+        experience: (typeof getExperience === 'function') ? getExperience() : [],
+        currentSkills: {
+          technical: document.getElementById('skillsTechnical').value || '',
+          tools: document.getElementById('skillsTools').value || '',
+          languages: document.getElementById('skillsLanguages').value || ''
+        }
+      };
+
+      fetch('/api/suggest-skills', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function(r){
+        return r.json().then(function(body){ return { ok: r.ok, status: r.status, body: body }; });
+      }).then(function(res){
+        btn.classList.remove('loading');
+        btn.removeAttribute('disabled');
+
+        if(!res.ok){
+          var msg = res.status === 429 ? 'Daily suggestion limit reached. Try again next week.' : (res.body && res.body.error) || 'Suggestion failed.';
+          chipsEl.innerHTML = '<span class="suggest-error">' + msg + '</span>';
+          return;
+        }
+
+        var items = (res.body && res.body[bucket]) || [];
+        if(!items.length){
+          chipsEl.innerHTML = '<span class="suggest-empty">No new keywords to suggest right now. Add more JD / experience detail for better results.</span>';
+          return;
+        }
+
+        items.forEach(function(term){
+          var chip = document.createElement('span');
+          chip.className = 'suggest-chip';
+          chip.setAttribute('role','button');
+          chip.setAttribute('tabindex','0');
+          chip.setAttribute('title','Click to add to ' + targetId);
+
+          var label = document.createElement('span');
+          label.textContent = term;
+          chip.appendChild(label);
+
+          var x = document.createElement('span');
+          x.className = 'chip-x';
+          x.textContent = '×';
+          x.setAttribute('aria-label','dismiss');
+          chip.appendChild(x);
+
+          chip.addEventListener('click', function(e){
+            if(e.target === x || x.contains(e.target)) return;
+            var existing = textarea.value.trim();
+            var lower = existing.toLowerCase();
+            if(lower.indexOf(term.toLowerCase()) === -1){
+              textarea.value = existing ? existing + ', ' + term : term;
+            }
+            chip.classList.add('dismissed');
+          });
+          chip.addEventListener('keydown', function(e){
+            if(e.key === 'Enter' || e.key === ' '){
+              e.preventDefault();
+              chip.click();
+            }
+          });
+          x.addEventListener('click', function(e){
+            e.stopPropagation();
+            chip.classList.add('dismissed');
+          });
+
+          chipsEl.appendChild(chip);
+        });
+      }).catch(function(){
+        btn.classList.remove('loading');
+        btn.removeAttribute('disabled');
+        chipsEl.innerHTML = '<span class="suggest-error">Network error. Try again.</span>';
+      });
+    });
+  });
 
   /* ── GENERATE ─────────────────────────────────────── */
   generateBtn.addEventListener('click', function(){

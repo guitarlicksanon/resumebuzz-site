@@ -850,6 +850,9 @@ textarea{resize:vertical;line-height:1.55}
         </div>
       </div>
 
+      <!-- Fix and rebuild panel -->
+      <div id="fixPanel" style="display:none"></div>
+
     </div>
     <div id="payCta" style="display:none;flex-direction:column;border-top:2px solid var(--gold-dim);background:linear-gradient(90deg,#1A1508,#0F0D08)">
       <!-- Top row: label + buttons -->
@@ -937,6 +940,8 @@ textarea{resize:vertical;line-height:1.55}
   var timerSeconds  = 0;
   var tokenCount    = 0;
   var isGenerating  = false;
+  var lastIntake    = null;
+  var lastScoreData = null;
 
   /* ── TEMPLATE PICKER ──────────────────────────────── */
   var stylesByStage = {
@@ -1420,11 +1425,17 @@ textarea{resize:vertical;line-height:1.55}
       }
     } catch(e){}
 
-    var intake = collectIntake();
+    lastIntake = collectIntake();
+    doGenerate(lastIntake);
+  }
+
+  async function doGenerate(intake){
     outputContent.textContent = '';
     outputPlaceholder.style.display = 'none';
     document.getElementById('watermark').style.display = 'none';
     document.getElementById('payCta').style.display = 'none';
+    document.getElementById('scoreCompare').style.display = 'none';
+    document.getElementById('fixPanel').style.display = 'none';
     setGenerating(true);
     startTimer();
 
@@ -1550,6 +1561,7 @@ textarea{resize:vertical;line-height:1.55}
     document.getElementById('watermark').style.display = 'none';
     document.getElementById('payCta').style.display = 'none';
     document.getElementById('scoreCompare').style.display = 'none';
+    document.getElementById('fixPanel').style.display = 'none';
     statusLine.textContent = 'Ready';
     stopTimer();
     if(isGenerating){
@@ -1684,6 +1696,7 @@ textarea{resize:vertical;line-height:1.55}
 
       scLoad.style.display = 'none';
       scRes.style.display  = 'block';
+      lastScoreData = data;
 
       // Overall score row
       var before = preAudit ? preAudit.overall : null;
@@ -1725,9 +1738,128 @@ textarea{resize:vertical;line-height:1.55}
       });
 
       outputArea.scrollTop = outputArea.scrollHeight;
+      buildFixPanel(data);
     } catch(e) {
       scLoad.textContent = 'Score check unavailable.';
     }
+  }
+
+  /* ── FIX PANEL ─────────────────────────────────────── */
+  function buildFixPanel(scoreData) {
+    var panel = document.getElementById('fixPanel');
+    panel.innerHTML = '';
+
+    var questions = [];
+
+    // Spellcheck recommendation - always
+    questions.push({
+      id: 'fp_spell',
+      label: 'Spelling and accuracy check',
+      hint: 'Review the draft above for any names, titles, or dates that need correcting. List any changes here.',
+      ph: 'e.g. "Company name should be Acme Corp not Acme" or "Promoted in 2021 not 2020"',
+      rows: 2,
+      always: true
+    });
+
+    // Conditional by category score
+    var ats   = scoreData.ats_compatibility  ? scoreData.ats_compatibility.score  : 25;
+    var kw    = scoreData.keyword_density    ? scoreData.keyword_density.score    : 25;
+    var imp   = scoreData.impact_language    ? scoreData.impact_language.score    : 25;
+    var struc = scoreData.structure          ? scoreData.structure.score          : 25;
+
+    if (imp < 20) {
+      questions.push({
+        id: 'fp_metrics',
+        label: 'Add numbers and results',
+        hint: 'Your impact score has room to grow. Specific figures turn weak bullets into strong ones.',
+        ph: 'e.g. "Grew revenue by 40% in Q3" or "Managed a team of 12 engineers" or "Cut processing time from 3 days to 4 hours"',
+        rows: 3
+      });
+    }
+
+    if (kw < 20) {
+      questions.push({
+        id: 'fp_keywords',
+        label: 'Target job title or keywords',
+        hint: 'Paste the job title or a few key phrases from the posting so we can sharpen the language.',
+        ph: 'e.g. "Senior Product Manager - fintech, agile, roadmap, cross-functional"',
+        rows: 2
+      });
+    }
+
+    if (ats < 20) {
+      questions.push({
+        id: 'fp_ats',
+        label: 'Missing dates or contact details',
+        hint: 'ATS systems flag gaps in dates and contact info. Fill in anything that was left blank.',
+        ph: 'e.g. "Add end date Jan 2023 for Acme role" or "LinkedIn: linkedin.com/in/yourname"',
+        rows: 2
+      });
+    }
+
+    if (struc < 20) {
+      questions.push({
+        id: 'fp_structure',
+        label: 'Anything missing from the draft',
+        hint: 'Certifications, awards, languages, publications, or sections that should appear but did not.',
+        ph: 'e.g. "Add: PMP Certified 2022" or "Include a Languages section: Spanish (fluent)"',
+        rows: 2
+      });
+    }
+
+    // Always: free-form notes
+    questions.push({
+      id: 'fp_other',
+      label: 'Anything else to change',
+      hint: 'Tone adjustments, section order, phrasing preferences, or anything the draft missed.',
+      ph: 'e.g. "Make the summary shorter" or "Swap bullets 2 and 3 in the first job"',
+      rows: 2
+    });
+
+    var hasAnswers = false;
+    var qHTML = questions.map(function(q) {
+      return '<div style="margin-bottom:1rem">' +
+        '<div style="font-size:0.8rem;font-weight:700;color:var(--gold);margin-bottom:0.25rem">' + q.label + '</div>' +
+        '<div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.4rem">' + q.hint + '</div>' +
+        '<textarea id="' + q.id + '" rows="' + q.rows + '" placeholder="' + q.ph + '" ' +
+          'style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:6px;' +
+          'color:#ebebeb;font-size:0.8rem;padding:0.5rem 0.65rem;resize:vertical;font-family:inherit;box-sizing:border-box">' +
+        '</textarea>' +
+      '</div>';
+    }).join('');
+
+    panel.innerHTML =
+      '<div style="margin-top:1.5rem;border:1px solid rgba(232,184,75,0.22);border-radius:10px;overflow:hidden;font-family:\'DM Sans\',sans-serif">' +
+        '<div style="padding:0.85rem 1.2rem;background:rgba(232,184,75,0.07);border-bottom:1px solid rgba(232,184,75,0.15);display:flex;align-items:center;gap:0.6rem">' +
+          '<span style="font-size:1rem">🔧</span>' +
+          '<div style="font-weight:700;font-size:0.88rem;color:var(--gold)">Fix and rebuild</div>' +
+          '<div style="font-size:0.7rem;color:var(--muted);margin-left:auto">Answer what applies. Leave the rest blank.</div>' +
+        '</div>' +
+        '<div style="padding:1.2rem 1.4rem">' +
+          qHTML +
+          '<button id="rebuildBtn" style="width:100%;margin-top:0.5rem;padding:0.75rem;background:linear-gradient(135deg,var(--gold-bright),var(--amber));color:#111;font-weight:700;font-size:0.88rem;border:none;border-radius:7px;cursor:pointer;letter-spacing:0.02em">🐝 Rebuild with Fixes</button>' +
+        '</div>' +
+      '</div>';
+
+    panel.style.display = 'block';
+
+    document.getElementById('rebuildBtn').addEventListener('click', function(){
+      var parts = [];
+      questions.forEach(function(q) {
+        var el = document.getElementById(q.id);
+        var val = el ? el.value.trim() : '';
+        if (val) parts.push('[' + q.label.toUpperCase() + ']\n' + val);
+      });
+      if (!parts.length) {
+        alert('Add at least one note above before rebuilding.');
+        return;
+      }
+      var fixNotes = 'REVISION INSTRUCTIONS - apply these changes to the rebuilt draft:\n\n' + parts.join('\n\n');
+      var rebuildIntake = JSON.parse(JSON.stringify(lastIntake));
+      rebuildIntake.writer_notes = (rebuildIntake.writer_notes ? rebuildIntake.writer_notes + '\n\n' : '') + fixNotes;
+      lastIntake = rebuildIntake;
+      doGenerate(rebuildIntake);
+    });
   }
 
   /* ── PROMO CODE ────────────────────────────────────── */

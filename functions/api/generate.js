@@ -1,3 +1,24 @@
+const DATE_FORMATS = {
+  us:        `\n- DATE FORMAT (REGION-SPECIFIC): Always write dates as "Month YYYY" with full English month name (e.g., January 2026 - Present, March 2022 - October 2025). Use "Present" for current roles. Never use "2024 - Present", "01/2024", "Jan-24", or any abbreviated form.`,
+  canada:    `\n- DATE FORMAT (REGION-SPECIFIC): "Month YYYY" with full English month name (e.g., January 2026 - Present). Use "Present" for current roles.`,
+  uk:        `\n- DATE FORMAT (REGION-SPECIFIC): "Month YYYY" with full English month name (e.g., January 2026 - Present). Use "Present" for current roles. UK convention does not use abbreviated months or "01/2026" style.`,
+  ireland:   `\n- DATE FORMAT (REGION-SPECIFIC): "Month YYYY" with full English month name (e.g., January 2026 - Present). Use "Present" for current roles.`,
+  australia: `\n- DATE FORMAT (REGION-SPECIFIC): "Month YYYY" with full English month name (e.g., January 2026 - Present). Use "Present" for current roles.`,
+  dach:      `\n- DATE FORMAT (REGION-SPECIFIC): If writing in German, use "MM.YYYY" (e.g., 01.2026 - 10.2025) or "Monat YYYY" with full German month name (Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember). Use "Heute" for current roles. If writing in English, default to "Month YYYY - Present".`,
+  france:    `\n- DATE FORMAT (REGION-SPECIFIC): If writing in French, use "mois YYYY" with lowercase full French month name (janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre) or "MM/YYYY". Use "à ce jour" for current roles. If writing in English, default to "Month YYYY - Present".`,
+  spain:     `\n- DATE FORMAT (REGION-SPECIFIC): If writing in Spanish, use "mes YYYY" with lowercase full Spanish month name (enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre) or "MM/YYYY". Use "Actualidad" for current roles. If writing in English, default to "Month YYYY - Present".`,
+  latam:     `\n- DATE FORMAT (REGION-SPECIFIC): If writing in Spanish, use "mes YYYY" with lowercase full Spanish month name (enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre) or "MM/YYYY". Use "Actualidad" for current roles. If writing in English, default to "Month YYYY - Present".`,
+  mexico:    `\n- DATE FORMAT (REGION-SPECIFIC): If writing in Spanish, use "mes YYYY" with lowercase full Spanish month name or "MM/YYYY". Use "Actualidad" for current roles. If writing in English, default to "Month YYYY - Present".`,
+  colombia:  `\n- DATE FORMAT (REGION-SPECIFIC): If writing in Colombian Spanish, use "mes YYYY" with lowercase full Spanish month name or "MM/YYYY". Use "Actualidad" for current roles. If writing in English, default to "Month YYYY - Present".`,
+  rioplatense: `\n- DATE FORMAT (REGION-SPECIFIC): If writing in Rioplatense Spanish, use "mes YYYY" with lowercase full Spanish month name or "MM/YYYY". Use "Actualidad" or "Presente" for current roles. If writing in English, default to "Month YYYY - Present".`,
+  chile:     `\n- DATE FORMAT (REGION-SPECIFIC): If writing in Chilean Spanish, use "mes YYYY" with lowercase full Spanish month name or "MM/YYYY". Use "Actualidad" for current roles. If writing in English, default to "Month YYYY - Present".`,
+  peru:      `\n- DATE FORMAT (REGION-SPECIFIC): If writing in Peruvian Spanish, use "mes YYYY" with lowercase full Spanish month name or "MM/YYYY". Use "Actualidad" for current roles. If writing in English, default to "Month YYYY - Present".`,
+  india:     `\n- DATE FORMAT (REGION-SPECIFIC): "Month YYYY" with full English month name (e.g., January 2026 - Present). Indian English convention; use "Present" for current roles.`,
+  mena:      `\n- DATE FORMAT (REGION-SPECIFIC): If writing in English (default for Gulf CVs), use "Month YYYY - Present". If writing in Arabic, use Arabic month names (يناير، فبراير، مارس، أبريل، مايو، يونيو، يوليو، أغسطس، سبتمبر، أكتوبر، نوفمبر، ديسمبر) and "حتى الآن" for current roles.`,
+  japan:     `\n- DATE FORMAT (REGION-SPECIFIC): If writing in Japanese, use "YYYY年M月" format (e.g., 2026年1月 - 現在). Use "現在" for current roles. If writing in English, default to "Month YYYY - Present".`,
+  southeast_asia: `\n- DATE FORMAT (REGION-SPECIFIC): "Month YYYY" with full English month name (e.g., January 2026 - Present). Use "Present" for current roles.`,
+};
+
 const MARKET_RULES = {
   us: `
 MARKET: United States
@@ -307,7 +328,8 @@ CORE RULES, NON-NEGOTIABLE
 - ABSOLUTE DASH BAN. Never output em-dash (—) or en-dash (–) anywhere in the document, for any reason. These long dashes are an AI signature and are banned outright. Use commas, periods, colons, parentheses, or the word "to" for ranges. The only acceptable dash-shaped character is the plain ASCII hyphen (-), and only in two contexts: date ranges (e.g., January 2022 - Present) and compound words (e.g., problem-solving, customer-facing). Never use any dash as a clause separator in prose. Constructions like "drove revenue growth - a record for the team" or "built the platform - no engineering team required" are lazy and read as AI-generated. Rewrite each sentence so it flows without any dash.
 - Concurrent roles: when a candidate holds multiple simultaneous positions (multiple roles with the same end date or multiple current roles), list each one as a separate entry in order of relevance to the target role. Do not consolidate them into a single entry and do not add commentary about holding multiple roles at once.
 - Education dates: if no graduation year is provided for an education entry, omit the date field entirely. Do not add "(In Progress)", "(Expected)", or any placeholder text.
-- Employment date format: always write dates as Month YYYY (e.g., January 2024 - Present, not 2024 - Present). Month-level precision is required for ATS tenure parsing.
+- Employment date format: month-level precision is required for ATS tenure parsing. The exact month name format and "current role" word depend on the target market and writing language; see DATE FORMAT (REGION-SPECIFIC) below.
+- Bullet length: any single bullet that runs longer than approximately 280 characters (or visually wraps to 4+ lines) MUST be split into a main bullet plus 2-3 sub-bullets. The main bullet carries the headline claim with its strongest metric; each sub-bullet carries one supporting detail or scope element. Prefix sub-bullets with two spaces and a middle-dot bullet character ("  • "). Do not pad to create sub-bullets; if there are no genuine supporting details, keep the bullet shorter instead.
 - Soft phrases are banned. Never write "exceeded expectations," "consistent positive feedback," "recognized for [quality]," "earned a reputation for," "strong track record of," or any other unfalsifiable soft claim. If a metric exists to support the claim, lead with the metric and cut the soft preamble entirely. "Completed 400% more orders than quota" is correct. "Exceeded expectations completing 400% more orders" is not.
 - Section headers must use standard ATS-safe labels. Use "Projects" not "Projects (Shipped & Live)" or any other decorated variant. Never add parenthetical descriptions, status labels, or emoji to section headers.
 
@@ -343,7 +365,8 @@ CAREER LEVELS
   const isHigherEdRole = /financial.?aid|student.?services|academic.?advi|enrollment|registrar|bursar|higher.?ed|university|college|student.?success|student.?affairs|admissions|academic.?counsel|educational.?counsel/.test(targetRole);
   const isFinancialAidRole = /financial.?aid|aid.?advi|aid.?couns/.test(targetRole);
 
-  let prompt = base + marketRules;
+  const dateFormat = DATE_FORMATS[market] || DATE_FORMATS.us;
+  let prompt = base + marketRules + dateFormat;
 
   if (isTechnicalRole) {
     prompt += `

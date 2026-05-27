@@ -1126,11 +1126,11 @@ textarea{resize:vertical;line-height:1.55}
       .replace(/'/g, '&#39;');
   }
 
-  var LINK_RE = /(\b[A-Za-z0-9._+\-]+@[A-Za-z0-9\-]+(?:\.[A-Za-z0-9\-]+)+\b)|(https?:\/\/[^\s<]+)|(\b(?:[A-Za-z0-9][A-Za-z0-9\-]*\.)+(?:com|org|net|io|app|dev|co|me|ai|xyz|tech|studio|design|page|site|info|edu|gov|us|uk|ca|au)(?:\/[^\s<]*)?)/g;
+  var LINK_RE = /(\b[A-Za-z0-9._+\-]+@[A-Za-z0-9\-]+(?:\.[A-Za-z0-9\-]+)+\b)|(https?:\/\/[^\s<]+)|(\bwww\.[A-Za-z0-9][A-Za-z0-9\-]*(?:\.[A-Za-z0-9][A-Za-z0-9\-]*)*\.[A-Za-z]{2,}(?:\/[^\s<]*)?)|(\b[A-Za-z0-9][A-Za-z0-9\-]*(?:\.[A-Za-z0-9][A-Za-z0-9\-]*)*\.(?:com|org|net|io|app|dev|co|me|ai|xyz|tech|studio|design|page|site|info|edu|gov)\/[^\s<]*)|(\b[a-z0-9][a-z0-9\-]*(?:\.[a-z0-9][a-z0-9\-]*)*\.(?:com|org|net|io|app|dev|co|me|ai|xyz|tech|studio|design|page|site|info|edu|gov))/g;
 
   function linkify(text){
     var escaped = escapeHtml(text);
-    return escaped.replace(LINK_RE, function(match, email, url, bare){
+    return escaped.replace(LINK_RE, function(match, email, url){
       var trail = '';
       var target = match;
       if(!email){

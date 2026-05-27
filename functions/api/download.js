@@ -234,19 +234,33 @@ function runsXml(text, sz, hyperlinkCtx) {
   return out.join("");
 }
 
+const DATE_TAIL_RE = /^(.*?)\s*\|\s*((?:(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+)?\d{4}(?:\s*[-–]\s*(?:Present|(?:(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+)?\d{4}))?)\s*$/i;
+const TAB_RIGHT_POS = 10080;
+const DATED_SECTIONS = /^(EXPERIENCE|EDUCATION|CERTIFICATIONS|CERTIFICATIONS & RECOGNITION|HONORS|AWARDS|MEMBERSHIPS|PROFESSIONAL DEVELOPMENT|VOLUNTEER|VOLUNTEER WORK|PROJECTS|PUBLICATIONS|RESEARCH|RESIDENCIES|RESIDENCIES & FELLOWSHIPS|BOARD|BOARD & ADVISORY ROLES|PATENTS|COURSES|COURSES TAUGHT|COURSES COMPLETED|PRESENTATIONS|PRESENTATIONS \/ SPEAKING)$/i;
+
+function detectTrailingDate(line) {
+  const m = line.match(DATE_TAIL_RE);
+  if (!m) return null;
+  return { rest: m[1].trim(), date: m[2].trim() };
+}
+
 function buildDocumentXml(markdown, hyperlinkCtx) {
   const lines = markdown.split("\n");
   const paras = [];
   let firstHeading = true;
+  let pendingContactCenter = false;
+  let currentSection = null;
 
-  for (const raw of lines) {
-    const line = raw.trim();
-    if (!line) continue;
+  for (const rawLine of lines) {
+    const trimmed = rawLine.trim();
+    if (!trimmed) continue;
 
-    if (line.startsWith("## ")) {
-      const text = line.slice(3).trim();
+    if (trimmed.startsWith("## ")) {
+      const text = trimmed.slice(3).trim();
       if (firstHeading) {
         firstHeading = false;
+        pendingContactCenter = true;
+        currentSection = null;
         paras.push(
           `<w:p><w:pPr><w:jc w:val="center"/><w:spacing w:before="0" w:after="80"/>` +
           `<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="C9A84C"/></w:pBdr></w:pPr>` +
@@ -255,6 +269,7 @@ function buildDocumentXml(markdown, hyperlinkCtx) {
         );
       } else {
         firstHeading = false;
+        currentSection = text.toUpperCase();
         paras.push(
           `<w:p><w:pPr><w:spacing w:before="200" w:after="60"/>` +
           `<w:pBdr><w:bottom w:val="single" w:sz="4" w:space="1" w:color="C9A84C"/></w:pBdr></w:pPr>` +
@@ -265,8 +280,21 @@ function buildDocumentXml(markdown, hyperlinkCtx) {
       continue;
     }
 
-    if (line.startsWith("- ") || line.startsWith("• ")) {
-      const text = line.slice(2).trim();
+    // Sub-bullet: 2+ leading spaces, then • or -
+    const subMatch = rawLine.match(/^\s{2,}[•\-]\s+(.*)$/);
+    if (subMatch) {
+      firstHeading = false;
+      paras.push(
+        `<w:p><w:pPr><w:ind w:left="720" w:hanging="180"/><w:spacing w:before="0" w:after="40"/></w:pPr>` +
+        `<w:r><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr><w:t xml:space="preserve">• </w:t></w:r>` +
+        runsXml(subMatch[1], 20, hyperlinkCtx) +
+        `</w:p>`
+      );
+      continue;
+    }
+
+    if (trimmed.startsWith("- ") || trimmed.startsWith("• ")) {
+      const text = trimmed.slice(2).trim();
       firstHeading = false;
       paras.push(
         `<w:p><w:pPr><w:ind w:left="360" w:hanging="180"/><w:spacing w:before="0" w:after="40"/></w:pPr>` +
@@ -278,10 +306,47 @@ function buildDocumentXml(markdown, hyperlinkCtx) {
     }
 
     firstHeading = false;
-    const centered = !paras.length;
+
+    if (pendingContactCenter) {
+      pendingContactCenter = false;
+      paras.push(
+        `<w:p><w:pPr><w:jc w:val="center"/><w:spacing w:before="0" w:after="80"/></w:pPr>` +
+        runsXml(trimmed, 22, hyperlinkCtx) +
+        `</w:p>`
+      );
+      continue;
+    }
+
+    const isDatedSection = currentSection ? DATED_SECTIONS.test(currentSection) : false;
+    const trailingDate = isDatedSection ? detectTrailingDate(trimmed) : null;
+
+    if (trailingDate) {
+      const beforeSpacing = currentSection === "EXPERIENCE" ? 180 : 60;
+      paras.push(
+        `<w:p><w:pPr><w:tabs><w:tab w:val="right" w:pos="${TAB_RIGHT_POS}"/></w:tabs>` +
+        `<w:spacing w:before="${beforeSpacing}" w:after="40"/></w:pPr>` +
+        runsXml(trailingDate.rest, 22, hyperlinkCtx) +
+        `<w:r><w:tab/></w:r>` +
+        runsXml(trailingDate.date, 22, hyperlinkCtx) +
+        `</w:p>`
+      );
+      continue;
+    }
+
+    if (currentSection === "EXPERIENCE") {
+      // Role header without trailing date (e.g., "**Earlier:** ...") — give role-style spacing
+      paras.push(
+        `<w:p><w:pPr><w:spacing w:before="180" w:after="40"/></w:pPr>` +
+        runsXml(trimmed, 22, hyperlinkCtx) +
+        `</w:p>`
+      );
+      continue;
+    }
+
+    // Regular paragraph: justified across the page (summary, skill lines, etc.)
     paras.push(
-      `<w:p><w:pPr>${centered ? '<w:jc w:val="center"/>' : ''}<w:spacing w:before="0" w:after="80"/></w:pPr>` +
-      runsXml(line, 22, hyperlinkCtx) +
+      `<w:p><w:pPr><w:jc w:val="both"/><w:spacing w:before="0" w:after="80"/></w:pPr>` +
+      runsXml(trimmed, 22, hyperlinkCtx) +
       `</w:p>`
     );
   }

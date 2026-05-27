@@ -1278,6 +1278,12 @@ textarea{resize:vertical;line-height:1.55}
       inp.setAttribute('data-field', f.key);
       inp.placeholder = f.ph;
       wrap.appendChild(l); wrap.appendChild(inp);
+      if(f.key === 'year'){
+        var hint = document.createElement('div');
+        hint.style.cssText = 'font-size:10px;color:#888;margin-top:3px;line-height:1.4;';
+        hint.textContent = 'Optional. Leaving it off is a common way to reduce age bias, but some ATS systems flag missing dates and may lower your score.';
+        wrap.appendChild(hint);
+      }
       r2.appendChild(wrap);
     });
 

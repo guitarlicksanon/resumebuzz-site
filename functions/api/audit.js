@@ -82,7 +82,11 @@ function uint8ToBase64(bytes) {
 }
 
 function buildPrompt(jobDescription) {
+  const today = new Date().toISOString().slice(0, 10);
+  const currentYear = today.slice(0, 4);
   let prompt = `You are an expert resume writer and ATS specialist with 14 years of experience and over 1,000 resumes written for clients across 6 continents, service, tech, business, engineering, medical, and board-level roles.
+
+CURRENT DATE: Today is ${today}. The current year is ${currentYear}. Treat this as ground truth when evaluating any date on the resume. Do not call a year "future" unless it is strictly greater than ${currentYear}. A start date in ${currentYear} or earlier is a present or past date and must never be flagged as future-dated, even if the role's end date is "Present."
 
 Audit the resume and return ONLY a valid JSON object with this exact structure. No markdown, no explanation, no text outside the JSON:
 
@@ -116,6 +120,9 @@ Scoring guidelines:
 
 AGE-DISCRIMINATION PROTECTION (HARD RULE)
 Omitting graduation years from the Education section is a deliberate, valid choice candidates make to avoid age-based screening bias. Never flag missing graduation years as a finding at any severity (not critical, not warning, not info). Do not suggest "adding graduation years would improve ATS calculation of qualification timelines" or similar. ATS systems do not meaningfully penalize missing graduation years; the candidate's protection trade-off is the right call. The same protection applies to omitting dates from early-career or pre-2000 experience entries that primarily indicate age rather than relevant tenure. Score the resume as if those omissions were neutral choices.
+
+CONCURRENT-ROLES NORMALCY (HARD RULE)
+Multiple roles carrying "Present" or current end dates simultaneously is normal and valid. Freelance, contract, consulting, advisory, board, founder, fractional, part-time, and side-business roles routinely overlap with a primary W2 role and with each other. Do not flag concurrent "Present" roles as an ATS anomaly, data quality issue, recruiter red flag, or "looks like four full-time jobs" finding at any severity. ATS systems index roles independently and do not penalize overlap. The builder intake captures each role separately with its own start/end dates by design, so overlap is a faithful representation of the candidate's history, not a parsing artifact. Only flag if the resume itself makes explicit claims that are logically impossible (e.g., the same role text claims two different employers at the same time). Score concurrent active roles as a neutral choice.
 
 Provide 2-4 findings per category. Be specific and actionable, name the actual problem, not a generic tip. critical = must fix before applying, warning = should fix, info = nice to have.`;
 

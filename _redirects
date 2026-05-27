@@ -1,1 +1,4 @@
 /home / 301
+
+# Belt-and-suspenders for the local-only _private/ folder (which should never be committed/deployed):
+/_private/* /404 404

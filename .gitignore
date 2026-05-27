@@ -2,3 +2,7 @@
 node_modules/
 .DS_Store
 *.log
+
+# Local-only scratch space (drafts, notes, secrets-during-rotation, etc.).
+# Never committed, never deployed. See _private/README.md.
+_private/

@@ -26,6 +26,27 @@ export async function onRequestGet({ request, env }) {
 
   const stripeAuth = { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` };
   const base = 'https://api.stripe.com/v1';
+  const url = new URL(request.url);
+
+  // ?all=true returns every active product (used by GA which shares this Stripe account)
+  if (url.searchParams.get('all') === 'true') {
+    try {
+      const res = await fetch(`${base}/products?limit=100&active=true`, { headers: stripeAuth });
+      const data = await res.json();
+      if (data.error) return json({ error: data.error.message }, 400);
+      const products = (data.data || []).map(function (p) {
+        return {
+          product_id: p.id,
+          product_name: p.name,
+          label: p.name,
+          features: (p.marketing_features || []).map(function (f) { return f.name; }),
+        };
+      });
+      return json({ ok: true, products });
+    } catch (e) {
+      return json({ error: e.message }, 500);
+    }
+  }
 
   const products = await Promise.all(PRICES.map(async function ({ price_id, label }) {
     try {

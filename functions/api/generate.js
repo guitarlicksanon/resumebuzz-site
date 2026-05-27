@@ -200,6 +200,9 @@ CORE RULES — NON-NEGOTIABLE
 - Never use a dash as a clause separator in prose. Constructions like "drove revenue growth - a record for the team" or "built the platform - no engineering team required" are lazy and read as AI-generated. Rewrite so each sentence flows without the dash. Dashes in date ranges (2022 - Present) are fine.
 - Concurrent roles: when a candidate holds multiple simultaneous positions (multiple roles with the same end date or multiple current roles), list each one as a separate entry in order of relevance to the target role. Do not consolidate them into a single entry and do not add commentary about holding multiple roles at once.
 - Education dates: if no graduation year is provided for an education entry, omit the date field entirely. Do not add "(In Progress)", "(Expected)", or any placeholder text.
+- Employment date format: always write dates as Month YYYY (e.g., January 2024 - Present, not 2024 - Present). Month-level precision is required for ATS tenure parsing.
+- Soft phrases are banned. Never write "exceeded expectations," "consistent positive feedback," "recognized for [quality]," "earned a reputation for," "strong track record of," or any other unfalsifiable soft claim. If a metric exists to support the claim, lead with the metric and cut the soft preamble entirely. "Completed 400% more orders than quota" is correct. "Exceeded expectations completing 400% more orders" is not.
+- Section headers must use standard ATS-safe labels. Use "Projects" not "Projects (Shipped & Live)" or any other decorated variant. Never add parenthetical descriptions, status labels, or emoji to section headers.
 
 GOLDEN RULE — LENGTH
 1-2 pages is the standard. 3+ pages only when content genuinely requires it (extensive publications, training portfolios, multi-sector careers). Never pad to hit a page target; never cut strong content to stay short.
@@ -218,6 +221,13 @@ CAREER LEVELS
   const targetRole = ((intake.target?.role || intake.target?.title || '') + ' ' + (intake.target?.industry || '')).toLowerCase();
   const isTechnicalRole = /engineer|developer|architect|data|ml\b|ai\b|machine.?learn|software|devops|platform|backend|frontend|full.?stack|cloud|infrastructure|security|sre|analytics/.test(targetRole);
 
+  const allText = [
+    ...(intake.skills?.technical || []),
+    ...(intake.skills?.tools || []),
+    ...(intake.experience || []).flatMap(j => [j.description || '', ...(j.achievements || [])]),
+  ].join(' ').toLowerCase();
+  const hasServerless = /cloudflare workers|cloudflare pages|cloudflare kv|aws lambda|vercel|netlify|deno deploy|fly\.io|serverless|edge function/.test(allText);
+
   const hasShippedProducts = (intake.experience || []).some(job => {
     const text = (job.description || '') + ' ' + (job.achievements || []).join(' ');
     return /https?:\/\/|www\.|built and (launched|deployed|shipped)|live at|available at|\.(com|io|app|dev|co|org)\b/.test(text);
@@ -230,6 +240,13 @@ CAREER LEVELS
 
 SKILLS PLACEMENT — TECHNICAL ROLES
 For technical and AI/ML target roles, place the Technical Skills section immediately after the Professional Summary, before Work Experience. This ensures ATS keyword scanning hits skills before the experience section.`;
+  }
+
+  if (hasServerless) {
+    prompt += `
+
+SERVERLESS / EDGE TERMINOLOGY
+The candidate's stack includes serverless or edge-compute platforms. In the Skills section and Professional Summary, include the vendor-neutral umbrella terms "serverless architecture," "edge computing," and "cloud deployment" alongside the specific platform names. These terms appear in ATS keyword filters for cloud and infrastructure roles and are accurate descriptions of this candidate's actual work.`;
   }
 
   if (hasShippedProducts) {

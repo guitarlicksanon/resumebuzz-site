@@ -1787,6 +1787,16 @@ textarea{resize:vertical;line-height:1.55}
       });
     }
 
+    if (kw < 23) {
+      questions.push({
+        id: 'fp_cloud_terms',
+        label: 'Cloud and infrastructure terms',
+        hint: 'Confirm which of these umbrella terms are accurate for your stack. The rebuild will weave in any that apply — these appear in ATS filters but are often missing even when the underlying work qualifies.',
+        ph: 'e.g. "Yes: serverless architecture, edge computing, cloud deployment" or "Add: SaaS, stakeholder management, cross-functional collaboration"',
+        rows: 2
+      });
+    }
+
     if (ats < 20) {
       questions.push({
         id: 'fp_ats',
@@ -1803,6 +1813,16 @@ textarea{resize:vertical;line-height:1.55}
         label: 'Anything missing from the draft',
         hint: 'Certifications, awards, languages, publications, or sections that should appear but did not.',
         ph: 'e.g. "Add: PMP Certified 2022" or "Include a Languages section: Spanish (fluent)"',
+        rows: 2
+      });
+    }
+
+    if (struc < 22 || ats < 22) {
+      questions.push({
+        id: 'fp_concurrent',
+        label: 'Concurrent or overlapping roles',
+        hint: 'If you hold or have held multiple jobs at the same time, tell us which one is most relevant to this application. The rebuild will lead with that role and order the rest by fit rather than date.',
+        ph: 'e.g. "Primary role is OYE Creations — list James Innes second, HotelPlanner third" or "All roles are current but the consulting work is the focus"',
         rows: 2
       });
     }

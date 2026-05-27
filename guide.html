@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Use the Builder - ResumeBuzz</title>
+<meta name="description" content="How the ResumeBuzz AI builder works, what each ATS score category means, and the fastest ways to push your score higher.">
+<link rel="canonical" href="https://buzzresume.com/guide" />
+<style>
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:optional;src:url('/assets/fonts/dm-mono-400.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:optional;src:url('/assets/fonts/dm-mono-500.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 900;font-display:optional;src:url('/assets/fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400 900;font-display:optional;src:url('/assets/fonts/playfair-italic.woff2') format('woff2')}
+70%{box-shadow:0 0 0 6px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+  .dt-prefix{color:#EBEBEB}
+  .dt-pulse{width:6px;height:6px;border-radius:50%;background:#4ADE80;flex-shrink:0;animation:dt-ping 2s ease-in-out infinite}
+  @keyframes dt-ping{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,.5)}60%{opacity:.6;box-shadow:0 0 0 5px rgba(74,222,128,0)}}
+  .dt-lnk{color:#EBEBEB;text-decoration:none}
+  .dt-lnk .dt-t1{color:#EBEBEB;transition:color .15s}
+  .dt-lnk .dt-t2{color:#C9A84C;transition:color .15s}
+  .dt-lnk:hover .dt-t1{color:#C9A84C}
+  .dt-lnk:hover .dt-t2{color:#EBEBEB}
+</style>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111111;
+  --surface:#1B1B1B;
+  --surface2:#232323;
+  --border:#2E2E2E;
+  --gold:#C9A84C;
+  --gold-dim:#8A6F2E;
+  --text:#EBEBEB;
+  --muted:#8C8C8C;
+  --warm:#F5F3EE;
+  --red:#E05A3A;
+  --green:#4ADE80;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:1rem;line-height:1.6;min-height:100vh}
+h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.2}
+a{color:inherit;text-decoration:none}
+
+/* OYE BAR */
+.oye-bar{height:36px;background:#090806;border-bottom:1px solid rgba(201,168,76,0.12);display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;position:sticky;top:0;z-index:101}
+.oye-brand{display:flex;align-items:center;gap:0.45rem;text-decoration:none;color:rgba(255,255,255,0.82);font-family:'Playfair Display',Georgia,serif;font-size:0.75rem;font-weight:600;transition:color 150ms}
+.oye-brand em{font-style:normal;color:#C9A84C;transition:color 150ms}
+.oye-brand svg ellipse,.oye-brand svg circle,.oye-brand svg line{stroke:rgba(255,255,255,0.65);transition:stroke 150ms}
+.oye-brand:hover{color:#C9A84C}
+.oye-brand:hover em{color:rgba(255,255,255,0.82)}
+.oye-brand:hover svg ellipse,.oye-brand:hover svg circle,.oye-brand:hover svg line{stroke:#C9A84C}
+.oye-nav-links{display:flex;align-items:center;gap:1.25rem}
+.oye-nav-links a{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.82);text-decoration:none;transition:color 0.15s;white-space:nowrap}
+.oye-nav-links a:hover{color:#C9A84C}
+@media(max-width:540px){.oye-nav-links{display:none}}
+
+/* NAV */
+nav{position:sticky;top:36px;z-index:100;background:rgba(17,17,17,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 1.5rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.wordmark{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:-0.01em;cursor:default}
+.wordmark .w1{color:var(--warm);transition:color 220ms}
+.wordmark .w2{color:var(--gold);transition:color 220ms}
+.wordmark:hover .w1{color:var(--gold)}
+.wordmark:hover .w2{color:var(--warm)}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);transition:color 0.15s}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted)}
+@media(max-width:720px){
+  .nav-links{display:none;position:fixed;top:100px;left:0;right:0;background:rgba(17,17,17,0.97);backdrop-filter:blur(12px);flex-direction:column;padding:1.5rem;gap:1.25rem;border-bottom:1px solid var(--border);z-index:99}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+}
+
+/* PAGE */
+main{max-width:860px;margin:0 auto;padding:5rem 1.5rem 8rem}
+.page-eyebrow{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem}
+.page-heading{font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem}
+.page-heading .w1{color:var(--warm);transition:color 220ms}
+.page-heading .w2{color:var(--gold);transition:color 220ms}
+.page-heading:hover .w1{color:var(--gold)}
+.page-heading:hover .w2{color:var(--warm)}
+.page-sub{font-size:1.05rem;color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:4rem}
+
+/* SECTION HEADINGS */
+.section-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem}
+.section-heading{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;margin-bottom:0.75rem}
+.section-heading .w1{color:var(--warm)}
+.section-heading .w2{color:var(--gold)}
+.section-sub{font-size:0.93rem;color:var(--muted);line-height:1.7;margin-bottom:2rem}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:1.25rem;margin-bottom:5rem}
+.step{display:flex;gap:1.5rem;align-items:flex-start}
+.step-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:800;color:var(--gold);line-height:1;flex-shrink:0;width:2.5rem;text-align:right}
+.step-body{flex:1;padding-top:0.35rem;border-left:2px solid var(--border);padding-left:1.5rem}
+.step-title{font-family:'DM Mono',monospace;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text);margin-bottom:0.4rem}
+.step-desc{font-size:0.93rem;color:var(--muted);line-height:1.7}
+.step-tip{display:inline-block;margin-top:0.6rem;font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--gold);background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:4px;padding:0.3rem 0.6rem}
+
+/* SCORE CARDS */
+.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:5rem}
+@media(max-width:620px){.score-grid{grid-template-columns:1fr}}
+.score-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.75rem 1.5rem;position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;inset:0;border-radius:12px;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.05) 0%,transparent 65%);pointer-events:none}
+.score-pts{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;color:var(--gold);line-height:1;margin-bottom:0.2rem}
+.score-pts span{font-size:1rem;font-weight:400;color:var(--muted);font-family:'DM Mono',monospace}
+.score-name{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.85rem}
+.score-what{font-size:0.9rem;color:var(--text);line-height:1.6;margin-bottom:0.85rem}
+.score-how{font-size:0.82rem;color:var(--muted);line-height:1.65}
+.score-how strong{color:var(--gold);font-weight:600}
+
+/* TIPS */
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:5rem}
+@media(max-width:620px){.tips-grid{grid-template-columns:1fr}}
+.tip-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.4rem 1.25rem}
+.tip-icon{font-size:1.1rem;margin-bottom:0.6rem}
+.tip-title{font-family:'DM Mono',monospace;font-size:0.75rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text);margin-bottom:0.4rem}
+.tip-desc{font-size:0.88rem;color:var(--muted);line-height:1.65}
+.tip-desc strong{color:var(--text);font-weight:600}
+
+/* MISTAKES */
+.mistakes{display:flex;flex-direction:column;gap:0.85rem;margin-bottom:5rem}
+.mistake{display:flex;gap:1rem;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.25rem}
+.mistake-x{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--red);background:rgba(224,90,58,0.1);border:1px solid rgba(224,90,58,0.2);border-radius:4px;padding:0.2rem 0.45rem;flex-shrink:0;margin-top:0.05rem}
+.mistake-text{font-size:0.9rem;color:var(--muted);line-height:1.6}
+.mistake-text strong{color:var(--text);font-weight:600}
+
+/* CTA */
+.cta-block{background:var(--surface);border:1px solid rgba(201,168,76,0.25);border-radius:14px;padding:2.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.cta-block::before{content:'';position:absolute;inset:0;border-radius:14px;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.08) 0%,transparent 60%);pointer-events:none}
+.cta-block h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;margin-bottom:0.6rem}
+.cta-block h2 .w1{color:var(--warm)}
+.cta-block h2 .w2{color:var(--gold)}
+.cta-block p{font-size:0.95rem;color:var(--muted);margin-bottom:1.75rem;max-width:440px;margin-left:auto;margin-right:auto}
+.btn-build{display:inline-block;background:var(--gold);color:#111;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.95rem;padding:0.8rem 2.2rem;border-radius:7px;text-decoration:none;letter-spacing:0.01em;transition:opacity 0.15s}
+.btn-build:hover{opacity:0.88}
+
+/* DIVIDER */
+.section-divider{border:none;border-top:1px solid var(--border);margin:4rem 0}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);margin-top:6rem;padding:2.5rem 1.5rem;text-align:center}
+.footer-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:0.75rem}
+.footer-inner span{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted)}
+.footer-inner a{color:var(--muted);transition:color 0.15s}
+.footer-inner a:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<div class="oye-bar">
+  <a href="https://oyecreations.com" target="_blank" rel="noopener noreferrer" class="oye-brand">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" style="height:18px;width:auto" aria-hidden="true">
+      <ellipse cx="250" cy="175" rx="205" ry="135" fill="none" stroke="#C9A84C" stroke-width="13" stroke-linecap="round"/>
+      <defs><clipPath id="oyecp"><ellipse cx="250" cy="175" rx="191" ry="121"/></clipPath></defs>
+      <g clip-path="url(#oyecp)" stroke="#C9A84C" stroke-width="13" stroke-linecap="round" fill="none">
+        <circle cx="148" cy="175" r="63"/>
+        <line x1="175" y1="80" x2="250" y2="168"/><line x1="320" y1="80" x2="250" y2="168"/>
+        <line x1="250" y1="168" x2="250" y2="265"/>
+        <line x1="318" y1="112" x2="318" y2="240"/><line x1="318" y1="112" x2="388" y2="112"/>
+        <line x1="318" y1="176" x2="383" y2="176"/><line x1="318" y1="240" x2="393" y2="240"/>
+      </g>
+    </svg>
+    <span>OYE <em>Creations</em></span>
+  </a>
+  <nav class="oye-nav-links" aria-label="OYE network">
+    <a href="https://multilingo.studio" target="_blank" rel="noopener noreferrer">Multilingo</a>
+    <a href="https://guitaranon.com" target="_blank" rel="noopener noreferrer">GuitarAnon</a>
+    <a href="https://droptimize.org" target="_blank" rel="noopener noreferrer">Droptimize</a>
+  </nav>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="wordmark" style="text-decoration:none">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 52" width="26" height="23" style="vertical-align:middle;margin-right:0.35rem;flex-shrink:0" aria-hidden="true"><polygon points="60,26 45,0 15,0 0,26 15,52 45,52" fill="#C9A84C"/><path d="M30,12 L39,27 L34.5,27 L34.5,40 L25.5,40 L25.5,27 L21,27 Z" fill="#111"/></svg>
+      <span class="w1">Resume</span><span class="w2">Buzz</span>
+    </a>
+    <button class="hamburger" aria-label="Toggle menu" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="/">Audit</a>
+      <a href="/build">Build</a>
+      <a href="/guide" class="active">Guide</a>
+      <a href="/about">About</a>
+      <a href="https://block.buzzresume.com">Second Chance</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <p class="page-eyebrow">How it works</p>
+  <h1 class="page-heading"><span class="w1">Get the most out of </span><span class="w2">the builder</span></h1>
+  <p class="page-sub">The builder does the writing. You supply the raw material. The better the input, the higher the score. Here is exactly how to do it.</p>
+
+  <!-- HOW IT WORKS -->
+  <p class="section-label">The process</p>
+  <h2 class="section-heading"><span class="w1">Five steps, </span><span class="w2">start to finish</span></h2>
+  <p class="section-sub">Each step feeds into the next. Skipping any of them will show up in your score.</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Tell it what job you are going for</div>
+        <div class="step-desc">Fill in your target role, industry, and seniority level. If you have a job posting, paste the full description into the Job Description field. This is the single biggest lever for keyword matching. The builder reads the posting and calibrates the language to match what that employer is looking for.</div>
+        <div class="step-tip">No posting? Use the job title alone. A posting will always score higher.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Enter your work history with numbers</div>
+        <div class="step-desc">For each role, use the Key Achievements fields to list your bullet points separately. Each bullet gets its own box. Include specific numbers wherever you have them: percentages, dollar amounts, headcounts, time frames, client counts. The builder treats those numbers as facts and keeps them intact through the rewrite. Vague descriptions get tightened. Numbers survive exactly as entered.</div>
+        <div class="step-tip">One bullet per achievement field. Do not pile everything into the raw notes box.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Fill in contact, skills, and education</div>
+        <div class="step-desc">Phone, email, and LinkedIn are not optional if you want a clean ATS score. Most systems parse the contact block first. A missing phone number alone can drop your compatibility score significantly. Skills go in the separate fields, not buried in job descriptions. Education: if you do not have a formal degree, write what you have studied and when. Even self-directed study with a date beats a blank field.</div>
+        <div class="step-tip">No degree? Try: "Self-directed study, AI and web development, 2020 - present"</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Review the AI draft and ATS score</div>
+        <div class="step-desc">The builder generates your resume in real time. When it finishes, the ATS scoring runs automatically. You get a score out of 100 across four categories. Review the draft for any names, dates, or company names that need correcting. The AI does not know how to spell your old employer's name. You do.</div>
+        <div class="step-tip">Copy the draft into Word or Google Docs and run spellcheck before moving on.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Use the fix panel and rebuild</div>
+        <div class="step-desc">Below your score, a fix panel appears with questions based on your weakest categories. Answer the ones that apply and click Rebuild. The builder applies your corrections to the same draft without starting from scratch. Each rebuild typically adds 5 to 15 points. You can rebuild multiple times.</div>
+        <div class="step-tip">Answer all the fix panel fields, not just the first one. Every unanswered field is a missed point.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ATS SCORE EXPLAINED -->
+  <p class="section-label">Your score</p>
+  <h2 class="section-heading"><span class="w1">What each </span><span class="w2">category measures</span></h2>
+  <p class="section-sub">The ATS score runs out of 100 across four categories of 25 points each. This is what each one is actually checking.</p>
+
+  <div class="score-grid">
+
+    <div class="score-card">
+      <div class="score-pts">25 <span>/ 25 pts</span></div>
+      <div class="score-name">ATS Compatibility</div>
+      <div class="score-what">Whether a resume parsing system can actually read your document correctly. Most employers run applications through automated software before a human sees it. If that software cannot parse your contact info, your dates, or your job titles, your application gets dropped.</div>
+      <div class="score-how"><strong>How to score higher:</strong> Fill in phone, email, and LinkedIn. Use a full date format for each role (month and year, not just year). Stick to standard section names. Do not use tables, columns, or graphics in the intake fields.</div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-pts">25 <span>/ 25 pts</span></div>
+      <div class="score-name">Keyword Density</div>
+      <div class="score-what">How well the language in your resume matches the language in job postings for your target role. ATS systems match resumes to jobs using exact and near-exact keyword matches. If a posting says "stakeholder management" and your resume says "worked with teams," you miss the match.</div>
+      <div class="score-how"><strong>How to score higher:</strong> Paste the full job description into the builder. Pull specific terms from that posting and include them naturally in your achievement bullets. The builder will mirror the language back.</div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-pts">25 <span>/ 25 pts</span></div>
+      <div class="score-name">Impact Language</div>
+      <div class="score-what">Whether your bullets show results or just describe tasks. A bullet that says "managed the onboarding process" tells the reader what you did. A bullet that says "cut onboarding time from 3 weeks to 6 days across a team of 40" tells them what changed because of you. The second one scores.</div>
+      <div class="score-how"><strong>How to score higher:</strong> Add numbers to your achievement fields. Percentages, headcounts, dollar amounts, time savings. The builder keeps them exactly as you wrote them. If you do not have numbers, describe the scale: team size, number of clients, frequency, or geographic reach.</div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-pts">25 <span>/ 25 pts</span></div>
+      <div class="score-name">Structure</div>
+      <div class="score-what">Whether the document is organized in a way that ATS systems and human reviewers expect to find. Missing sections, blank fields, or non-standard organization cause the system to flag the resume as incomplete even if the content is strong.</div>
+      <div class="score-how"><strong>How to score higher:</strong> Include education even if it is informal. Add a certifications section if you have any credentials. Make sure every role has a start date, end date or "Present," and a job title. Do not leave any section intentionally blank.</div>
+    </div>
+
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- TIPS -->
+  <p class="section-label">Best practices</p>
+  <h2 class="section-heading"><span class="w1">What moves the </span><span class="w2">score the most</span></h2>
+  <p class="section-sub">These are the highest-impact things you can do. Most of them take under two minutes.</p>
+
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">📋</div>
+      <div class="tip-title">Paste the job posting</div>
+      <div class="tip-desc">The Job Description field is where keyword matching happens. <strong>A resume built with a job posting scores 8 to 15 points higher</strong> on average than one built without it. Paste the full posting, not just the title.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔢</div>
+      <div class="tip-title">Put numbers in the achievement fields</div>
+      <div class="tip-desc">Every number you enter comes out of the AI exactly as written. <strong>Percentages, dollar figures, team sizes, client counts</strong> - they survive the rewrite intact and go directly toward your Impact Language score.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📬</div>
+      <div class="tip-title">Complete the contact block</div>
+      <div class="tip-desc">Phone and email are <strong>the first things ATS systems look for</strong>. A missing phone number alone can drop your Compatibility score by several points. LinkedIn is optional but adds to completeness.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎓</div>
+      <div class="tip-title">Always fill in education</div>
+      <div class="tip-desc">A blank Education section is an automatic Structure penalty. <strong>No degree is not the same as no entry.</strong> List coursework, certifications, self-directed study, bootcamps, or anything with a date attached.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔧</div>
+      <div class="tip-title">Use the fix panel every time</div>
+      <div class="tip-desc">The questions in the fix panel are generated from your specific score gaps. <strong>They are not generic suggestions.</strong> Answering them and rebuilding targets the exact categories holding your score down.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📅</div>
+      <div class="tip-title">Use month and year for dates</div>
+      <div class="tip-desc">Writing "2022 - Present" is fine for a human reader. ATS parsers <strong>prefer "January 2022 - Present"</strong> because they calculate tenure. Year-only dates get flagged as potentially incomplete in some systems.</div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- COMMON MISTAKES -->
+  <p class="section-label">What to avoid</p>
+  <h2 class="section-heading"><span class="w1">Mistakes that </span><span class="w2">cost points</span></h2>
+  <p class="section-sub">These come up constantly. All of them are easy to avoid once you know what to look for.</p>
+
+  <div class="mistakes">
+    <div class="mistake">
+      <div class="mistake-x">avoid</div>
+      <div class="mistake-text"><strong>Dumping everything into the raw notes box.</strong> The Raw Notes field is for context that does not fit as a bullet point. It is not a substitute for the achievement fields. If your accomplishments are only in the notes box, the builder has no structured bullets to work from and will generate generic content.</div>
+    </div>
+    <div class="mistake">
+      <div class="mistake-x">avoid</div>
+      <div class="mistake-text"><strong>Leaving phone or email blank.</strong> These look like small omissions. To an ATS parser, a missing phone number means the record is incomplete. It can prevent the application from being routed correctly, and it shows up directly in your Compatibility score.</div>
+    </div>
+    <div class="mistake">
+      <div class="mistake-x">avoid</div>
+      <div class="mistake-text"><strong>Skipping the job description field.</strong> The builder can generate a polished resume without it. It cannot generate one that matches a specific employer's language without it. Keyword Density is the hardest category to improve after the fact if you skip this step.</div>
+    </div>
+    <div class="mistake">
+      <div class="mistake-x">avoid</div>
+      <div class="mistake-text"><strong>Ignoring the fix panel after scoring.</strong> The fix panel is where most of the score improvement happens. Generating a draft and not running the fix cycle is like baking a cake and not adding frosting. The structure is there. The finish is not.</div>
+    </div>
+    <div class="mistake">
+      <div class="mistake-x">avoid</div>
+      <div class="mistake-text"><strong>Leaving education completely blank.</strong> If you skipped the education fields because you do not have a formal degree, add something anyway. A certification, a course, a period of independent study with a date. Blank is always worse than something.</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <h2><span class="w1">Ready to </span><span class="w2">build?</span></h2>
+    <p>The whole process takes about ten minutes. Your draft comes out the other side polished, scored, and ready to iterate on.</p>
+    <a href="/build" class="btn-build">Build my resume</a>
+  </div>
+
+</main>
+
+<!-- ── SCORE STRIP ──────────────────────────────────────────────── -->
+<div style="background:rgba(201,168,76,0.05);border-top:1px solid rgba(201,168,76,0.12);padding:9px 24px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <a href="https://droptimize.org" target="_blank" rel="noopener" aria-label="droptimize.org" style="display:inline-flex;align-items:center;margin-right:5px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56" style="height:16px;width:auto;flex-shrink:0;" aria-hidden="true" fill="none"><path d="M6,20 A18,18 0 0,1 42,20 Q42,38 24,54 Q6,38 6,20 Z" fill="#C9A84C"/><polyline points="13,28 24,14 35,28" stroke="#111111" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;">droptimize</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:#8C8C8C;opacity:0.5;">·</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;"><strong style="color:#C9A84C;font-weight:500;">100/100</strong> Lighthouse</span>
+    </div>
+    <span style="display:flex;align-items:center;gap:10px;flex-shrink:0;"><span class="dt-pulse"></span><span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:#4ADE80;white-space:nowrap;">Audited May 2026</span><span class="dt-prefix" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap;">Site enhanced by </span><a class="dt-lnk" href="https://droptimize.org" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap;"><span class="dt-t1">droptimize</span><span class="dt-t2">.org &#x2192;</span></a></span>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <span>&copy; 2026 ResumeBuzz &middot; An <a href="https://oyecreations.com" target="_blank" rel="noopener">OYE Creations</a> property</span>
+    <span><a href="/privacy">Privacy</a> &middot; <a href="/">Back to Audit</a></span>
+  </div>
+</footer>
+
+<script>window.OYEChat = { brand: 'resumebuzz', adminUrl: 'https://bink.oyecreations.com', subjects: ['AI Builder', 'Human Writer', 'CV vs Resume'], turnstileSiteKey: '0x4AAAAAADUIs5uXgonNVbPD' }</script>
+<script defer src="https://bink.oyecreations.com/assets/chat-widget.js?v=25"></script>
+</body>
+</html>

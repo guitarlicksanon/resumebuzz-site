@@ -42,6 +42,9 @@ Scoring guidelines:
 - Impact Language (0-25): Deduct for weak verbs (worked, helped, responsible for), passive voice, bullets without quantified results.
 - Structure & Completeness (0-25): Deduct for missing professional summary, wrong section order, inappropriate length, missing key sections.
 
+AGE-DISCRIMINATION PROTECTION (HARD RULE)
+Omitting graduation years from the Education section is a deliberate, valid choice candidates make to avoid age-based screening bias. Never flag missing graduation years as a finding at any severity. Do not suggest "adding graduation years would improve ATS calculation of qualification timelines" or similar. ATS systems do not meaningfully penalize missing graduation years. The same protection applies to omitting dates from early-career experience that primarily indicates age rather than relevant tenure. Score those omissions as neutral.
+
 Provide 2-3 findings per category. Be specific and actionable. critical = must fix, warning = should fix, info = nice to have.
 
 RESUME TEXT:

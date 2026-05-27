@@ -400,6 +400,21 @@ LANGUAGE REQUIREMENT
 Write the entire document in ${outputLanguage}. Every word, heading, bullet, and section label must be in ${outputLanguage}. Write naturally as a fluent native speaker would. Do not include any English text.`;
   }
 
+  if (intake.role_structure === "split") {
+    prompt += `
+
+ROLE BULLET STRUCTURE OVERRIDE: SPLIT WITH SUB-HEADERS
+The candidate has explicitly opted into the visual split format and accepted the ATS parsing risk. Override the default WORK EXPERIENCE ENTRIES rule. For every role with more than 2 bullets, split the bullet list into two clearly labeled subsections, each label on its own line in ALL CAPS, plain text, no decoration:
+
+ACHIEVEMENTS
+- Outcomes, wins, and measurable results. At least 60% must include a metric, dollar figure, percentage, ratio, named count, or other specific outcome.
+
+RESPONSIBILITIES
+- Scope and ongoing duties that define the role but did not produce a discrete measurable win.
+
+Use the ACHIEVEMENTS label first, then RESPONSIBILITIES. Omit either subsection if it would be empty. Do not invent responsibilities to pad. For very short tenures (under 6 months or 1 to 2 bullets total) a single combined list is acceptable and the labels can be skipped.`;
+  }
+
   return prompt;
 }
 
@@ -575,15 +590,14 @@ No hash symbols, no underlines, no dashes under the header.
 WORK EXPERIENCE ENTRIES
 Format the role header on a single line: Company Name | Job Title | City, ST | Start Month YYYY - End Month YYYY
 
-Under each role, split the bullets into two clearly labeled subsections, each label on its own line in ALL CAPS, plain text, no decoration:
+Under each role, use a single unified bullet list. No sub-section headers (do not emit "ACHIEVEMENTS", "RESPONSIBILITIES", or any other intra-role label). The bullets follow a strict ORDERING RULE:
 
-ACHIEVEMENTS
-- Outcomes, wins, and measurable results. At least 60% must include a metric, dollar figure, percentage, ratio, named count, or other specific outcome. These are the bullets that prove impact. 2 to 5 bullets per role; quality over quantity.
+1. Achievement bullets first. These are outcomes, wins, and measurable results: metric, dollar figure, percentage, ratio, named count, or other specific result. At least 60% of each role's bullets must carry a metric or specific outcome. Lead the role's bullet list with these.
+2. Responsibility bullets after. These are scope and ongoing duties that define the role but did not produce a discrete measurable win. Keep them tight: do not invent responsibilities to pad the list.
 
-RESPONSIBILITIES
-- Scope and ongoing duties that define the role but did not produce a discrete measurable win. Keep this list short: 2 to 4 bullets per role. Skip this subsection entirely if every bullet is genuinely an achievement.
+The order is: every achievement bullet, then every responsibility bullet, in one continuous list. Never interleave them. Never label them. If every bullet in a role is genuinely an achievement, the role can have zero responsibility bullets.
 
-Use the ACHIEVEMENTS label first, then RESPONSIBILITIES. Omit either subsection if it would be empty. Do not invent responsibilities to pad the section. For very short tenures (under 6 months) a single combined list is acceptable, but most roles must use the split.
+Bullet count per role: 3 to 7 total. Quality over quantity. For very short tenures (under 6 months), 1 to 3 bullets is enough.
 
 BULLET FORMAT
 Primary bullets: each line starts with a plain hyphen and a space, e.g., - Led platform migration cutting infra cost 38%.

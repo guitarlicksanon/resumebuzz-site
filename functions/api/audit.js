@@ -58,7 +58,16 @@ async function extractDocxText(buffer) {
   } else {
     throw new Error("Unsupported compression method: " + entry.compressionMethod);
   }
-  const plain = xmlText.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const stripped = xmlText.replace(/<[^>]+>/g, " ");
+  const decoded = stripped
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(parseInt(n, 10)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCodePoint(parseInt(n, 16)));
+  const plain = decoded.replace(/\s+/g, " ").trim();
   return plain;
 }
 
@@ -104,6 +113,9 @@ Scoring guidelines:
 - Keyword Density (0-25): Deduct for missing industry-standard terms, vague skill descriptions (e.g. "Python" instead of "Python 3.x"), absent role-specific language.
 - Impact Language (0-25): Deduct for weak verbs (worked, helped, assisted, responsible for), passive voice, bullet points without quantified results.
 - Structure & Completeness (0-25): Deduct for missing professional summary, wrong section order for experience level, inappropriate length, missing key sections.
+
+AGE-DISCRIMINATION PROTECTION (HARD RULE)
+Omitting graduation years from the Education section is a deliberate, valid choice candidates make to avoid age-based screening bias. Never flag missing graduation years as a finding at any severity (not critical, not warning, not info). Do not suggest "adding graduation years would improve ATS calculation of qualification timelines" or similar. ATS systems do not meaningfully penalize missing graduation years; the candidate's protection trade-off is the right call. The same protection applies to omitting dates from early-career or pre-2000 experience entries that primarily indicate age rather than relevant tenure. Score the resume as if those omissions were neutral choices.
 
 Provide 2-4 findings per category. Be specific and actionable, name the actual problem, not a generic tip. critical = must fix before applying, warning = should fix, info = nice to have.`;
 

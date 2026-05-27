@@ -788,6 +788,27 @@ textarea{resize:vertical;line-height:1.55}
       <textarea id="writerNotes" rows="4" placeholder="Anything the client said that doesn't fit elsewhere. Tone, gaps, context, red flags. Every drop of context is honey."></textarea>
     </div>
 
+    <!-- ROLE STRUCTURE OPTION -->
+    <div class="form-section" style="padding-bottom:0.5rem">
+      <div class="section-header">Role bullet structure</div>
+      <div style="display:flex;flex-direction:column;gap:0.4rem;font-size:0.82rem">
+        <label style="display:flex;align-items:flex-start;gap:0.55rem;cursor:pointer">
+          <input type="radio" name="roleStructure" id="roleStructUnified" value="unified" checked style="margin-top:0.25rem">
+          <span>
+            <strong style="color:var(--text)">Unified list per role (recommended)</strong><br>
+            <span style="color:var(--muted);font-size:0.78rem">One bullet list per job. Metric-bearing achievements appear first, day-to-day responsibilities after. Standard format every ATS parses cleanly.</span>
+          </span>
+        </label>
+        <label style="display:flex;align-items:flex-start;gap:0.55rem;cursor:pointer">
+          <input type="radio" name="roleStructure" id="roleStructSplit" value="split" style="margin-top:0.25rem">
+          <span>
+            <strong style="color:var(--text)">Split into <code style="background:rgba(232,184,75,0.1);padding:0 0.3rem;border-radius:3px">ACHIEVEMENTS</code> and <code style="background:rgba(232,184,75,0.1);padding:0 0.3rem;border-radius:3px">RESPONSIBILITIES</code> sub-headers</strong><br>
+            <span style="color:var(--muted);font-size:0.78rem">Reads beautifully for human reviewers, but adds parsing risk: some ATS systems (older Taleo, certain iCIMS configs) treat the sub-headers as new sections and orphan the bullets that follow. Choose this only if you know the target employer uses a modern ATS or you'll mainly be submitting via direct human referral / hand-delivered PDF.</span>
+          </span>
+        </label>
+      </div>
+    </div>
+
     <div class="generate-wrap">
       <button class="btn-generate" id="generateBtn">
         <span class="spinner" id="generateSpinner"></span>
@@ -1447,9 +1468,13 @@ textarea{resize:vertical;line-height:1.55}
     var tNum = tplStyle.value.replace('T','');
     var tpl = 'Template_' + tNum + '_' + tplPhoto.value + '_' + tplWeight.value + '_' + tplColor.value;
 
+    var roleStructEl = document.querySelector('input[name="roleStructure"]:checked');
+    var roleStructure = roleStructEl ? roleStructEl.value : 'unified';
+
     return {
       docType: document.getElementById('docType').value,
       region: document.getElementById('region').value,
+      role_structure: roleStructure,
       client: {
         name: document.getElementById('clientName').value.trim(),
         email: document.getElementById('clientEmail').value.trim(),
@@ -1534,7 +1559,56 @@ textarea{resize:vertical;line-height:1.55}
     } catch(e){}
 
     lastIntake = collectIntake();
+
+    var pages = estimatePageCount(lastIntake);
+    if(pages >= 3){
+      var seniority = (lastIntake.target && lastIntake.target.seniority) || '';
+      var hardCap = /senior|exec|c-?suite|director|vp|chief/i.test(seniority) ? 3 : 2;
+      if(pages > hardCap){
+        var msg = 'Heads up: with the experience you\'ve entered, the draft will likely run about ' + pages + ' pages.\n\n'
+          + 'Standard guidance is 1 to 2 pages for most candidates, 2 to 3 for senior or executive roles. '
+          + 'Three-plus pages get deprioritized by most recruiters and some ATS systems.\n\n'
+          + 'Options before generating:\n'
+          + '  • Remove roles older than ~10 years (or fold them into a one-line "Earlier:" summary)\n'
+          + '  • Trim the Notes / Achievements text in each role\n'
+          + '  • Drop optional sections (Volunteer, Awards, Memberships) that aren\'t load-bearing\n\n'
+          + 'Click OK to generate anyway, or Cancel to edit the intake first.';
+        if(!confirm(msg)){
+          return;
+        }
+      }
+    }
+
     doGenerate(lastIntake);
+  }
+
+  function estimatePageCount(intake){
+    // Rough estimator: ~450 words = one page of resume body at our font/spacing
+    var words = 0;
+    function countWords(s){ if(!s) return 0; return s.trim().split(/\s+/).filter(Boolean).length; }
+    words += countWords(intake.summary_notes);
+    var exp = intake.experience || [];
+    for(var i=0;i<exp.length;i++){
+      var j = exp[i];
+      words += 6; // header line (company, title, dates, location)
+      words += countWords(j.description);
+      var achs = j.achievements || [];
+      for(var k=0;k<achs.length;k++){
+        words += countWords(achs[k]);
+      }
+    }
+    var edu = intake.education || [];
+    words += edu.length * 8;
+    words += (intake.certifications || []).length * 6;
+    var sk = intake.skills || {};
+    words += countWords((sk.technical || []).join(' '));
+    words += countWords((sk.tools || []).join(' '));
+    words += countWords((sk.languages || []).join(' '));
+    var add = intake.additional || {};
+    Object.keys(add).forEach(function(k){ words += countWords(add[k]); });
+    // ACH/RESP split adds ~10% length from the labels
+    if(intake.role_structure === 'split'){ words = Math.round(words * 1.10); }
+    return Math.max(1, Math.ceil(words / 450));
   }
 
   async function doGenerate(intake){

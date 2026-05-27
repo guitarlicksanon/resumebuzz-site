@@ -185,6 +185,113 @@ MARKET: Southeast Asia (Philippines, Malaysia, Singapore, Indonesia)
 - Professional English; avoid idioms that may not translate across the region`,
 };
 
+const INDUSTRY_KEYWORDS = {
+  healthcare: `
+HEALTHCARE SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them. Never invent credentials or clinical experience.
+Systems: Epic, Cerner, Meditech, McKesson, PointClickCare, Allscripts, EMR/EHR, patient portal
+Compliance: HIPAA, OSHA, Joint Commission (JCAHO), CMS regulations, Magnet designation, infection control, regulatory compliance, documentation standards
+Clinical language: patient assessment, care planning, medication administration, patient advocacy, interdisciplinary collaboration, evidence-based practice, patient outcomes, continuity of care, care coordination, discharge planning
+Credentials (only if candidate holds them): BLS, ACLS, PALS, NRP, CNA, LPN, RN, NP, PA-C, CCRN, CNOR, ICD-10, CPT coding`,
+
+  finance: `
+FINANCE AND ACCOUNTING SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them.
+Standards: GAAP, IFRS, SOX (Sarbanes-Oxley), SEC reporting, FASB, internal controls, audit readiness, revenue recognition
+Analysis: financial modeling, DCF analysis, variance analysis, budget forecasting, FP&A, cost-benefit analysis, cash flow management, P&L oversight, working capital, EBITDA
+Systems: SAP, Oracle Financials, NetSuite, QuickBooks, Workday Financials, Hyperion, Anaplan, Adaptive Insights, Bloomberg Terminal, advanced Excel (VLOOKUP, pivot tables, Power Query)
+Credentials (only if candidate holds them): CPA, CFA, CMA, CFP`,
+
+  marketing: `
+MARKETING AND COMMUNICATIONS SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them.
+Digital channels: SEO, SEM, PPC, Google Ads, Meta Ads, programmatic advertising, email marketing, content marketing, social media marketing, influencer marketing, affiliate marketing
+Analytics: Google Analytics (GA4), A/B testing, conversion rate optimization (CRO), CTR, CPA, ROAS, CLV, marketing attribution, funnel analysis, cohort analysis
+Platforms: HubSpot, Salesforce Marketing Cloud, Marketo, Mailchimp, Hootsuite, Sprout Social, Semrush, Ahrefs, Canva, Adobe Creative Suite
+Strategy: brand strategy, go-to-market strategy, demand generation, lead generation, pipeline contribution, market segmentation, buyer personas, integrated marketing campaigns`,
+
+  sales: `
+SALES AND BUSINESS DEVELOPMENT SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them.
+Process: pipeline management, quota attainment, prospecting, cold outreach, discovery calls, consultative selling, solution selling, account expansion, territory management, revenue forecasting, renewal management
+Metrics: ARR, MRR, ACV, win rate, average deal size, sales cycle length, conversion rate, net retention rate
+Tools: Salesforce, HubSpot, Outreach, Salesloft, ZoomInfo, LinkedIn Sales Navigator, Gong, Chorus, MEDDIC framework, Challenger Sale
+Deal types: enterprise sales, SMB sales, SaaS sales, contract negotiation, RFP response, upsell, cross-sell, account-based selling (ABM)`,
+
+  hr: `
+HUMAN RESOURCES SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them.
+Talent acquisition: full-cycle recruiting, sourcing, Boolean search, ATS administration (Greenhouse, Lever, iCIMS, Workday Recruiting), offer negotiation, onboarding, time-to-fill, cost-per-hire, employer branding
+HR operations: HRIS (Workday, ADP, BambooHR, UKG), FLSA compliance, FMLA administration, ADA accommodations, EEOC compliance, OSHA, workers compensation, employee relations, performance management, corrective action
+People strategy: succession planning, workforce planning, compensation benchmarking, total rewards, learning and development (L&D), organizational design, change management, DEI strategy, employee engagement, retention programs
+Credentials (only if candidate holds them): SHRM-CP, SHRM-SCP, PHR, SPHR`,
+
+  operations: `
+OPERATIONS AND SUPPLY CHAIN SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them.
+Methodologies: Lean manufacturing, Six Sigma (DMAIC, DFSS), Kaizen, 5S, continuous improvement, root cause analysis, value stream mapping, Gemba walks, Theory of Constraints
+Supply chain: procurement, strategic sourcing, vendor management, supplier onboarding, contract negotiation, inventory optimization, demand forecasting, S&OP, warehouse management, last-mile logistics
+Systems: SAP, Oracle ERP, NetSuite, WMS, TMS, Manhattan Associates, Tableau, Power BI, advanced Excel
+Metrics: OEE, OTIF (on-time in-full), SLA compliance, cost reduction, throughput, cycle time, defect rate, inventory turns, fill rate, on-time delivery (OTD)`,
+
+  legal: `
+LEGAL SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them.
+Research and drafting: legal research, Westlaw, LexisNexis, contract drafting, contract review, brief writing, legal memoranda, Bluebook citation, redlining, due diligence, document review
+Practice areas (apply only where relevant to candidate's background): corporate law, M&A, employment law, intellectual property, commercial litigation, regulatory affairs, compliance, data privacy (GDPR, CCPA), real estate transactions, immigration
+Tools and process: e-discovery, Relativity, case management, docket management, deposition preparation, trial preparation, client intake, legal billing (Clio, LegalFiles, Aderant)
+Standards: attorney-client privilege, work product doctrine, ABA ethics compliance, CLE requirements`,
+
+  nonprofit: `
+NON-PROFIT AND SOCIAL SERVICES SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them.
+Funding: grant writing, grant management, federal grant compliance, Uniform Guidance (2 CFR 200), OMB requirements, budget reporting, foundation relations, major gifts, donor stewardship, annual fund, capital campaign
+Program delivery: program evaluation, needs assessment, logic model, theory of change, outcome measurement, community outreach, capacity building, coalition building, stakeholder engagement
+Systems: Salesforce Nonprofit (NPSP), Raiser's Edge, Bloomerang, DonorPerfect, GrantHub, Apricot, ServicePoint
+Social work and clinical (if applicable): trauma-informed care, motivational interviewing, strengths-based approach, crisis intervention, harm reduction, cultural humility, LMSW, LCSW`,
+
+  construction: `
+CONSTRUCTION AND PROJECT MANAGEMENT SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them.
+Project delivery: budget management, schedule management, risk management, scope management, stakeholder reporting, change order management, RFI processing, submittal review, quality control, punch list, project close-out
+Construction tools: Procore, Autodesk Construction Cloud, Bluebeam Revu, AutoCAD, Revit, BIM (Building Information Modeling), PlanGrid, CoConstruct, scheduling (MS Project, Primavera P6)
+Site and safety: OSHA 30, site safety plan, safety audits, subcontractor management, field supervision, site logistics
+Real estate (if applicable): market analysis, lease negotiation, due diligence, title review, entitlement, zoning, property management, asset management, cap rate, NOI, ARGUS
+Credentials (only if candidate holds them): PMP, PE, LEED AP, OSHA 30, CCM`,
+
+  hospitality: `
+HOSPITALITY AND FOOD & BEVERAGE SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them.
+Systems: POS (Toast, Aloha, Micros, Square, Lightspeed), OpenTable, Resy, SevenRooms, Opera PMS, Marriott CI/TY, Delphi
+Standards: ServSafe certification, TIPS certification, food safety HACCP, brand standards (Marriott, Hilton, Hyatt, IHG, Accor), Forbes Travel Guide standards
+Revenue and metrics: RevPAR, ADR (average daily rate), occupancy rate, covers per shift, labor cost percentage, food cost percentage, upselling, guest satisfaction (GSS, NPS, TripAdvisor index)
+Guest experience: VIP guest services, conflict resolution, event coordination, catering management, banquet operations, group sales, yield management`,
+
+  k12: `
+K-12 EDUCATION SECTOR KEYWORDS
+Apply these terms where the candidate's experience genuinely supports them.
+Instruction: differentiated instruction, Common Core State Standards (CCSS), curriculum development, lesson planning, formative assessment, summative assessment, Bloom's taxonomy, UDL (Universal Design for Learning), project-based learning (PBL), Socratic seminar, co-teaching
+Special education (if applicable): IEP development, 504 plans, push-in/pull-out services, behavior intervention plan (BIP), RTI/MTSS, IDEA compliance, PBIS, transition planning, assistive technology
+Technology: Google Classroom, Canvas, Schoology, Seesaw, Nearpod, Kahoot, PowerSchool, Infinite Campus, Clever, Edulastic
+Student support: social-emotional learning (SEL), trauma-informed practices, culturally responsive teaching, restorative practices, family engagement, early intervention, PBIS tier system`,
+};
+
+function detectIndustry(targetRole) {
+  const r = targetRole.toLowerCase();
+  if (/nurs|medical|clinical|patient|hospital|health.?care|icu\b|er\b|\brn\b|\bcna\b|\blpn\b|\bnp\b|physician|surgeon|pharmacist|physical.therap|occupational.therap|radiology|phlebotom|medical.assist|behavioral.health/.test(r)) return 'healthcare';
+  if (/\baccountant|accounting|\bcpa\b|\bcfo\b|finance|financial.anal|controller|auditor|bookkeep|\btax\b|payroll|treasury|fp.?a\b|budget.anal|actuary|audit/.test(r)) return 'finance';
+  if (/market|seo\b|sem\b|ppc\b|content.strateg|brand.strateg|social.media|digital.market|email.market|campaign.manag|advertising|\bpr\b|public.relations|communications|growth/.test(r)) return 'marketing';
+  if (/\bsales\b|account.execut|account.manag|business.develop|\bbdr\b|\bsdr\b|\bae\b|revenue.manag|quota|closing.deal|client.success|customer.success|solution.engineer/.test(r)) return 'sales';
+  if (/human.resources|\bhr\b|people.ops|talent.acquis|recruiter|recruiting|\bhrbp\b|compensation.benefit|learning.develop|organizational.develop|\bdei\b/.test(r)) return 'hr';
+  if (/operat|supply.chain|logistics|warehouse|procurement|inventory|purchasing|vendor.manag|manufactur|lean.manag|six.sigma|production|quality.assur|continuous.improv/.test(r)) return 'operations';
+  if (/attorney|lawyer|\blegal\b|paralegal|counsel|litigation|compliance.officer|regulatory.affair|contract.manag|intellectual.property|corporate.law|data.privacy/.test(r)) return 'legal';
+  if (/non.?profit|social.worker|social.services|case.manag|program.coord|community.outreach|grant.writ|fundrais|development.officer|volunteer.coord|mental.health.counsel/.test(r)) return 'nonprofit';
+  if (/project.manag|\bpmp\b|\bscrum\b|construction|general.contract|site.manag|real.estate|property.manag|civil.engineer|structural.engineer|superintendent/.test(r)) return 'construction';
+  if (/hotel|hospitality|restaurant|food.service|\bchef\b|sous.chef|catering|event.coord|front.desk|concierge|revenue.manag.*hotel|food.beverage|banquet/.test(r)) return 'hospitality';
+  if (/\bteacher\b|teaching|instructor|\bk.12\b|elementary.school|middle.school|high.school|special.ed|curriculum.coord|classroom|school.counselor|principal/.test(r)) return 'k12';
+  return null;
+}
+
 function buildSystemPrompt(intake) {
   const base = `You are a professional resume writer with 14 years of experience placing candidates across every industry, career level, and geography. You have written thousands of CVs, resumes, cover letters, and LinkedIn profiles for everyone from new graduates to C-suite executives. Your writing sounds unmistakably human — no clichés, no filler, no AI-sounding output.
 
@@ -257,6 +364,11 @@ The candidate's stack includes serverless or edge-compute platforms. In the Skil
 
 PROJECTS SECTION — BUILDER/FOUNDER CANDIDATES
 This candidate has shipped live products (URLs or deployed tools appear in their work history). Add a dedicated "Projects" section after Work Experience and before Education. List each distinct shipped product as a 2-3 bullet entry: product name in bold, what it does, the tech stack or approach, and any scale or outcome metrics. Do not repeat bullets that already appear in the Work Experience section.`;
+  }
+
+  const detectedIndustry = detectIndustry(targetRole);
+  if (detectedIndustry && INDUSTRY_KEYWORDS[detectedIndustry]) {
+    prompt += '\n' + INDUSTRY_KEYWORDS[detectedIndustry];
   }
 
   if (isHigherEdRole) {

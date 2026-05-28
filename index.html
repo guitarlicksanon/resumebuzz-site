@@ -1603,7 +1603,85 @@ details.faq-item summary:hover{color:var(--gold)}
     <span style="display:flex;align-items:center;gap:10px;flex-shrink:0;"><span class="dt-pulse"></span><span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:#4ADE80;white-space:nowrap;" class="oye-s-date">Audited May 2026</span><span class="dt-prefix" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap;">Site enhanced by </span><a class="dt-lnk" href="https://droptimize.org" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap;"><span class="dt-t1">droptimize</span><span class="dt-t2">.org &#x2192;</span></a></span>
   </div>
 </div>
-  <footer>
+  <!-- ─── Live Audit Strip ─── -->
+<!-- Pulls the latest droptimize weekly audit for this domain and renders the 5 category
+     scores (SEO / Security / Performance / Accessibility / Best Practices). Updates every
+     Monday when the droptimize cron runs. CORS-friendly, no auth, falls back to dashes if
+     the API is unreachable. -->
+<section class="oye-audit-strip-section" aria-label="Live droptimize audit">
+  <div class="oye-audit-strip-wrap">
+    <div class="oye-audit-strip">
+      <div class="oye-audit-meta">
+        <div class="oye-audit-indicator"><span class="oye-audit-pulse"></span><span class="oye-audit-lbl">Live</span></div>
+        <a href="https://droptimize.org/?domain=buzzresume.com#portfolio" target="_blank" rel="noopener" class="oye-audit-domain">audited by droptimize &#x2197;</a>
+        <span class="oye-audit-date" id="oye-audit-date">Loading...</span>
+      </div>
+      <div class="oye-audit-grid">
+        <div class="oye-audit-tile"><div class="oye-audit-val" data-score="seo">&mdash;</div><div class="oye-audit-tile-lbl">SEO</div></div>
+        <div class="oye-audit-tile"><div class="oye-audit-val" data-score="security">&mdash;</div><div class="oye-audit-tile-lbl">Security</div></div>
+        <div class="oye-audit-tile"><div class="oye-audit-val" data-score="performance">&mdash;</div><div class="oye-audit-tile-lbl">Performance</div></div>
+        <div class="oye-audit-tile"><div class="oye-audit-val" data-score="accessibility">&mdash;</div><div class="oye-audit-tile-lbl">Accessibility</div></div>
+        <div class="oye-audit-tile"><div class="oye-audit-val" data-score="best_practices">&mdash;</div><div class="oye-audit-tile-lbl">Best Practices</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .oye-audit-strip-section { padding: 32px 24px; background: transparent; }
+  .oye-audit-strip-wrap { max-width: 1100px; margin: 0 auto; }
+  .oye-audit-strip { display: flex; align-items: stretch; border: 1px solid rgba(74,222,128,0.22); background: #0E1411; overflow: hidden; border-radius: 6px; font-family: 'DM Mono', ui-monospace, SFMono-Regular, monospace; }
+  .oye-audit-meta { display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 14px 18px; background: rgba(74,222,128,0.05); border-right: 1px solid rgba(74,222,128,0.14); min-width: 200px; flex-shrink: 0; }
+  .oye-audit-indicator { display: flex; align-items: center; gap: 7px; }
+  .oye-audit-pulse { width: 8px; height: 8px; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 8px #4ADE80; animation: oyeAuditPulse 2.4s ease-in-out infinite; flex-shrink: 0; }
+  @keyframes oyeAuditPulse { 0%,100% { opacity:1; transform:scale(1);} 50% { opacity:0.5; transform:scale(0.85);} }
+  .oye-audit-lbl { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #4ADE80; }
+  .oye-audit-domain { font-size: 12px; color: #E5E5E5; text-decoration: none; transition: color 0.15s; }
+  .oye-audit-domain:hover { color: #4ADE80; }
+  .oye-audit-date { font-size: 10px; color: #8C8C8C; }
+  .oye-audit-grid { display: flex; flex: 1; }
+  .oye-audit-tile { flex: 1; padding: 14px 8px; background: #131A17; border-right: 1px solid rgba(74,222,128,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-align: center; }
+  .oye-audit-tile:last-child { border-right: none; }
+  .oye-audit-val { font-size: 26px; font-weight: 700; line-height: 1; color: #5E6661; font-family: 'DM Mono', ui-monospace, SFMono-Regular, monospace; }
+  .oye-audit-val.is-gold { color: #C9A84C; text-shadow: 0 0 16px rgba(201,168,76,0.4); }
+  .oye-audit-val.is-amber { color: #F59E0B; }
+  .oye-audit-val.is-red { color: #E05A3A; }
+  .oye-audit-tile-lbl { font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: #4ADE80; }
+  @media (max-width: 720px) {
+    .oye-audit-strip { flex-direction: column; }
+    .oye-audit-meta { border-right: none; border-bottom: 1px solid rgba(74,222,128,0.14); flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px; min-width: 0; }
+    .oye-audit-grid { flex-wrap: wrap; }
+    .oye-audit-tile { flex: 0 0 33.333%; padding: 12px 4px; border-bottom: 1px solid rgba(74,222,128,0.08); }
+    .oye-audit-tile:nth-child(3n) { border-right: none; }
+    .oye-audit-tile:nth-child(n+4) { border-bottom: none; }
+    .oye-audit-val { font-size: 20px; }
+  }
+</style>
+<script>
+(function () {
+  var DOMAIN = 'buzzresume.com';
+  function colorFor(v) { if (v == null) return ''; if (v >= 95) return 'is-gold'; if (v >= 70) return 'is-amber'; return 'is-red'; }
+  function fmtDate(d) { try { return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); } catch (e) { return d; } }
+  fetch('https://droptimize.org/api/audit/latest?domain=' + encodeURIComponent(DOMAIN))
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var dateEl = document.getElementById('oye-audit-date');
+      if (!data || !data.audit) { if (dateEl) dateEl.textContent = 'Audit runs every Monday'; return; }
+      var a = data.audit, scores = a.scores || {};
+      ['seo','security','performance','accessibility','best_practices'].forEach(function (k) {
+        var el = document.querySelector('.oye-audit-val[data-score="' + k + '"]');
+        if (!el) return;
+        var v = scores[k];
+        if (v == null) { el.textContent = '—'; return; }
+        el.textContent = v;
+        el.className = 'oye-audit-val ' + colorFor(v);
+      });
+      if (dateEl) dateEl.textContent = fmtDate(a.week || a.timestamp);
+    })
+    .catch(function () { var d = document.getElementById('oye-audit-date'); if (d) d.textContent = 'Audit runs every Monday'; });
+})();
+</script>
+
+<footer>
     <div class="footer-inner">
       <span>ResumeBuzz is a DBA of OYE Creations LLC</span>
       <a href="https://oyecreations.com" target="_blank" rel="noopener">oyecreations.com</a>

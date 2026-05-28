@@ -861,6 +861,23 @@ footer a:hover{color:var(--warm)}
 
 </main>
 
+<!-- ── SCORE STRIP (above footer) ──────────────────────────────────── -->
+<div data-oye-strip="footer" style="background:rgba(201,168,76,0.05);border-top:1px solid rgba(201,168,76,0.12);border-bottom:1px solid rgba(201,168,76,0.12);padding:9px 24px;">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <a href="https://droptimize.org" target="_blank" rel="noopener" aria-label="droptimize.org" style="display:inline-flex;align-items:center;margin-right:5px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 56" style="height:16px;width:auto;flex-shrink:0;" aria-hidden="true" fill="none"><path d="M6,20 A18,18 0 0,1 42,20 Q42,38 24,54 Q6,38 6,20 Z" fill="#C9A84C"/><polyline points="13,28 24,14 35,28" stroke="#111111" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;"><strong class="oye-s-seo" style="color:#C9A84C;font-weight:500;">100</strong> SEO</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;"><strong class="oye-s-sec" style="color:#C9A84C;font-weight:500;">100</strong> Security</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;"><strong class="oye-s-perf" style="color:#C9A84C;font-weight:500;">100</strong> Performance</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;"><strong class="oye-s-a11y" style="color:#C9A84C;font-weight:500;">100</strong> Accessibility</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#8C8C8C;"><strong class="oye-s-bp" style="color:#C9A84C;font-weight:500;">100</strong> Best Practices</span>
+    </div>
+    <span style="display:flex;align-items:center;gap:10px;flex-shrink:0;"><span class="oye-dt-pulse" style="width:6px;height:6px;border-radius:50%;background:#4ADE80;flex-shrink:0;animation:oye-dt-ping 2s ease-in-out infinite;"></span><span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:#4ADE80;white-space:nowrap;" class="oye-s-date">Audited May 2026</span><span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap;color:#EBEBEB;">Site enhanced by </span><a href="https://droptimize.org" target="_blank" rel="noopener" class="oye-dt-lnk" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap;text-decoration:none;color:#EBEBEB;"><span class="oye-dt-t1" style="color:#EBEBEB;">droptimize</span><span class="oye-dt-t2" style="color:#C9A84C;">.org &#x2192;</span></a></span>
+  </div>
+</div>
+<style>@keyframes oye-dt-ping{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,.5)}60%{opacity:.6;box-shadow:0 0 0 5px rgba(74,222,128,0)}}.oye-dt-lnk:hover .oye-dt-t1{color:#C9A84C!important}.oye-dt-lnk:hover .oye-dt-t2{color:#EBEBEB!important}</style>
+<script>(function(){var D='buzzresume.com';if(window.__oyeStripFetched)return;window.__oyeStripFetched=1;(window.requestIdleCallback||function(cb,o){setTimeout(cb,o&&o.timeout?Math.min(o.timeout,500):500)})(function(){fetch('https://bink.oyecreations.com/api/public/scores?domain='+D).then(function(r){return r.json();}).then(function(d){if(!d.ok||!d.scores)return;var s=d.scores,m,i;function u(c,v){if(v==null)return;m=document.querySelectorAll(c);for(i=0;i<m.length;i++)m[i].textContent=v;}u('.oye-s-seo',s.seo);u('.oye-s-sec',s.security);u('.oye-s-perf',s.performance);u('.oye-s-a11y',s.accessibility);u('.oye-s-bp',s.bestPractices);if(d.date){var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],dt=new Date(d.date+'T00:00:00Z'),lbl='Audited '+mo[dt.getUTCMonth()]+' '+dt.getUTCFullYear();u('.oye-s-date',lbl);}}).catch(function(){});},{timeout:2000});})();</script>
+
+
 <footer>
   <p>
     <a href="/">ResumeBuzz</a> &nbsp;&middot;&nbsp;

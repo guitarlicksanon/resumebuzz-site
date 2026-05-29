@@ -30,33 +30,49 @@
 
   var style = document.createElement('style');
   style.textContent =
-    '.buzz-judge{position:fixed;width:46px;z-index:9999;pointer-events:none;' +
+    '.buzz-judge{position:fixed;width:52px;z-index:9999;pointer-events:none;' +
     'transform-origin:50% 80%;filter:drop-shadow(0 3px 6px rgba(31,30,20,.3))}';
   document.head.appendChild(style);
 
-  // The real Buzz palette (#F5C800 / #111), frowning with eyes cut to the side.
-  var BEE =
-    '<svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">' +
-    '<line x1="40" y1="18" x2="34" y2="6" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>' +
-    '<circle cx="33" cy="5" r="3.2" fill="#111"/>' +
-    '<line x1="60" y1="18" x2="66" y2="6" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>' +
-    '<circle cx="67" cy="5" r="3.2" fill="#111"/>' +
-    '<circle cx="50" cy="44" r="30" fill="#F5C800"/>' +
-    '<circle cx="36" cy="44" r="11" fill="#fff"/><circle cx="64" cy="44" r="11" fill="#fff"/>' +
-    '<circle cx="41" cy="42" r="5.5" fill="#111"/><circle cx="69" cy="42" r="5.5" fill="#111"/>' +
-    '<circle cx="39" cy="40" r="1.6" fill="#fff"/><circle cx="67" cy="40" r="1.6" fill="#fff"/>' +
-    '<path d="M 40 62 Q 50 56 60 62" stroke="#111" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
-    '</svg>';
+  // The actual Buzz sprite from the "Get Buzz a Job" game (bee.html beeSVG):
+  // square glasses, antennae, stinger. Here: wings resting, frowning, eyes
+  // cut hard to the side. Not the Associate, not the phone-glued Apprentice.
+  var _uid = 0;
+  function buzzSVG() {
+    var u = 'bz' + (_uid++);
+    return '<svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;width:100%;height:auto;display:block">' +
+      '<ellipse cx="22" cy="58" rx="22" ry="13" fill="rgba(255,255,255,0.75)" stroke="rgba(200,200,200,0.4)" stroke-width="0.8" style="transform:rotate(-26deg);transform-box:fill-box;transform-origin:right center"/>' +
+      '<ellipse cx="78" cy="58" rx="22" ry="13" fill="rgba(255,255,255,0.75)" stroke="rgba(200,200,200,0.4)" stroke-width="0.8" style="transform:rotate(26deg);transform-box:fill-box;transform-origin:left center"/>' +
+      '<clipPath id="' + u + '"><ellipse cx="50" cy="95" rx="21" ry="30"/></clipPath>' +
+      '<ellipse cx="50" cy="95" rx="21" ry="30" fill="#F5C800"/>' +
+      '<rect x="29" y="83" width="42" height="10" fill="#111" clip-path="url(#' + u + ')"/>' +
+      '<rect x="29" y="101" width="42" height="10" fill="#111" clip-path="url(#' + u + ')"/>' +
+      '<polygon points="46,124 54,124 50,130" fill="#E8A838"/>' +
+      '<circle cx="50" cy="44" r="30" fill="#F5C800"/>' +
+      // eyes: pupils + highlights shifted left = side-eye
+      '<circle cx="36" cy="44" r="11" fill="#fff"/><circle cx="31" cy="44" r="5.5" fill="#111"/><circle cx="28" cy="41" r="2" fill="#fff"/>' +
+      '<circle cx="64" cy="44" r="11" fill="#fff"/><circle cx="59" cy="44" r="5.5" fill="#111"/><circle cx="56" cy="41" r="2" fill="#fff"/>' +
+      // Buzz's signature square glasses
+      '<rect x="23" y="31" width="26" height="22" rx="4" fill="none" stroke="#111" stroke-width="3.5"/>' +
+      '<rect x="51" y="31" width="26" height="22" rx="4" fill="none" stroke="#111" stroke-width="3.5"/>' +
+      '<line x1="49" y1="42" x2="51" y2="42" stroke="#111" stroke-width="3.5"/>' +
+      '<line x1="23" y1="42" x2="16" y2="44" stroke="#111" stroke-width="3"/>' +
+      '<line x1="77" y1="42" x2="84" y2="44" stroke="#111" stroke-width="3"/>' +
+      '<path d="M38 62 Q50 56 62 62" stroke="#111" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
+      '<line x1="38" y1="16" x2="30" y2="4" stroke="#111" stroke-width="2.5"/><circle cx="29" cy="3" r="3.5" fill="#111"/>' +
+      '<line x1="62" y1="16" x2="70" y2="4" stroke="#111" stroke-width="2.5"/><circle cx="71" cy="3" r="3.5" fill="#111"/>' +
+      '</svg>';
+  }
 
   function judge(field) {
     var prev = field._buzzBee;
     if (prev) { clearTimeout(prev._t); prev.remove(); }
     var b = document.createElement('div');
     b.className = 'buzz-judge';
-    b.innerHTML = BEE;
+    b.innerHTML = buzzSVG();
     var r = field.getBoundingClientRect();
-    b.style.left = (r.right - 52) + 'px';
-    b.style.top = (r.top - 22) + 'px';
+    b.style.left = (r.right - 56) + 'px';
+    b.style.top = (r.top - 46) + 'px';
     document.body.appendChild(b);
     field._buzzBee = b;
     var dur = 2000;
